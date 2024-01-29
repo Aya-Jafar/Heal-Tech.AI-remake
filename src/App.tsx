@@ -1,12 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, lazy } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Home from "./pages/Home";
-import AutoCompletion from "./pages/services/AutoCompletion";
-import Summarization from "./pages/services/summarization";
-import ChatBot from "./pages/services/ChatBot";
 
-function App() {
+const Home: FC = lazy(() => import("./pages/Home"));
+const AutoCompletion: FC = lazy(
+  () => import("./pages/services/AutoCompletion")
+);
+const Summarization: FC = lazy(() => import("./pages/services/summarization"));
+const ChatBot: FC = lazy(() => import("./pages/services/ChatBot"));
+
+
+export default function App() {
   return (
     <div className="App">
       <Routes>
@@ -24,5 +28,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
