@@ -151,5 +151,23 @@ hr {
   font-size: 35px;
   font-style: normal;
   font-weight: 200;
-  line-height:60px;
+  line-height:55px;
+}
+.services{
+  height: 60vh;
+  padding: 2% 5%;
+  margin-top: 9%;
+}
+
+.services-wrapper{
+  margin-top: 5%;
+  height: 60vh;
+  /* padding: 2% 5%; */
+  background-color: #1f41bb;
+  display: flex;
+  justify-content: space-around;
+}
+.services-wrapper div{
+  width: 400px;
+  background-color: #a5006a;
 }
