@@ -1,6 +1,7 @@
 import React, { FC, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
+import Header from "./components/Header";
 
 const Home = lazy(() => import("./pages/Home"));
 const AutoCompletion = lazy(() => import("./pages/services/AutoCompletion"));
@@ -10,6 +11,7 @@ const ChatBot = lazy(() => import("./pages/services/ChatBot"));
 const App: FC = () => {
   return (
     <div className="App">
+      <Header />
       <Routes>
         <Route
           path="/"
