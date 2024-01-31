@@ -258,3 +258,9 @@ hr {
   margin-top: 4%;
   
 }
+
+.footer{
+  height: 90vh;
+  display: flex;
+  align-items: end;
+}
