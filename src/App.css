@@ -12,6 +12,7 @@
   justify-content: space-evenly;
   align-items: center;
   gap: 100px;
+  cursor: pointer;
 }
 
 .header-btns {

@@ -4,7 +4,7 @@ interface AboutUsProps {}
 
 export default function AboutUs(props: AboutUsProps) {
   return (
-    <div className="about-us">
+    <div className="about-us" id="about">
       <div className="about-us-container">
         <h1>About Us</h1>
         <p>

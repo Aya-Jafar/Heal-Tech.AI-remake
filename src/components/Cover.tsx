@@ -1,6 +1,7 @@
 import * as React from "react";
 import pic from "../images/heal-tech.AI-cover.png";
 import { handleMouseMove, handleMouseLeave } from "../animation";
+import { Link as ScrollLink } from "react-scroll";
 
 interface ICoverProps {}
 
@@ -14,7 +15,9 @@ export default function Cover(props: ICoverProps) {
           Summarization, and Expert Chatbot Assistance Where Precision Meets
           Efficiency in Doctor AI Services
         </p>
-        <button id="explore-btn">Start Exploring</button>
+        <ScrollLink to="services" spy={true} smooth={true} duration={500}>
+          <button id="explore-btn">Start Exploring</button>
+        </ScrollLink>
       </div>
       <div
         className="cover-pic"

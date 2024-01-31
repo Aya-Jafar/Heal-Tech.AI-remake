@@ -5,7 +5,7 @@ interface ServicesWrapperProps {}
 
 export function ServicesWrapper(props: ServicesWrapperProps) {
   return (
-    <div className="services">
+    <div className="services" id="services">
       <center>
         <h1 style={{fontSize:"40px"}}>Our Services</h1>
       </center>
