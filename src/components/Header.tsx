@@ -23,7 +23,7 @@ export default function Header(props: HeaderProps) {
           <ScrollLink to="services" spy={true} smooth={true} duration={500}>
             Services
           </ScrollLink>
-          <ScrollLink to="#" spy={true} smooth={true} duration={500}>
+          <ScrollLink to="contact" spy={true} smooth={true} duration={500}>
             Contact Us
           </ScrollLink>
         </div>
