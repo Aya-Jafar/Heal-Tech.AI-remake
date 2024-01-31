@@ -1,30 +1,51 @@
-import React, { FC, lazy } from "react";
+import React, { FC, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 
-const Home: FC = lazy(() => import("./pages/Home"));
-const AutoCompletion: FC = lazy(
-  () => import("./pages/services/AutoCompletion")
-);
-const Summarization: FC = lazy(() => import("./pages/services/summarization"));
-const ChatBot: FC = lazy(() => import("./pages/services/ChatBot"));
+const Home = lazy(() => import("./pages/Home"));
+const AutoCompletion = lazy(() => import("./pages/services/AutoCompletion"));
+const Summarization = lazy(() => import("./pages/services/summarization"));
+const ChatBot = lazy(() => import("./pages/services/ChatBot"));
 
-
-export default function App() {
+const App: FC = () => {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Home />}></Route>
+        <Route
+          path="/"
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Home />
+            </Suspense>
+          }
+        ></Route>
         <Route
           path="/services/auto-completion"
-          element={<AutoCompletion />}
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <AutoCompletion />
+            </Suspense>
+          }
         ></Route>
         <Route
           path="/services/summarization"
-          element={<Summarization />}
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Summarization />
+            </Suspense>
+          }
         ></Route>
-        <Route path="/services/chat-bot" element={<ChatBot />}></Route>
+        <Route
+          path="/services/chat-bot"
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <ChatBot />
+            </Suspense>
+          }
+        ></Route>
       </Routes>
     </div>
   );
-}
+};
+
+export default App;
