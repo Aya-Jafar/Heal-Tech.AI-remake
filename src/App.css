@@ -151,23 +151,69 @@ hr {
   font-size: 35px;
   font-style: normal;
   font-weight: 200;
-  line-height:55px;
+  line-height: 55px;
 }
-.services{
-  height: 60vh;
-  padding: 2% 5%;
+.services {
+  height: 75vh;
   margin-top: 9%;
+  /* background-color: #a5006a; */
 }
 
-.services-wrapper{
+.services-wrapper {
   margin-top: 5%;
+  width: 100%;
+  /* background-color: #a5006a; */
   height: 60vh;
-  /* padding: 2% 5%; */
-  background-color: #1f41bb;
   display: flex;
-  justify-content: space-around;
+  flex-wrap: wrap;
+
+  align-items: flex-start;
+
+  justify-content: center;
+
 }
-.services-wrapper div{
+
+.try-btn {
+  margin-top: auto;
+  margin-bottom: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px white solid;
+  outline: none;
+  width: 180px;
+  height: 45px;
+  margin-left: auto; 
+  margin-right: auto;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.try-btn h3{
+  font-weight: 30px;
+  color:white
+
+}
+.service-item {
   width: 400px;
-  background-color: #a5006a;
+  height: 55vh;
+  display: flex;
+  
+  flex-direction: column;
+  /* align-items: start; */
+  padding: 1px 14px;
+  margin-right: 10px;
+}
+
+
+
+
+
+
+.service-item h1{
+  font-size: 35px;
+}
+.service-item p{
+  font-size: 30px;
+  font-weight: 300;
 }
