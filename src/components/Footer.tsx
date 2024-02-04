@@ -8,7 +8,7 @@ export function Footer() {
         {/* <hr /> */}
         <div className="logo">
           <img src={logo} alt="" />
-          <p>© 2023 HEAL TECH.AI . All rights reserved</p>
+          <p>© 2024 HEAL TECH.AI . All rights reserved</p>
         </div>
       </div>
     </div>
