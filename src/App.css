@@ -377,7 +377,7 @@ input::file-selector-button {
   margin-bottom: 30px;
   border: 0.1px rgba(255, 255, 255, 0.617) solid;
 }
-.question.map .chat-input.a{
+.question.map .chat-input.a {
   box-shadow: 10px 9px 100px -20px #1f41bb;
   border: none;
   align-self: flex-start;
@@ -390,7 +390,7 @@ input::file-selector-button {
   display: flex;
   align-items: center;
   padding: 0 5%;
-  width:60vw;
+  width: 60vw;
   border-radius: 14px;
   outline: none;
   font-size: 20px;
@@ -405,4 +405,50 @@ input::file-selector-button {
   width: 35px;
   height: 35px;
   cursor: pointer;
+}
+
+.problems {
+  height: 100vh;
+  /* background-color: #031867; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5%;
+  margin-bottom: 15%;
+}
+.problems h1 {
+  font-size: 40px;
+}
+.grid {
+  margin-top: 3%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px; /* Optional: Add gap for spacing between the divs */
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr; /* Change to a single column layout on smaller screens */
+  }
+}
+
+.problem {
+  width: 400px;
+  height: 330px;
+  background-color: #040a21;
+  border-radius: 20px;
+  border: 1px #006cea solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.problem:hover{
+  background-color: #222C87;
+}
+
+.problem p{
+  padding: 20px;
+  font-size: 30px;
+  font-weight: 200;
+
+  align-self: center;
 }

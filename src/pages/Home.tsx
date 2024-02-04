@@ -4,15 +4,16 @@ import AboutUs from "../components/AboutUs";
 import { ServicesWrapper } from "../components/ServicesWrapper";
 import Contact from "../components/Contact";
 import { Footer } from "../components/Footer";
+import ProblemStatement from "../components/ProblemStatement";
 
-interface HomeProps {}
 
-export default function Home(props: HomeProps) {
+
+export default function Home() {
   return (
     <div>
       <Cover />
       <AboutUs />
-      {/* TODO: add problem statement section */}
+      <ProblemStatement />
       <ServicesWrapper />
       <Contact />
       <Footer />
