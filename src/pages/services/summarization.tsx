@@ -1,23 +1,52 @@
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useEffect } from "react";
+import summarizeText from "../../huggingFace/textSummary";
+import { extractPdfText } from "../../utils/helpers";
+import { ApiResponse } from "../../schemas";
+
 
 export default function Summarization() {
   const [fileContent, setFileContent] = useState<string | null>(null);
+  const [generatedText, setGeneratedText] = useState<ApiResponse | null>(null);
 
-  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
+
+    // TODO: Add File size check
 
     if (file) {
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = async (e) => {
         const content = e.target?.result as string;
-        setFileContent(content);
+
+        if (file.name.endsWith(".pdf")) {
+          const pdfContent = await extractPdfText(content);
+
+          setFileContent(pdfContent);
+        } else {
+          setFileContent(content);
+        }
       };
-      // TODO: Add File size check
-      reader.readAsText(file, "utf-8");
+
+      reader.readAsBinaryString(file);
     }
   };
 
-  // console.log(fileContent);
+
+  useEffect(() => {}, [generatedText]);
+
+
+  const summarize = () => {
+    if (fileContent) {
+      summarizeText({ inputs: fileContent }).then((response: ApiResponse[]) => {
+
+        // console.log(JSON.stringify(response));
+        // if (response.hasOwnProperty("generated_text")) {
+        setGeneratedText(response[0]);
+        console.log("Generated text set:", response);
+        // }
+      });
+    }
+  };
 
   return (
     <div className="model-page">
@@ -36,14 +65,16 @@ export default function Summarization() {
       <div className="model summary">
         <div className="file-upload-container">
           {/* TODO: Change the accept to txt and PDF */}
-          <input
-            type="file"
-            id="inp"
-            onChange={handleFileChange}
-            accept="pdf/*"
-          />
+          <input type="file" id="inp" onChange={handleFileChange} />
         </div>
-        <button id="explore-btn">Summarize</button>
+
+        <button id="explore-btn" onClick={summarize}>
+          Summarize
+        </button>
+
+        {generatedText !== null && (
+          <p>{generatedText.generated_text}</p>
+        )}
       </div>
     </div>
   );
