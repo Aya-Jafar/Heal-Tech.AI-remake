@@ -424,13 +424,14 @@ input::file-selector-button {
   margin-top: 3%;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 30px; /* Optional: Add gap for spacing between the divs */
+  gap: 30px;
   @media (max-width: 768px) {
-    grid-template-columns: 1fr; /* Change to a single column layout on smaller screens */
+    grid-template-columns: 1fr; 
   }
 }
 
 .problem {
+  /* It's me I'm the problem it's me */
   width: 400px;
   height: 330px;
   background-color: #040a21;
