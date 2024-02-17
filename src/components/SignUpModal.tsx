@@ -14,6 +14,7 @@ function SignUpModal() {
     setIsSignUpModalOpen,
     setCurrentUser,
     currentUser,
+    setIsLoginModalOpen,
   } = useAuth() as AuthSchema;
 
   const [emailError, setEmailError] = useState("");
@@ -198,6 +199,18 @@ function SignUpModal() {
                   Sign up
                 </button>
               </Box>
+              <br />
+              <p className="login-text">
+                Already have an account? {"  "}
+                <strong
+                  onClick={() => {
+                    setIsSignUpModalOpen(false);
+                    setIsLoginModalOpen(true);
+                  }}
+                >
+                  Log in
+                </strong>
+              </p>
             </center>
           </form>
         </Box>
