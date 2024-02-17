@@ -13,7 +13,7 @@ export default function AutoCompletion() {
   useEffect(() => {
     // Set cursor position at the end of the typed text
     if (textareaRef.current) {
-      const preTypedTextLength = " New".length ;
+      const preTypedTextLength = " New ".length ;
       const cursorPosition = inputText.length - preTypedTextLength;
 
       textareaRef.current.selectionStart = cursorPosition;
@@ -26,7 +26,7 @@ export default function AutoCompletion() {
       e.preventDefault();
       setPlaceholderColor("white");
 
-      const preTypedTextLength = " New".length + 1;
+      const preTypedTextLength = " New ".length + 1;
       const cursorPosition = inputText.length + preTypedTextLength;
 
       if (textareaRef.current) {
@@ -37,8 +37,8 @@ export default function AutoCompletion() {
   };
 
   const appendText = () => {
-    setAppendedText("New");
-    setInputText((prevText) => prevText + ` New`);
+    setAppendedText("New ");
+    setInputText((prevText) => prevText + ` New `);
   };
 
   const getLastWord = (text: string) => {
@@ -58,7 +58,7 @@ export default function AutoCompletion() {
         </p>
         <br />
         <p>
-          Start typing; the AI completion will show up. Hit Tab to apply it.
+          Start typing and the AI completion will show up. Hit Tab to apply it.
         </p>
       </div>
       <div className="model">

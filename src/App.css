@@ -440,6 +440,7 @@ input::file-selector-button {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 .problem:hover{
@@ -452,4 +453,9 @@ input::file-selector-button {
   font-weight: 200;
 
   align-self: center;
+}
+
+.login-text strong{
+  color:#006cea;
+  cursor: pointer;
 }

@@ -3,12 +3,41 @@ import logo from "../images/healai-icon.png";
 import { Link } from "react-router-dom";
 import { linkStyle } from "../dynamicStyles";
 import { Link as ScrollLink } from "react-scroll";
+import LoginModal from "./LoginModal";
+import { useAuth } from "../store/auth";
+import { AuthSchema } from "../schema";
+import SignUpModal from "./SignUpModal";
+import { app } from "../firebase/config";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
-interface HeaderProps {}
+export default function Header() {
+  const {
+    setIsLoginModalOpen,
+    setIsSignUpModalOpen,
+    currentUser,
+    setCurrentUser,
+  } = useAuth() as AuthSchema;
 
-export default function Header(props: HeaderProps) {
+  const auth = getAuth(app);
+
+  React.useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user: any) => {
+      setCurrentUser(user);
+      if (user) {
+        localStorage.setItem("token", (user as any).accessToken);
+      }
+    });
+
+    return unsubscribe;
+  }, [auth]);
+
+
+  
   return (
     <>
+      <LoginModal />
+      <SignUpModal />
+
       <div className="header">
         <Link to="/" style={{ ...linkStyle }}>
           <div className="logo">
@@ -27,14 +56,18 @@ export default function Header(props: HeaderProps) {
             Contact Us
           </ScrollLink>
         </div>
-        <div className="header-btns">
-          <button className="btn">
-            <h4>Sign Up</h4>
-          </button>
-          <button id="login-btn">
-            <h4>Log in</h4>
-          </button>
-        </div>
+        {currentUser !== null && currentUser !== undefined ? (
+          <h3>{(currentUser as any).displayName}</h3>
+        ) : (
+          <div className="header-btns">
+            <button className="btn" onClick={() => setIsSignUpModalOpen(true)}>
+              <h4>Sign Up</h4>
+            </button>
+            <button id="login-btn" onClick={() => setIsLoginModalOpen(true)}>
+              <h4>Log in</h4>
+            </button>
+          </div>
+        )}
       </div>
       <hr />
     </>
