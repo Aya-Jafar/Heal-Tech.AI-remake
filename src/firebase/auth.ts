@@ -30,6 +30,18 @@ export async function createAccount(
   }
 }
 
+export async function signOutUser() {
+  try {
+    await signOut(auth);
+    localStorage.removeItem("token");
+  } catch (error) {
+    console.error("Sign-out error:", error);
+  }
+}
 
 
-function logIn(email: string, password: string): void {}
+
+export async function logIn(email: string, password: string) {
+
+
+}

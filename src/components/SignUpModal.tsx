@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
-import { createAccount } from "../firebase/auth";
+import { createAccount } from "../Firebase/auth";
 import FormHelperText from "@mui/material";
 
 function SignUpModal() {
@@ -63,7 +63,7 @@ function SignUpModal() {
     );
     if (currentUser !== null) {
       setIsSignUpModalOpen(false);
-    //   setEmailError("");
+      //   setEmailError("");
     }
   };
 

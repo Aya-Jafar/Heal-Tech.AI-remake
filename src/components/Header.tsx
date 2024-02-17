@@ -7,8 +7,10 @@ import LoginModal from "./LoginModal";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
 import SignUpModal from "./SignUpModal";
-import { app } from "../firebase/config";
+import { app } from "../Firebase/config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import logoutIcon from "../images/logout.png";
+import { signOutUser } from "../Firebase/auth";
 
 export default function Header() {
   const {
@@ -31,8 +33,6 @@ export default function Header() {
     return unsubscribe;
   }, [auth]);
 
-
-  
   return (
     <>
       <LoginModal />
@@ -57,7 +57,15 @@ export default function Header() {
           </ScrollLink>
         </div>
         {currentUser !== null && currentUser !== undefined ? (
-          <h3>{(currentUser as any).displayName}</h3>
+          <div className="logout">
+            <h3>{(currentUser as any).displayName}</h3>
+            <img
+              src={logoutIcon}
+              alt=""
+              className="logout-icon"
+              onClick={signOutUser}
+            />
+          </div>
         ) : (
           <div className="header-btns">
             <button className="btn" onClick={() => setIsSignUpModalOpen(true)}>

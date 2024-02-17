@@ -459,3 +459,13 @@ input::file-selector-button {
   color:#006cea;
   cursor: pointer;
 }
+
+.logout{
+  display: flex;
+  align-items: center;
+  gap:20px
+}
+.logout-icon{
+  height: 25px;
+  cursor: pointer;
+}
