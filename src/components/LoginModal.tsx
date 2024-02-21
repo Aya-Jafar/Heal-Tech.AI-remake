@@ -5,12 +5,14 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
+import { logIn } from "../Firebase/auth";
 
 function LoginModal() {
   const {
     isLoginModalOpen,
     setIsLoginModalOpen,
-    setIsLogin,
+    setCurrentUser,
+    currentUser,
     setIsSignUpModalOpen,
   } = useAuth() as AuthSchema;
 
@@ -41,7 +43,15 @@ function LoginModal() {
   };
 
   const handleSubmit = () => {
-    // login(formData);
+    logIn(formData.email, formData.password, setCurrentUser);
+
+    console.log("user after submission",currentUser);
+    
+    // TODO: Don't close the madal if some fields is invalid
+    
+    // if (currentUser !== null) {
+      setIsLoginModalOpen(false);
+    // }
   };
 
   return (
