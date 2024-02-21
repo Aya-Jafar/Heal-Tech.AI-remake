@@ -11,6 +11,6 @@ export const useAuth = create((set) => ({
   setIsSignUpModalOpen: (isSignUpModalOpen: boolean) =>
     set({ isSignUpModalOpen }),
 
-  setCurrentUser: (currentUser: object) => set({ currentUser }),
+  setCurrentUser: (currentUser: any) => set({ currentUser }),
   
 }));

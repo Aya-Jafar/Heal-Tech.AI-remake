@@ -14,7 +14,7 @@ export async function createAccount(
   email: string,
   userName: string,
   password: string,
-  setCurrentUser: any
+  setCurrentUser: React.Dispatch<React.SetStateAction<any>>
 ) {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
@@ -39,9 +39,21 @@ export async function signOutUser() {
   }
 }
 
+export async function logIn(
+  email: string,
+  password: string,
+  setCurrentUser: React.Dispatch<React.SetStateAction<any>>
+) {
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    const user = auth.currentUser;
 
-
-export async function logIn(email: string, password: string) {
-
-
+    if (user) {
+      //   console.log("User from login", user);
+      setCurrentUser(user);
+      localStorage.setItem("token", (user as any).accessToken);
+    }
+  } catch (error) {
+    console.error("Sign-in error:", error);
+  }
 }
