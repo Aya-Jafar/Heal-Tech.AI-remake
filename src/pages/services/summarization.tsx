@@ -3,7 +3,6 @@ import summarizeText from "../../huggingFace/textSummary";
 import { extractPdfText } from "../../utils/helpers";
 import { ApiResponse } from "../../schemas";
 
-
 export default function Summarization() {
   const [fileContent, setFileContent] = useState<string | null>(null);
   const [generatedText, setGeneratedText] = useState<ApiResponse | null>(null);
@@ -31,14 +30,11 @@ export default function Summarization() {
     }
   };
 
-
   useEffect(() => {}, [generatedText]);
-
 
   const summarize = () => {
     if (fileContent) {
       summarizeText({ inputs: fileContent }).then((response: ApiResponse[]) => {
-
         // console.log(JSON.stringify(response));
         // if (response.hasOwnProperty("generated_text")) {
         setGeneratedText(response[0]);
@@ -72,9 +68,9 @@ export default function Summarization() {
           Summarize
         </button>
 
-        {generatedText !== null && (
+        {generatedText !== null && generatedText !== undefined ? (
           <p>{generatedText.generated_text}</p>
-        )}
+        ) : null}
       </div>
     </div>
   );
