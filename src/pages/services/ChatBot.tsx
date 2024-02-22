@@ -2,38 +2,71 @@ import * as React from "react";
 import sendIcon from "../../images/send-q.png";
 import CircularProgress from "@mui/material/CircularProgress";
 import sendQuestion from "../../huggingFace/chatBot";
+import { ChatBotState, ChatBotStateAction } from "../../schema";
 
 export default function ChatBot() {
-  const [isClicked, setIsClicked] = React.useState<boolean>(false);
-  const [currentQuestion, setCurrentQuestion] = React.useState<string>("");
-  const [answer, setAnswer] = React.useState<string | null>(null);
-  const [questions, setQuestions] = React.useState<string[]>([]);
+  const initialState = {
+    isClicked: false,
+    currentQuestion: "",
+    answer: null,
+    questions: [],
+  };
+
+  function reducer(
+    state: ChatBotState,
+    action: ChatBotStateAction
+  ): ChatBotState {
+    
+    switch (action.type) {
+      case "SEND_ICON_CLICK":
+        return { ...state, isClicked: true };
+
+      case "SET_CURRENT_QUESTION":
+        return { ...state, currentQuestion: action.payload };
+
+      case "SET_ANSWER":
+        return {
+          ...state,
+          answer: action.payload,
+          currentQuestion: "",
+          questions: [state.currentQuestion, ...state.questions],
+        };
+
+      case "RESET_CLICK":
+        return { ...state, isClicked: false };
+
+      default:
+        return state;
+    }
+  }
+
+  const [state, dispatch] = React.useReducer(reducer, initialState);
+
 
   const handleSendIconClick = async () => {
-    setIsClicked(true);
+    dispatch({ type: "SEND_ICON_CLICK" });
 
-    if (currentQuestion.trim().length > 0) {
-      const response = await sendQuestion({
-        inputs: currentQuestion,
-      });
+    if (state.currentQuestion.trim().length > 0) {
       try {
+        const response = await sendQuestion({
+          inputs: state.currentQuestion,
+        });
         if (response[0] && response[0].generated_text) {
-          setAnswer(JSON.stringify(response[0].generated_text));
-          setCurrentQuestion("");
-          setQuestions((prevQuestions) => [currentQuestion, ...prevQuestions]);
+          dispatch({
+            type: "SET_ANSWER",
+            payload: JSON.stringify(response[0].generated_text),
+          });
         }
         // TODO: else: use the estimated_time key to wait and then send request again
       } catch (e) {
         // TODO: show error message
-
         console.error("Error fetching the answer:", e);
       } finally {
-        setCurrentQuestion("");
-        setIsClicked(false);
+        dispatch({ type: "RESET_CLICK" });
       }
     } else {
       setTimeout(() => {
-        setIsClicked(false);
+        dispatch({ type: "RESET_CLICK" });
       }, 3000);
     }
   };
@@ -47,15 +80,18 @@ export default function ChatBot() {
 
   return (
     <div className="model-page chat">
-      <h1 className="test">Medical Chat Bot</h1>
+      <h1>Medical Chat Bot</h1>
       <div className="question">
         <input
           className="chat-input"
           placeholder="Type your question here..."
-          onChange={(e) => setCurrentQuestion(e.target.value)}
+          value={state.currentQuestion}
+          onChange={(e) =>
+            dispatch({ type: "SET_CURRENT_QUESTION", payload: e.target.value })
+          }
           onKeyDown={handleKeyPress}
         />
-        {isClicked ? (
+        {state.isClicked ? (
           <CircularProgress
             className="comment-progress-indicator"
             size="35px"
@@ -69,11 +105,11 @@ export default function ChatBot() {
           />
         )}
       </div>
-      {questions.map((q, index) => (
+      {state.questions.map((q: string, index: number) => (
         <div key={index} className="question map">
           <div className="chat-input q">{q}</div>
           <br />
-          <div className="chat-input a">{answer}</div>
+          <div className="chat-input a">{state.answer}</div>
         </div>
       ))}
     </div>
