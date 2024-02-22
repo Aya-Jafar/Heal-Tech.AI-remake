@@ -1,6 +1,7 @@
 import * as React from "react";
 import sendIcon from "../../images/send-q.png";
 import CircularProgress from "@mui/material/CircularProgress";
+import sendQuestion from "../../huggingFace/chatBot";
 
 export default function ChatBot() {
   const [isClicked, setIsClicked] = React.useState<boolean>(false);
@@ -8,21 +9,33 @@ export default function ChatBot() {
   const [answer, setAnswer] = React.useState<string | null>(null);
   const [questions, setQuestions] = React.useState<string[]>([]);
 
-  const handleSendIconClick = () => {
+  const handleSendIconClick = async () => {
     setIsClicked(true);
 
-    if (currentQuestion.length > 0) {
-      // TODO: Send a request to the model and set the answer
-      const mockAnswer = "This is a mock answer from the model.";
-      setAnswer(mockAnswer);
-      setCurrentQuestion("");
-      // Save the current question to the history
-      setQuestions((prevQuestions) => [currentQuestion,...prevQuestions]);
-    }
+    if (currentQuestion.trim().length > 0) {
+      const response = await sendQuestion({
+        inputs: currentQuestion,
+      });
+      try {
+        if (response[0] && response[0].generated_text) {
+          setAnswer(JSON.stringify(response[0].generated_text));
+          setCurrentQuestion("");
+          setQuestions((prevQuestions) => [currentQuestion, ...prevQuestions]);
+        }
+        // TODO: else: use the estimated_time key to wait and then send request again
+      } catch (e) {
+        // TODO: show error message
 
-    setTimeout(() => {
-      setIsClicked(false);
-    }, 3000);
+        console.error("Error fetching the answer:", e);
+      } finally {
+        setCurrentQuestion("");
+        setIsClicked(false);
+      }
+    } else {
+      setTimeout(() => {
+        setIsClicked(false);
+      }, 3000);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -34,7 +47,7 @@ export default function ChatBot() {
 
   return (
     <div className="model-page chat">
-      <h1>Medical Chat Bot</h1>
+      <h1 className="test">Medical Chat Bot</h1>
       <div className="question">
         <input
           className="chat-input"
