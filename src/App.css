@@ -104,7 +104,7 @@ hr {
   /* flex: 2; */
 }
 .cover-pic img:hover {
-  box-shadow: 15px 9px 100px -1px #57CEEB(31, 124, 253);
+  box-shadow: 15px 9px 100px -1px #466bef;
 }
 
 #explore-btn {
@@ -293,7 +293,33 @@ hr {
   overflow-y: scroll;
   background-color: #040a21;
   box-shadow: 15px 17px 100px -20px #1f41bb;
+} 
+.model{
+  width: 35%;
+  margin-top: 4%;
+  padding: 5% 3%;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  color: white;
+  overflow-y: scroll;
+  background-color: #040a21;
+  box-shadow: 15px 17px 100px -20px #1f41bb;
 }
+.model-input{
+  width: 100%;
+  height: 100%;
+  outline: none;
+  border: none;
+}
+
+.tab-btn{
+  border: 1px solid #e5e7ebab;
+  border-radius: 7px;
+  color:white;
+  padding: 1px 9px;
+}
+
 
 .model textarea::placeholder {
   color: white;
@@ -311,9 +337,7 @@ hr {
   justify-content: center;
 }
 .model.summary {
-  height: 70vh;
-  width: 40%;
-  /* background-color: rgb(122, 122, 122); */
+  width: 35%;
 
   display: flex;
   flex-direction: column;
@@ -322,6 +346,7 @@ hr {
   gap: 35px;
 
   margin-top: 5%;
+  box-shadow: none;
 }
 
 #inp {
@@ -426,7 +451,7 @@ input::file-selector-button {
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
   @media (max-width: 768px) {
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
   }
 }
 
@@ -443,11 +468,11 @@ input::file-selector-button {
   cursor: pointer;
 }
 
-.problem:hover{
-  background-color: #222C87;
+.problem:hover {
+  background-color: #222c87;
 }
 
-.problem p{
+.problem p {
   padding: 20px;
   font-size: 30px;
   font-weight: 200;
@@ -455,17 +480,44 @@ input::file-selector-button {
   align-self: center;
 }
 
-.login-text strong{
-  color:#006cea;
+.login-text strong {
+  color: #006cea;
   cursor: pointer;
 }
 
-.logout{
+.logout {
   display: flex;
   align-items: center;
-  gap:20px
+  gap: 20px;
 }
-.logout-icon{
+.logout-icon {
   height: 25px;
   cursor: pointer;
+}
+
+.suggestion-dropdown-container {
+  position: relative;
+}
+
+.suggestion-dropdown {
+  position: absolute;
+  top: -100%;
+  left: 40%;
+  width: 30%;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #040a21;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.suggestion-item {
+  padding: 8px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
 }

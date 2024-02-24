@@ -1,0 +1,145 @@
+import React from "react";
+import { useState, useRef } from "react";
+import fetchSuggestions from "../huggingFace/nextWord";
+
+const PredictiveText = () => {
+  const [userText, setUserText] = useState("");
+  const [aiText, setAIText] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const debounceTimeoutRef = useRef(null);
+  const contentEditableRef = useRef(null);
+
+  let enterPressed = false;
+
+  const isCursorAtEnd = () => {
+    const selection = window.getSelection();
+    return selection.anchorOffset === selection.anchorNode.length;
+  };
+
+  const handleInput = (e) => {
+    let newText = e.target.innerText;
+    if (enterPressed && newText.endsWith("\n\n")) {
+      // Remove the last newline character
+      newText = newText.slice(0, -1);
+
+      // Reset the flag
+      enterPressed = false;
+    }
+
+    setUserText(newText);
+    setAIText("");
+
+    // Check if cursor is at the end
+    if (isCursorAtEnd()) {
+      // Debounce the API call
+      clearTimeout(debounceTimeoutRef.current);
+      debounceTimeoutRef.current = setTimeout(() => {
+        fetchSuggestions(newText, setAIText, setLoading);
+      }, 1500);
+    }
+  };
+
+  const focusContentEditable = () => {
+    if (contentEditableRef.current) {
+      contentEditableRef.current.focus();
+    }
+  };
+
+  const setCursorToEnd = (element) => {
+    const range = document.createRange();
+    const selection = window.getSelection();
+    range.selectNodeContents(element);
+    range.collapse(false); // false means collapse to end rather than the start
+    selection.removeAllRanges();
+    selection.addRange(range);
+  };
+
+  const acceptSuggestion = () => {
+    const contentEditableElement = contentEditableRef.current;
+    if (aiText) {
+      setUserText(userText + aiText);
+      contentEditableElement.innerText = userText + aiText;
+      setAIText("");
+      // Set cursor to end after accepting Suggestion
+      setCursorToEnd(contentEditableElement);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Tab") {
+      event.preventDefault();
+      acceptSuggestion();
+    }
+
+    if (event.key === "Enter") {
+      // Set the flag to true when Enter is pressed
+      enterPressed = true;
+
+      // Allow the default Enter key behavior to occur
+      setTimeout(() => {
+        const contentEditableElement = contentEditableRef.current;
+        const childNodes = Array.from(contentEditableElement.childNodes);
+
+        // Find the last <br> element
+        for (let i = childNodes.length - 1; i >= 0; i--) {
+          if (childNodes[i].nodeName === "BR") {
+            // Remove the last <br> element
+            contentEditableElement.removeChild(childNodes[i]);
+            break; // Exit the loop after removing the <br>
+          }
+        }
+
+        // Insert an empty text node with a zero-width space
+        const emptyTextNode = document.createTextNode("\u200B");
+        contentEditableElement.appendChild(emptyTextNode);
+
+        // Set cursor after the empty text node
+        setCursorToEnd(contentEditableElement);
+      }, 0); // SetTimeout with delay of 0 to allow the stack to clear and the <br> to be inserted
+    }
+  };
+
+  return (
+    <div>
+      <div onClick={focusContentEditable}>
+        <span
+          ref={contentEditableRef}
+          contentEditable={true}
+          suppressContentEditableWarning="true"
+          onInput={handleInput}
+          className="model-input"
+          onKeyDown={handleKeyDown}
+        >
+          {/* {userText} */}
+        </span>
+
+        <span
+          style={{
+            color: aiText ? "rgba(110, 110, 110, 0.398)" : "white",
+          }}
+          contentEditable={false}
+        >
+          {aiText.length > 0 && (
+            <>
+              {aiText}
+              <span
+                onClick={() => {
+                  acceptSuggestion();
+                }}
+                className="tab-btn"
+              >
+                Tab
+              </span>
+            </>
+          )}
+        </span>
+      </div>
+      <div className="text-xs h-10 text-gray-700 italic">
+        {loading && <div>loading ai suggestions...</div>}
+      </div>
+    </div>
+  );
+};
+
+export default PredictiveText;
