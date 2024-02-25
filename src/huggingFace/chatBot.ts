@@ -5,10 +5,8 @@ async function sendQuestion(data: string) {
     body: JSON.stringify({ inputs: data }),
   });
   const result = await response.json();
-
-  console.log(result);
   
-
+  
   if (result && Array.isArray(result)) {
     const generatedTextWords = result[0].generated_text;
 
