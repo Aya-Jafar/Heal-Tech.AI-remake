@@ -20,3 +20,22 @@ export const extractPdfText = async (data: string) => {
   }
   return text;
 };
+
+export const countTokens = (text: string) => {
+  let tokensCount = new Map<string, number>();
+
+  let words = text.split(" ");
+
+  for (let word of words) {
+    if (word.length > 0) {
+      const count = tokensCount.get(word) || 0;
+      tokensCount.set(word, count + 1);
+    }
+  }
+  const totalCount = Array.from(tokensCount.values()).reduce(
+    (sum, count) => sum + count,
+    0
+  );
+
+  return totalCount;
+};

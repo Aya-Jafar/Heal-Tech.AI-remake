@@ -11,6 +11,12 @@ export interface AuthSchema {
   setCurrentUser: React.Dispatch<React.SetStateAction<any>>;
 }
 
+export interface SummaryAPIResponse {
+  generated_text?: string;
+}
+export interface APIErrorResponse {
+  estimated_time?: number;
+}
 
 export interface ChatBotState {
   isClicked: boolean;
