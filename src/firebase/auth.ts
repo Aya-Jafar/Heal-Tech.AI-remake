@@ -49,7 +49,6 @@ export async function logIn(
     const user = auth.currentUser;
 
     if (user) {
-      //   console.log("User from login", user);
       setCurrentUser(user);
       localStorage.setItem("token", (user as any).accessToken);
     }

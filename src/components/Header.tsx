@@ -11,6 +11,8 @@ import { app } from "../Firebase/config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import logoutIcon from "../images/logout.png";
 import { signOutUser } from "../Firebase/auth";
+import MobileNav from "./MobileHeader";
+import { FaBars } from "react-icons/fa";
 
 export default function Header() {
   const {
@@ -21,6 +23,9 @@ export default function Header() {
   } = useAuth() as AuthSchema;
 
   const auth = getAuth(app);
+
+  const [menuActive, setMenuActive] = React.useState(false);
+  const toggleMenu = () => setMenuActive(!menuActive);
 
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user: any) => {
@@ -45,6 +50,11 @@ export default function Header() {
             <h2>Heal Tech.AI</h2>
           </div>
         </Link>
+
+        <div className="menu-icon" onClick={toggleMenu}>
+          <FaBars />
+        </div>
+
         <div className="header-links">
           <ScrollLink to="about" spy={true} smooth={true} duration={500}>
             About
@@ -77,6 +87,9 @@ export default function Header() {
           </div>
         )}
       </div>
+
+      <MobileNav menuActive={menuActive} />
+      
       <hr />
     </>
   );
