@@ -6,6 +6,9 @@ import TextField from "@mui/material/TextField";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
 import { logIn } from "../Firebase/auth";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
+import { loginBoxStyle } from "../dynamicStyles";
 
 function LoginModal() {
   const {
@@ -20,6 +23,7 @@ function LoginModal() {
     email: "",
     password: "",
   });
+  const [validAuth, setValidAuth] = useState<boolean>(true);
 
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
@@ -29,33 +33,38 @@ function LoginModal() {
     });
   };
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    height: 400,
-    bgcolor: "#282828",
-    boxShadow: 24,
-    borderRadius: 3,
-    p: 4,
-  };
+  const handleSubmit = async () => {
+    await logIn(formData.email, formData.password, setCurrentUser);
 
-  const handleSubmit = () => {
-    logIn(formData.email, formData.password, setCurrentUser);
-    
-    // TODO: Don't close the madal if some fields is invalid
-
-    // if (currentUser !== null) {
+    if (localStorage.getItem("token")) {
       setIsLoginModalOpen(false);
-    // }
+      setValidAuth(true);
+    } else {
+      setValidAuth(false);
+    }
   };
 
   return (
     <>
+      {!validAuth && (
+        <center>
+          <Stack
+            sx={{
+              width: "50%",
+              position: "relative",
+              zIndex: (theme) => theme.zIndex.modal + 1,
+            }}
+            spacing={10}
+          >
+            <Alert variant="filled" severity="error" className="error-alert">
+              Invalid email or password
+            </Alert>
+          </Stack>
+        </center>
+      )}
+
       <Modal open={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)}>
-        <Box sx={style}>
+        <Box sx={loginBoxStyle}>
           <Typography id="modal-modal-title" variant="h4" component="h2">
             Login
           </Typography>

@@ -51,8 +51,11 @@ export async function logIn(
     if (user) {
       setCurrentUser(user);
       localStorage.setItem("token", (user as any).accessToken);
+    } else {
+      setCurrentUser(null);
     }
   } catch (error) {
     console.error("Sign-in error:", error);
+    setCurrentUser(null);
   }
 }
