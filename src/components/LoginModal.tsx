@@ -9,6 +9,7 @@ import { logIn } from "../Firebase/auth";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
 import { loginBoxStyle } from "../dynamicStyles";
+import { ErrorAlert } from "./ErrorAlert";
 
 function LoginModal() {
   const {
@@ -42,26 +43,15 @@ function LoginModal() {
     } else {
       setValidAuth(false);
     }
+
+    setTimeout(() => {
+      setValidAuth(true);
+    }, 1000);
   };
 
   return (
     <>
-      {!validAuth && (
-        <center>
-          <Stack
-            sx={{
-              width: "50%",
-              position: "relative",
-              zIndex: (theme) => theme.zIndex.modal + 1,
-            }}
-            spacing={10}
-          >
-            <Alert variant="filled" severity="error" className="error-alert">
-              Invalid email or password
-            </Alert>
-          </Stack>
-        </center>
-      )}
+      <ErrorAlert validAuth={validAuth} />
 
       <Modal open={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)}>
         <Box sx={loginBoxStyle}>
