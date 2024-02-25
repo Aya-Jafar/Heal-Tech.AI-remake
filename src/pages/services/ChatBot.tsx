@@ -16,7 +16,6 @@ export default function ChatBot() {
     state: ChatBotState,
     action: ChatBotStateAction
   ): ChatBotState {
-    
     switch (action.type) {
       case "SEND_ICON_CLICK":
         return { ...state, isClicked: true };
@@ -25,6 +24,14 @@ export default function ChatBot() {
         return { ...state, currentQuestion: action.payload };
 
       case "SET_ANSWER":
+        return {
+          ...state,
+          answer: action.payload,
+          currentQuestion: "",
+          questions: [state.currentQuestion, ...state.questions],
+        };
+
+      case "SET_ERROR":
         return {
           ...state,
           answer: action.payload,
@@ -42,25 +49,29 @@ export default function ChatBot() {
 
   const [state, dispatch] = React.useReducer(reducer, initialState);
 
-
   const handleSendIconClick = async () => {
     dispatch({ type: "SEND_ICON_CLICK" });
 
     if (state.currentQuestion.trim().length > 0) {
       try {
-        const response = await sendQuestion({
-          inputs: state.currentQuestion,
-        });
-        if (response[0] && response[0].generated_text) {
+        const response = await sendQuestion(state.currentQuestion);
+        
+        if (response) {
           dispatch({
             type: "SET_ANSWER",
-            payload: JSON.stringify(response[0].generated_text),
+            payload: JSON.stringify(response),
+          });
+        } else {
+          dispatch({
+            type: "SET_ERROR",
+            payload: "😥 Something went wrong, Please try again",
           });
         }
-        // TODO: else: use the estimated_time key to wait and then send request again
       } catch (e) {
-        // TODO: show error message
-        console.error("Error fetching the answer:", e);
+        dispatch({
+          type: "SET_ERROR",
+          payload: "😥 Something went wrong, Please try again",
+        });
       } finally {
         dispatch({ type: "RESET_CLICK" });
       }

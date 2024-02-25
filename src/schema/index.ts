@@ -29,4 +29,5 @@ export type ChatBotStateAction =
   | { type: "SEND_ICON_CLICK" }
   | { type: "SET_CURRENT_QUESTION"; payload: string }
   | { type: "SET_ANSWER"; payload: string }
-  | { type: "RESET_CLICK" };
+  | { type: "RESET_CLICK" }
+  | { type: "SET_ERROR"; payload: string };
