@@ -6,7 +6,8 @@ import TextField from "@mui/material/TextField";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
 import { createAccount } from "../Firebase/auth";
-import FormHelperText from "@mui/material";
+import { signupBoxStyle } from "../dynamicStyles";
+import { ErrorAlert } from "./ErrorAlert";
 
 function SignUpModal() {
   const {
@@ -18,6 +19,7 @@ function SignUpModal() {
   } = useAuth() as AuthSchema;
 
   const [emailError, setEmailError] = useState("");
+  const [validAuth, setValidAuth] = useState<boolean>(true);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -42,41 +44,34 @@ function SignUpModal() {
     });
   };
 
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    height: 550,
-    bgcolor: "#282828",
-    boxShadow: 24,
-    borderRadius: 3,
-    p: 4,
-  };
-
-  const handleSubmit = () => {
-    createAccount(
+  const handleSubmit = async () => {
+    await createAccount(
       formData.email,
       formData.name,
       formData.password1,
       setCurrentUser
     );
-    if (currentUser !== null) {
+    if (localStorage.getItem("token")) {
       setIsSignUpModalOpen(false);
-      //   setEmailError("");
+      setValidAuth(true);
+    } else {
+      setValidAuth(false);
     }
-  };
 
-  console.log("current user", currentUser);
+    setTimeout(() => {
+      setValidAuth(true);
+    }, 3000);
+  };
 
   return (
     <>
+      <ErrorAlert validAuth={validAuth} />
+
       <Modal
         open={isSignUpModalOpen}
         onClose={() => setIsSignUpModalOpen(false)}
       >
-        <Box sx={style}>
+        <Box sx={signupBoxStyle}>
           <Typography id="modal-modal-title" variant="h4" component="h2">
             Register
           </Typography>

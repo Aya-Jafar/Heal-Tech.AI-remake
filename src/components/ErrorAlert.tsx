@@ -4,9 +4,10 @@ import Stack from "@mui/material/Stack";
 
 export interface ErrorAlertProps {
   validAuth: boolean;
+  type?: string;
 }
 
-export function ErrorAlert({ validAuth }: ErrorAlertProps) {
+export function ErrorAlert({ validAuth, type }: ErrorAlertProps) {
   return (
     <>
       {!validAuth && (
@@ -20,7 +21,9 @@ export function ErrorAlert({ validAuth }: ErrorAlertProps) {
             spacing={10}
           >
             <Alert variant="filled" severity="error" className="error-alert">
-              Invalid email or password
+              {type === "login"
+                ? `Invalid email or password`
+                : `Invalid user data`}
             </Alert>
           </Stack>
         </center>

@@ -6,8 +6,6 @@ import TextField from "@mui/material/TextField";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
 import { logIn } from "../Firebase/auth";
-import Alert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
 import { loginBoxStyle } from "../dynamicStyles";
 import { ErrorAlert } from "./ErrorAlert";
 
@@ -46,12 +44,12 @@ function LoginModal() {
 
     setTimeout(() => {
       setValidAuth(true);
-    }, 1000);
+    }, 3000);
   };
 
   return (
     <>
-      <ErrorAlert validAuth={validAuth} />
+      <ErrorAlert validAuth={validAuth} type={"login"}/>
 
       <Modal open={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)}>
         <Box sx={loginBoxStyle}>
