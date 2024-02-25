@@ -2,3 +2,29 @@ export const linkStyle = {
   textDecoration: "none",
   color: "white",
 };
+
+export const loginBoxStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  height: 400,
+  bgcolor: "#282828",
+  boxShadow: 24,
+  borderRadius: 3,
+  p: 4,
+};
+
+export const signupBoxStyle = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  height: 550,
+  bgcolor: "#282828",
+  boxShadow: 24,
+  borderRadius: 3,
+  p: 4,
+};
