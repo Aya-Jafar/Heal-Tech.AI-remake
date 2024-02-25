@@ -44,11 +44,9 @@ function LoginModal() {
 
   const handleSubmit = () => {
     logIn(formData.email, formData.password, setCurrentUser);
-
-    console.log("user after submission",currentUser);
     
     // TODO: Don't close the madal if some fields is invalid
-    
+
     // if (currentUser !== null) {
       setIsLoginModalOpen(false);
     // }

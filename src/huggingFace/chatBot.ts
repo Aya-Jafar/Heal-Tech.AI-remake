@@ -11,9 +11,3 @@ async function sendQuestion(data: object) {
 }
 
 export default sendQuestion;
-
-// sendQuestion({
-//   inputs: "Can you please let us know more details about your ",
-// }).then((response) => {
-//   console.log(JSON.stringify(response));
-// });
