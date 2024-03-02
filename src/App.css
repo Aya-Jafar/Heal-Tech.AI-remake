@@ -125,6 +125,11 @@ hr {
 
   /* color: red; */
 }
+.error-alert {
+  position: absolute;
+  top: 120px;
+  left: 35%;
+}
 
 .about-us {
   background-image: url("./images/aboutus-bg.png");
@@ -552,7 +557,7 @@ input::file-selector-button {
   border-bottom: none;
 }
 
-.menu-icon{
+.menu-icon {
   display: none;
 }
 .drop-down-menu {
@@ -581,36 +586,32 @@ input::file-selector-button {
   align-items: center;
 
   justify-content: center;
-  color:#040a21;
+  color: #040a21;
 }
 
-
-.logout.mobile{
+.logout.mobile {
   display: flex;
   color: white;
-
 }
-.btn.mobile{
+.btn.mobile {
   width: 100%;
 }
-
 
 @media only screen and (max-width: 767px) {
   .home-cover {
     flex-wrap: wrap;
   }
-  #login-btn{
+  #login-btn {
     width: 100px;
   }
-  .cover-text p{
-   padding-right: 0;
+  .cover-text p {
+    padding-right: 0;
     font-size: 20px;
     width: 100%;
   }
-  .cover-pic img{
+  .cover-pic img {
     width: 100%;
     margin-top: 10%;
-
   }
   .about-us-container {
     margin-top: 200%;
@@ -625,55 +626,57 @@ input::file-selector-button {
     font-size: 30px;
     line-height: 30px;
   }
-  .about-us-container h1{
+  .about-us-container h1 {
     margin: 0;
   }
   .problems center h1 {
     margin-top: 400%;
     /* margin-bottom: 100%; */
   }
-  .problems{
+  .problems {
     margin-bottom: 300%;
   }
-  .services{
+  .services {
     margin-bottom: 90%;
   }
-  .about-us-container h1{
+  .about-us-container h1 {
     font-size: 45px;
   }
-  .form-group input{
+  .form-group input {
     width: 70%;
   }
-  .form-group textarea{
+  .form-group textarea {
     width: 70%;
   }
-  .menu-icon{
+  .menu-icon {
     display: block;
   }
-  .header-links{
+  .header-links {
     display: none;
   }
-  .logout{
+  .logout {
     display: none;
   }
-  .header-btns{
+  .header-btns {
     display: none;
   }
-  .model-page{
+  .model-page {
     flex-wrap: wrap;
   }
-  .model-description{
+  .model-description {
     width: 90%;
     height: 90%;
   }
-  .model{
+  .model {
     width: 80%;
     height: 100%;
     /* margin-bottom: 10%; */
   }
-  .model.summary{
+  .model.summary {
     width: 100%;
     height: 40%;
   }
-
+  .cover-text h1 {
+    font-size: 45px;
+  }
 }
