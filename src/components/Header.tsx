@@ -1,3 +1,5 @@
+// TODO: Convert this to lazy loading imports
+
 import * as React from "react";
 import logo from "../images/healai-icon.png";
 import { Link } from "react-router-dom";
@@ -68,7 +70,9 @@ export default function Header() {
         </div>
         {currentUser !== null && currentUser !== undefined ? (
           <div className="logout">
-            <h3>{(currentUser as any).displayName}</h3>
+            <Link to="/profile/1" style={{ ...linkStyle }}>
+              {(currentUser as any).displayName}
+            </Link>
             <img
               src={logoutIcon}
               alt=""
@@ -89,7 +93,7 @@ export default function Header() {
       </div>
 
       <MobileNav menuActive={menuActive} />
-      
+
       <hr />
     </>
   );

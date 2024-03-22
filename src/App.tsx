@@ -7,6 +7,7 @@ const Home = lazy(() => import("./pages/Home"));
 const AutoCompletion = lazy(() => import("./pages/services/AutoCompletion"));
 const Summarization = lazy(() => import("./pages/services/summarization"));
 const ChatBot = lazy(() => import("./pages/services/ChatBot"));
+const Profile = lazy(() => import("./pages/Profile"));
 
 const App: FC = () => {
   return (
@@ -42,6 +43,15 @@ const App: FC = () => {
           element={
             <Suspense fallback={<div>Loading...</div>}>
               <ChatBot />
+            </Suspense>
+          }
+        ></Route>
+
+        <Route
+          path="/profile/:id"
+          element={
+            <Suspense fallback={<div>Loading...</div>}>
+              <Profile />
             </Suspense>
           }
         ></Route>

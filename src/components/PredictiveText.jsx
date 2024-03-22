@@ -101,7 +101,7 @@ const PredictiveText = () => {
   };
 
   return (
-    <div>
+    <div className="model">
       <div onClick={focusContentEditable}>
         <span
           ref={contentEditableRef}

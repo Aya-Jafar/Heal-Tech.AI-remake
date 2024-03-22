@@ -1,11 +1,15 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import PredictiveText from "../../components/PredictiveText";
+import saveIcon from "../../images/save-icon.png";
 
 export default function AutoCompletion() {
   return (
     <div className="model-page">
       <div className="model-description">
-        <h1>Medical Auto Completion</h1>
+        <div className="title-and-save">
+          <h1>Medical Auto Completion</h1>
+        </div>
+
         <p>
           We used a model named Dialo GPT-large, created by Microsoft in 2019 as
           a general-purpose model. We fine-tuned it on medical domain data (from
@@ -17,7 +21,12 @@ export default function AutoCompletion() {
           Start typing and the AI completion will show up. Hit Tab to apply it.
         </p>
       </div>
-      <div className="model">
+
+      <div className="model-section">
+        <button className="save-btn">
+          <img src={saveIcon} alt="" />
+          Save
+        </button>
         <PredictiveText />
       </div>
     </div>

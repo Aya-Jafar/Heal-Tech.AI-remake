@@ -278,6 +278,7 @@ hr {
   display: flex;
   flex-direction: column;
 }
+
 .model-description h1 {
   font-size: 40px;
   margin-top: 40px;
@@ -301,7 +302,8 @@ hr {
   box-shadow: 15px 17px 100px -20px #1f41bb;
 }
 .model {
-  width: 35%;
+  /* width: 35%; */
+  height: 85%;
   margin-top: 4%;
   padding: 5% 3%;
   border-radius: 20px;
@@ -312,6 +314,15 @@ hr {
   background-color: #040a21;
   box-shadow: 15px 17px 100px -20px #1f41bb;
 }
+
+.model-section {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+}
+
 .model-input {
   width: 100%;
   height: 100%;
@@ -595,6 +606,30 @@ input::file-selector-button {
 }
 .btn.mobile {
   width: 100%;
+}
+
+.save-btn {
+  height: 35px;
+  width: 80px;
+  align-self: flex-end;
+  border-radius: 15px;
+  outline: none;
+  border: 1px white solid;
+  background-color: #040a21;
+  color: white;
+  margin-right: 2px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:3px
+}
+
+.save-btn img {
+  height: 15px;
+}
+.save-btn:hover {
+  box-shadow: 15px 9px 100px -1px #335efc;
 }
 
 @media only screen and (max-width: 767px) {
