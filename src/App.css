@@ -96,7 +96,7 @@ hr {
 
 .cover-pic img {
   /* width: 700px; */
-  width: 600px;
+  width: 640px;
   /* height: 630px; */
   object-fit: contain;
   border-radius: 30px;
@@ -108,8 +108,8 @@ hr {
 }
 
 #explore-btn {
-  width: 130px;
-  height: 35px;
+  width: 150px;
+  height: 37px;
   border-radius: 10px;
   outline: none;
   border: none;
@@ -622,7 +622,7 @@ input::file-selector-button {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap:3px
+  gap: 3px;
 }
 
 .save-btn img {
