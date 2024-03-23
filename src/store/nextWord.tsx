@@ -1,7 +1,15 @@
 import { create } from "zustand";
 
-export const useNextWord = create((set) => ({
-  generatedText: null,
+interface NextWordState {
+  aiText: string;
+}
 
-  setGeneratedText: (currentUser: any) => set({ currentUser }),
+interface NextWordActions {
+  setAIText: (aiText: string) => void;
+}
+
+export const useNextWord = create<NextWordState & NextWordActions>((set) => ({
+  aiText: "",
+
+  setAIText: (aiText) => set({ aiText }),
 }));
