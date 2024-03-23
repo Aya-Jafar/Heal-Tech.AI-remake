@@ -1,15 +1,19 @@
 import { create } from "zustand";
 
 interface NextWordState {
-  aiText: string;
+  userText: string;
 }
 
 interface NextWordActions {
-  setAIText: (aiText: string) => void;
+  setUserText: (update: string | ((prevUserText: string) => string)) => void;
 }
 
 export const useNextWord = create<NextWordState & NextWordActions>((set) => ({
-  aiText: "",
+  userText: "",
 
-  setAIText: (aiText) => set({ aiText }),
+  setUserText: (update) => {
+    set((state) => ({
+      userText: typeof update === "function" ? update(state.userText) : update,
+    }));
+  },
 }));

@@ -2,14 +2,15 @@ import React from "react";
 import PredictiveText from "../../components/PredictiveText";
 import saveIcon from "../../images/save-icon.png";
 import { saveGeneratedText } from "../../Firebase/data";
+import { useNextWord } from "../../store/nextWord";
 
 export default function AutoCompletion() {
-  const handleSaveClick = async () => {
-    console.log("hiii");
+  const { userText } = useNextWord();
 
+  const handleSaveClick = async () => {
     await saveGeneratedText({
       title: "Mock title",
-      text: "Mock text",
+      text: userText,
     });
   };
 
