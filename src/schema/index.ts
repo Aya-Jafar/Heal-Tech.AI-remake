@@ -1,6 +1,6 @@
 export interface AuthSchema {
   isLoginModalOpen: boolean;
-  currentUser: object;
+
   isSignUpModalOpen: boolean;
 
   setIsLoginModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -9,6 +9,10 @@ export interface AuthSchema {
   setIsSignUpModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 
   setCurrentUser: React.Dispatch<React.SetStateAction<any>>;
+
+  currentUser: {
+    uid: string;
+  };
 }
 
 export interface SummaryAPIResponse {

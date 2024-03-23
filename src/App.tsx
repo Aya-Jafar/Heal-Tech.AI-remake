@@ -48,7 +48,7 @@ const App: FC = () => {
         ></Route>
 
         <Route
-          path="/profile/:id"
+          path="/profile/:uid"
           element={
             <Suspense fallback={<div>Loading...</div>}>
               <Profile />

@@ -1,8 +1,18 @@
 import React from "react";
 import PredictiveText from "../../components/PredictiveText";
 import saveIcon from "../../images/save-icon.png";
+import { saveGeneratedText } from "../../Firebase/data";
 
 export default function AutoCompletion() {
+  const handleSaveClick = async () => {
+    console.log("hiii");
+
+    await saveGeneratedText({
+      title: "Mock title",
+      text: "Mock text",
+    });
+  };
+
   return (
     <div className="model-page">
       <div className="model-description">
@@ -23,7 +33,7 @@ export default function AutoCompletion() {
       </div>
 
       <div className="model-section">
-        <button className="save-btn">
+        <button className="save-btn" onClick={handleSaveClick}>
           <img src={saveIcon} alt="" />
           Save
         </button>
