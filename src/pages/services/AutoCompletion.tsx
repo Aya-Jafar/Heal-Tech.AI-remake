@@ -3,15 +3,44 @@ import PredictiveText from "../../components/PredictiveText";
 import saveIcon from "../../images/save-icon.png";
 import { saveGeneratedText } from "../../Firebase/data";
 import { useNextWord } from "../../store/nextWord";
+import Modal from "@mui/material/Modal";
+import { Box } from "@mui/material";
+import { Typography } from "@mui/material";
+import { saveBoxStyle } from "../../dynamicStyles";
+import { TextField } from "@mui/material";
+import { useAuth } from "../../store/auth";
+import { AuthSchema } from "../../schema";
 
 export default function AutoCompletion() {
+  const { currentUser, setIsLoginModalOpen } = useAuth() as AuthSchema;
+
   const { userText } = useNextWord();
 
+  const [isTitleModalOpen, setIsTitleModalOpen] =
+    React.useState<boolean>(false);
+
+  const [title, setTitle] = React.useState<string>("");
+
   const handleSaveClick = async () => {
-    await saveGeneratedText({
-      title: "Mock title",
-      text: userText,
-    });
+    if (currentUser !== undefined && currentUser !== null) {
+      setIsTitleModalOpen(true);
+    } else {
+      setIsLoginModalOpen(true);
+    }
+  };
+
+  const saveToProfile = async () => {
+    if (title.length > 0 && userText.length > 0) {
+      await saveGeneratedText({
+        title: title,
+        text: userText,
+      });
+      setIsTitleModalOpen(false)
+    }else{
+      // TODO: show snackbar message
+      
+
+    }
   };
 
   return (
@@ -36,10 +65,51 @@ export default function AutoCompletion() {
       <div className="model-section">
         <button className="save-btn" onClick={handleSaveClick}>
           <img src={saveIcon} alt="" />
-          Save
+
+          <p>Save</p>
         </button>
         <PredictiveText />
       </div>
+
+      <Modal open={isTitleModalOpen} onClose={() => setIsTitleModalOpen(false)}>
+        <Box sx={saveBoxStyle}>
+          <Typography id="modal-modal-title" variant="h4" component="h2">
+            Save to your profile
+          </Typography>
+          <form action="" style={{ marginTop: "60px" }}>
+            <TextField
+              id="outlined-basic"
+              label="Title"
+              variant="outlined"
+              name="title"
+              onChange={(e) => setTitle(e.target.value)}
+              style={{ marginBottom: "20px" }}
+              sx={{
+                width: "100%",
+                "& label": {
+                  color: "white", // Label color
+                },
+                "& fieldset": {
+                  borderColor: "white !important", // Border color
+                },
+              }}
+              inputProps={{
+                style: {
+                  color: "white", // Text color
+                },
+              }}
+            />
+          </form>
+
+          <br />
+          <br />
+          <center>
+            <button className="btn" onClick={saveToProfile}>
+              <strong>Save</strong>
+            </button>
+          </center>
+        </Box>
+      </Modal>
     </div>
   );
 }
