@@ -48,8 +48,7 @@ function SignUpModal() {
     await createAccount(
       formData.email,
       formData.name,
-      formData.password1,
-      setCurrentUser
+      formData.password1
     );
     if (localStorage.getItem("token")) {
       setIsSignUpModalOpen(false);

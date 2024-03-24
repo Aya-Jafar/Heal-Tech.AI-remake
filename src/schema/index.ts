@@ -10,9 +10,7 @@ export interface AuthSchema {
 
   setCurrentUser: React.Dispatch<React.SetStateAction<any>>;
 
-  currentUser: {
-    uid: string;
-  };
+  currentUser: object
 }
 
 export interface SummaryAPIResponse {

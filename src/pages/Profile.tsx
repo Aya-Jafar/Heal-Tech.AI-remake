@@ -2,42 +2,45 @@ import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
-import { saveGeneratedText } from "../Firebase/data";
+import { getSavedGeneratedText } from "../Firebase/data";
+import { Grid } from "@mui/material";
+import { onAuthStateChanged } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import { app } from "../Firebase/config";
+interface SavedGenerated {
+  title?: string;
+  text?: string;
+}
 
 function Profile() {
   const { currentUser } = useAuth() as AuthSchema;
 
-  console.log(currentUser?.uid);
-
-  const [savedNotes, setSavedNotes] = useState([]);
+  const [savedGenerated, setSavedGenerated] = useState<Array<object>>([]);
 
   const { uid } = useParams();
 
-
   useEffect(() => {
-    // getSavedArtworks(uid, setSavedNotes);
-    // getUserInfo(uid).then((result) => setUserInfo(result));
-  }, [uid]);
+    getSavedGeneratedText(setSavedGenerated);
+  }, [currentUser]);
 
-  // console.log(userInfo);
+  console.log(savedGenerated);
 
   return (
     <div className="profile">
-      <div>
-        {/* {currentUser ? (
-          <img src={currentUser.image} alt="" className="profile-image" />
-        ) : (
-          <img src={profileImg} alt="" className="profile-image" />
-        )} */}
-      </div>
-
-      {/* <h1>{userInfo && userInfo.name}</h1> */}
-      {/* <h4>{userInfo && userInfo.email}</h4> */}
-      {/* 
-      <ProfileTabProvider>
-        <ProfileTabs />
-        <ProfileTabContent uid={uid} />
-      </ProfileTabProvider> */}
+      {savedGenerated.length > 0 ? (
+        <div className="saved-grid">
+          {savedGenerated.map((saved: SavedGenerated, index) => (
+            <div key={index} className="saved-item">
+              <h1>{saved?.title}</h1>
+              <p>{saved?.text}</p>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="loader-container">
+          <span className="loader"></span>
+        </div>
+      )}
     </div>
   );
 }

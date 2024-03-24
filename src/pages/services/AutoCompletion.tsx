@@ -38,7 +38,6 @@ export default function AutoCompletion() {
       setIsTitleModalOpen(false)
     }else{
       // TODO: show snackbar message
-      
 
     }
   };

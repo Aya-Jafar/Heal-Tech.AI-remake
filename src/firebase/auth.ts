@@ -7,14 +7,20 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { app } from "./config";
+import { useAuth } from "../store/auth";
+import { AuthSchema } from "../schema";
 
 const auth = getAuth(app);
+
+const { currentUser, setCurrentUser } = useAuth.getState() as AuthSchema;
+
+console.log(currentUser);
+
 
 export async function createAccount(
   email: string,
   userName: string,
-  password: string,
-  setCurrentUser: React.Dispatch<React.SetStateAction<any>>
+  password: string
 ) {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
@@ -39,14 +45,11 @@ export async function signOutUser() {
   }
 }
 
-export async function logIn(
-  email: string,
-  password: string,
-  setCurrentUser: React.Dispatch<React.SetStateAction<any>>
-) {
+export async function logIn(email: string, password: string) {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     const user = auth.currentUser;
+    console.log(user);
 
     if (user) {
       setCurrentUser(user);

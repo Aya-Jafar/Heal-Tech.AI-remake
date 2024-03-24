@@ -6,8 +6,6 @@ import Contact from "../components/Contact";
 import { Footer } from "../components/Footer";
 import ProblemStatement from "../components/ProblemStatement";
 
-
-
 export default function Home() {
   return (
     <div>

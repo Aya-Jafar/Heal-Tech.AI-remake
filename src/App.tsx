@@ -17,7 +17,13 @@ const App: FC = () => {
         <Route
           path="/"
           element={
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense
+              fallback={
+                <div className="loader-container">
+                  <span className="loader"></span>
+                </div>
+              }
+            >
               <Home />
             </Suspense>
           }
@@ -25,7 +31,13 @@ const App: FC = () => {
         <Route
           path="/services/auto-completion"
           element={
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense
+              fallback={
+                <div className="loader-container">
+                  <span className="loader"></span>
+                </div>
+              }
+            >
               <AutoCompletion />
             </Suspense>
           }
@@ -33,7 +45,13 @@ const App: FC = () => {
         <Route
           path="/services/summarization"
           element={
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense
+              fallback={
+                <div className="loader-container">
+                  <span className="loader"></span>
+                </div>
+              }
+            >
               <Summarization />
             </Suspense>
           }
@@ -41,7 +59,13 @@ const App: FC = () => {
         <Route
           path="/services/chat-bot"
           element={
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense
+              fallback={
+                <div className="loader-container">
+                  <span className="loader"></span>
+                </div>
+              }
+            >
               <ChatBot />
             </Suspense>
           }
@@ -50,7 +74,13 @@ const App: FC = () => {
         <Route
           path="/profile/:uid"
           element={
-            <Suspense fallback={<div>Loading...</div>}>
+            <Suspense
+              fallback={
+                <div className="loader-container">
+                  <span className="loader"></span>
+                </div>
+              }
+            >
               <Profile />
             </Suspense>
           }

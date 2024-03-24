@@ -632,6 +632,69 @@ input::file-selector-button {
   box-shadow: 15px 9px 100px -1px #335efc;
 }
 
+.saved-grid {
+  display: flex;
+  /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
+
+  align-items: center;
+  justify-content: center;
+  gap: 2.5%;
+  margin: 0 auto;
+  margin-bottom: 1%;
+
+  overflow: hidden;
+
+  padding: 1% 10%;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+.loader {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 15px auto;
+  color: #fff;
+  box-sizing: border-box;
+  animation: animloader 2s linear infinite;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  25% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 2px;
+  }
+  50% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 -2px, -14px 0 0 2px, -38px 0 0 -2px;
+  }
+  75% {
+    box-shadow: 14px 0 0 2px, 38px 0 0 -2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+  100% {
+    box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
+  }
+}
+.saved-item {
+  position: relative;
+  margin-top: 3%;
+
+  width: 100%;
+  height: 300px;
+  color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px rgba(255, 255, 255, 0.622) solid;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
 @media only screen and (max-width: 767px) {
   .home-cover {
     flex-wrap: wrap;

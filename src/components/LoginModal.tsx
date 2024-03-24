@@ -33,7 +33,7 @@ function LoginModal() {
   };
 
   const handleSubmit = async () => {
-    await logIn(formData.email, formData.password, setCurrentUser);
+    await logIn(formData.email, formData.password);
 
     if (localStorage.getItem("token")) {
       setIsLoginModalOpen(false);
