@@ -638,13 +638,16 @@ input::file-selector-button {
 
   align-items: center;
   justify-content: center;
+  /* flex-wrap: wrap; */
   gap: 2.5%;
   margin: 0 auto;
   margin-bottom: 1%;
+  margin-top: 7%;
+  width: 100%;
 
   overflow: hidden;
 
-  padding: 1% 10%;
+  /* padding: 1% 100px; */
 }
 
 .loader-container {
@@ -686,13 +689,17 @@ input::file-selector-button {
   margin-top: 3%;
 
   width: 100%;
+  /* background-color: #006cea; */
   height: 300px;
   color: white;
   border-radius: 10px;
   overflow: hidden;
   border: 1px rgba(255, 255, 255, 0.622) solid;
+
   padding-left: 15px;
+
   padding-right: 15px;
+  cursor: pointer;
 }
 
 .profile {
@@ -700,13 +707,14 @@ input::file-selector-button {
   flex-direction: column;
   /* align-items: center; */
   /* background-color: #006cea; */
-  padding: 0 35%;
+  padding: 0 15%;
   height: 100vh;
   margin-top: 3%;
 }
-.into-section {
+.info-section {
   display: flex;
   gap: 7%;
+  padding: 0 20%;
 }
 
 @media only screen and (max-width: 767px) {
