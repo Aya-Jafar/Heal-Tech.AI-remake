@@ -11,13 +11,41 @@ import {
 import db from "./config";
 
 // Input object schema to save in Firestore
-interface GeneratedTextInput {
+interface SaveGeneratedTextInput {
   title: string;
   text: string;
 }
 
+//
+interface GetGeneratedTextInput {
+  dataSetter: React.Dispatch<React.SetStateAction<Array<object>>>;
+  setLoaded: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export const getUserInfo = async () => {
+  try {
+    const { currentUser } = useAuth.getState() as AuthSchema;
+
+    const currentUserUid = (currentUser as any)?.uid;
+
+    const docRef = doc(db, "users", currentUserUid);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      // console.log(docSnap.data());
+
+      return docSnap.data();
+    } else {
+      return null;
+    }
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
 export const saveGeneratedText = async (
-  generatedText: GeneratedTextInput
+  generatedText: SaveGeneratedTextInput
 ): Promise<void> => {
   const { currentUser } = useAuth.getState() as AuthSchema;
 
@@ -68,7 +96,8 @@ export const saveGeneratedText = async (
 };
 
 export const getSavedGeneratedText = async (
-  setter: React.Dispatch<React.SetStateAction<Array<object>>>
+  dataSetter: React.Dispatch<React.SetStateAction<Array<object>>>,
+  setLoaded: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
   const { currentUser } = useAuth.getState() as AuthSchema;
   const currentUserUid = (currentUser as any)?.uid;
@@ -103,7 +132,8 @@ export const getSavedGeneratedText = async (
         }
       }
       if (generatedTexts) {
-        setter(generatedTexts);
+        dataSetter(generatedTexts);
+        setLoaded(true);
       }
     } catch (error) {
       console.error("Error fetching saved artworks:", error);

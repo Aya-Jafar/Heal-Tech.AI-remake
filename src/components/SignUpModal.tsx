@@ -26,6 +26,8 @@ function SignUpModal() {
     password1: "",
     password2: "",
     name: "",
+    specialization: "",
+    phoneNumber: "",
   });
 
   const handleInputChange = (e: any) => {
@@ -48,7 +50,9 @@ function SignUpModal() {
     await createAccount(
       formData.email,
       formData.name,
-      formData.password1
+      formData.password1,
+      formData.specialization,
+      formData.phoneNumber
     );
     if (localStorage.getItem("token")) {
       setIsSignUpModalOpen(false);
@@ -131,6 +135,54 @@ function SignUpModal() {
               }}
             />
             <br />
+            <TextField
+              id="outlined-basic"
+              label="Specialization"
+              variant="outlined"
+              onChange={handleInputChange}
+              style={{ marginBottom: "20px" }}
+              name="specialization"
+              sx={{
+                width: "100%",
+                "& label": {
+                  color: "white", // Label color
+                },
+                "& fieldset": {
+                  borderColor: "white !important", // Border color
+                },
+              }}
+              inputProps={{
+                style: {
+                  color: "white", // Text color
+                },
+              }}
+            />
+            <br />
+
+            <TextField
+              id="outlined-basic"
+              label="Phone number"
+              variant="outlined"
+              onChange={handleInputChange}
+              style={{ marginBottom: "20px" }}
+              name="phoneNumber"
+              sx={{
+                width: "100%",
+                "& label": {
+                  color: "white", // Label color
+                },
+                "& fieldset": {
+                  borderColor: "white !important", // Border color
+                },
+              }}
+              inputProps={{
+                style: {
+                  color: "white", // Text color
+                },
+              }}
+            />
+            <br />
+
             <TextField
               id="outlined-basic"
               label="Password"

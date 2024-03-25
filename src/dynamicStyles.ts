@@ -22,7 +22,7 @@ export const signupBoxStyle = {
   left: "50%",
   transform: "translate(-50%, -50%)",
   width: 400,
-  height: 550,
+  height: "75vh",
   bgcolor: "#282828",
   boxShadow: 24,
   borderRadius: 3,

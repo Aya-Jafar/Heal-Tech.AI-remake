@@ -695,6 +695,20 @@ input::file-selector-button {
   padding-right: 15px;
 }
 
+.profile {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  /* background-color: #006cea; */
+  padding: 0 35%;
+  height: 100vh;
+  margin-top: 3%;
+}
+.into-section {
+  display: flex;
+  gap: 7%;
+}
+
 @media only screen and (max-width: 767px) {
   .home-cover {
     flex-wrap: wrap;
