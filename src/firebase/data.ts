@@ -102,7 +102,7 @@ export const getSavedGeneratedText = async (
   const { currentUser } = useAuth.getState() as AuthSchema;
   const currentUserUid = (currentUser as any)?.uid;
 
-  console.log("Inside function", currentUser);
+  // console.log("Inside function", currentUser);
 
   if (currentUserUid) {
     const userSavedPostsRef = doc(db, "saved-generated", currentUserUid);
@@ -116,7 +116,6 @@ export const getSavedGeneratedText = async (
 
       if (userData && userData.savedGenerated) {
         const savedGeneratedIDs = userData.savedGenerated;
-        console.log(savedGeneratedIDs);
 
         for (const generatedTextId of savedGeneratedIDs) {
           const generatedTextDocRef = doc(
@@ -127,7 +126,7 @@ export const getSavedGeneratedText = async (
           const generatedTextDocSnapshot = await getDoc(generatedTextDocRef);
           if (generatedTextDocSnapshot.exists()) {
             const generatedText = generatedTextDocSnapshot.data();
-            generatedTexts.push(generatedText);
+            generatedTexts.push({ generatedTextId, ...generatedText });
           }
         }
       }

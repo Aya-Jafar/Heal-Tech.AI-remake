@@ -85,6 +85,21 @@ const App: FC = () => {
             </Suspense>
           }
         ></Route>
+
+        <Route
+          path="/saved-generated/:id"
+          element={
+            <Suspense
+              fallback={
+                <div className="loader-container">
+                  <span className="loader"></span>
+                </div>
+              }
+            >
+              <Profile />
+            </Suspense>
+          }
+        ></Route>
       </Routes>
     </div>
   );

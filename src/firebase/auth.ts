@@ -77,7 +77,7 @@ export async function logIn(email: string, password: string) {
   try {
     await signInWithEmailAndPassword(auth, email, password);
     const user = auth.currentUser;
-    console.log(user);
+
 
     if (user) {
       setCurrentUser(user);

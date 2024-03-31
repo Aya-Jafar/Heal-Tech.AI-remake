@@ -702,6 +702,10 @@ input::file-selector-button {
   cursor: pointer;
 }
 
+.saved-item:hover {
+  border: 1px #01e8fe solid;
+}
+
 .profile {
   display: flex;
   flex-direction: column;

@@ -6,8 +6,11 @@ import { Avatar } from "@mui/material";
 import { cyan } from "@mui/material/colors";
 import { getUserInfo } from "../Firebase/data";
 import { get1st2Letters } from "../utils/helpers";
+import { Link } from "react-router-dom";
+import { linkStyle } from "../dynamicStyles";
 
 interface SavedGenerated {
+  generatedTextId?: string;
   title?: string;
   text?: string;
 }
@@ -29,7 +32,6 @@ function Profile() {
     getUserInfo().then((result) => setUserInfo(result));
     getSavedGeneratedText(setSavedGenerated, setLoaded);
   }, [currentUser, loaded]);
-
 
   return (
     <div className="profile">
@@ -56,10 +58,17 @@ function Profile() {
       {loaded && savedGenerated.length > 0 ? (
         <div className="saved-grid">
           {savedGenerated.map((saved: SavedGenerated, index) => (
-            <div key={index} className="saved-item">
-              <h1>{saved?.title}</h1>
-              <p>{saved?.text}</p>
-            </div>
+            <Link
+              to={`/saved-generated/${saved.generatedTextId}`}
+              key={index}
+              className="saved-item"
+              style={{ ...linkStyle }}
+            >
+              <>
+                <h1>{saved?.title}</h1>
+                <p>{saved?.text}</p>
+              </>
+            </Link>
           ))}
         </div>
       ) : (
