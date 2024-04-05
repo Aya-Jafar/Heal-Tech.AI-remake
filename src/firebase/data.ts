@@ -7,6 +7,7 @@ import {
   getDoc,
   collection,
   getDocs,
+  deleteDoc,
 } from "firebase/firestore";
 import db from "./config";
 
@@ -32,8 +33,6 @@ export const getUserInfo = async () => {
     const docSnap = await getDoc(docRef);
 
     if (docSnap.exists()) {
-      // console.log(docSnap.data());
-
       return docSnap.data();
     } else {
       return null;
@@ -102,8 +101,6 @@ export const getSavedGeneratedText = async (
   const { currentUser } = useAuth.getState() as AuthSchema;
   const currentUserUid = (currentUser as any)?.uid;
 
-  // console.log("Inside function", currentUser);
-
   if (currentUserUid) {
     const userSavedPostsRef = doc(db, "saved-generated", currentUserUid);
 
@@ -137,5 +134,46 @@ export const getSavedGeneratedText = async (
     } catch (error) {
       console.error("Error fetching saved artworks:", error);
     }
+  }
+};
+
+export const getSavedGeneratedData = async (savedTextId: string) => {
+  try {
+    // Reference to the document with the specified savedTextId
+    const savedGeneratedRef = doc(db, "generated-text", savedTextId);
+
+    // Get the document snapshot
+    const docSnapshot = await getDoc(savedGeneratedRef);
+
+    // Check if the document exists
+    if (docSnapshot?.exists()) {
+      // Access the data of the document
+      const savedGeneratedData = docSnapshot.data();
+      return savedGeneratedData;
+    } else {
+      console.log("Document does not exist");
+      return;
+    }
+  } catch (error) {
+    console.error("Error getting document:", error);
+    throw error;
+  }
+};
+
+
+
+
+export const deleteGeneratedText = async (savedTextId: string) => {
+  const { currentUser } = useAuth.getState() as AuthSchema;
+  const currentUserUid = (currentUser as any)?.uid;
+
+  const savedGeneratedRef = doc(db, "saved-generated", currentUserUid);
+  const docSnapshot = await getDoc(savedGeneratedRef);
+
+  console.log(docSnapshot);
+
+  try {
+  } catch (error) {
+    console.error("Error deleting comment: ", error);
   }
 };

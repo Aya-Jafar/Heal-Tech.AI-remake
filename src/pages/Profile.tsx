@@ -55,11 +55,11 @@ function Profile() {
         </div>
       )}
 
-      {loaded && savedGenerated.length > 0 ? (
+      {loaded && savedGenerated?.length > 0 ? (
         <div className="saved-grid">
-          {savedGenerated.map((saved: SavedGenerated, index) => (
+          {savedGenerated?.map((saved: SavedGenerated, index) => (
             <Link
-              to={`/saved-generated/${saved.generatedTextId}`}
+              to={`/saved-generated/${saved?.generatedTextId}`}
               key={index}
               className="saved-item"
               style={{ ...linkStyle }}

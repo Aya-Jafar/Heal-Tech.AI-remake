@@ -228,7 +228,6 @@ hr {
   margin-bottom: 5%;
 }
 .form-group input {
-  /* background-color: #0aa017; */
   width: 30vw;
   height: 4vh;
   margin-bottom: 3%;
@@ -720,6 +719,56 @@ input::file-selector-button {
   gap: 7%;
   padding: 0 20%;
 }
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.generated-page-container {
+  border-radius: 10px;
+  border: 1px rgba(255, 255, 255, 0.622) solid;
+  width: 65%;
+  height: 65vh;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  margin-top: 4%;
+  overflow-y: scroll;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 1%;
+}
+
+.generated-crud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.crud-btns {
+  display: flex;
+  gap: 15px;
+}
+
+#edit-btn {
+  background: none;
+  background-color: #040a21;
+  border: 1.5px #006cea solid;
+  width: 7vw;
+}
+#del-btn {
+  background: none;
+  background-color: #040a21;
+  border: 1.5px #d74a53 solid;
+  width: 7vw;
+}
+
+
+
+
+
 
 @media only screen and (max-width: 767px) {
   .home-cover {

@@ -8,6 +8,9 @@ const AutoCompletion = lazy(() => import("./pages/services/AutoCompletion"));
 const Summarization = lazy(() => import("./pages/services/summarization"));
 const ChatBot = lazy(() => import("./pages/services/ChatBot"));
 const Profile = lazy(() => import("./pages/Profile"));
+const SavedGenerated = lazy(() => import("./pages/SavedGenerated"));
+
+
 
 const App: FC = () => {
   return (
@@ -87,7 +90,7 @@ const App: FC = () => {
         ></Route>
 
         <Route
-          path="/saved-generated/:id"
+          path="/saved-generated/:generatedTextId"
           element={
             <Suspense
               fallback={
@@ -96,7 +99,7 @@ const App: FC = () => {
                 </div>
               }
             >
-              <Profile />
+              <SavedGenerated />
             </Suspense>
           }
         ></Route>

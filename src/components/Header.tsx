@@ -33,7 +33,7 @@ export default function Header() {
     const unsubscribe = onAuthStateChanged(auth, (user: any) => {
       setCurrentUser(user);
       if (user) {
-        localStorage.setItem("token", (user as any).accessToken);
+        localStorage.setItem("token", (user as any)?.accessToken);
       }
     });
 
