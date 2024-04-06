@@ -1,37 +1,43 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
-import { getSavedGeneratedText } from "../Firebase/data";
+import { getSavedGeneratedTexts } from "../Firebase/data";
 import { Avatar } from "@mui/material";
 import { cyan } from "@mui/material/colors";
 import { getUserInfo } from "../Firebase/data";
 import { get1st2Letters } from "../utils/helpers";
-import { Link } from "react-router-dom";
-import { linkStyle } from "../dynamicStyles";
-
-interface SavedGenerated {
-  generatedTextId?: string;
-  title?: string;
-  text?: string;
-}
+import GeneratedTextGrid from "../components/GeneratedTextGrid";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
 
 function Profile() {
   const { currentUser } = useAuth() as AuthSchema;
 
-  const [savedGenerated, setSavedGenerated] = useState<Array<object>>([]);
-
   const [userInfo, setUserInfo] = useState<any>(null);
 
-  // TODO: Pass the uid in the URL dynamically
-  //   const { uid } = useParams();
-
-  // TODO: Remove this state and make the `savedGenerated` dynamic
-  const [loaded, setLoaded] = useState<boolean>(false);
+  const [currentTab, setCurrentTab] = useState<string>("Generated Text");
 
   useEffect(() => {
+    // Get username and description for the current user
     getUserInfo().then((result) => setUserInfo(result));
-    getSavedGeneratedText(setSavedGenerated, setLoaded);
-  }, [currentUser, loaded]);
+  }, [currentUser]);
+
+  const [value, setValue] = React.useState(0);
+
+  // Handle current tab change
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+    if (newValue === 0) {
+      setCurrentTab("Generated Text");
+    } else if (newValue === 1) {
+      setCurrentTab("Summarized Text");
+    }
+  };
+
+  const generateTabContent = () => (
+    <GeneratedTextGrid currentTab={currentTab} />
+  );
 
   return (
     <div className="profile">
@@ -48,34 +54,23 @@ function Profile() {
           )}
         </div>
       </div>
+      <br />
+      <br />
 
-      {!loaded && (
-        <div className="loader-container">
-          <span className="loader"></span>
-        </div>
-      )}
+      <Box sx={{ width: "100%" }}>
+        <Tabs value={value} onChange={handleChange} centered>
+          <Tab
+            label="Generated Text"
+            sx={{ color: "white", fontWeight: "bold" }}
+          />
+          <Tab
+            label="Summarized Text"
+            sx={{ color: "white", fontWeight: "bold" }}
+          />
+        </Tabs>
+      </Box>
 
-      {loaded && savedGenerated?.length > 0 ? (
-        <div className="saved-grid">
-          {savedGenerated?.map((saved: SavedGenerated, index) => (
-            <Link
-              to={`/saved-generated/${saved?.generatedTextId}`}
-              key={index}
-              className="saved-item"
-              style={{ ...linkStyle }}
-            >
-              <>
-                <h1>{saved?.title}</h1>
-                <p>{saved?.text}</p>
-              </>
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <center>
-          <p>No Saved texts yet...</p>
-        </center>
-      )}
+      {generateTabContent()}
     </div>
   );
 }

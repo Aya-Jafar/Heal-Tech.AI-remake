@@ -6,7 +6,7 @@ import { useNextWord } from "../../store/nextWord";
 import Modal from "@mui/material/Modal";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import { saveBoxStyle } from "../../dynamicStyles";
+import { saveBoxStyle } from "../../utils/dynamicStyles";
 import { TextField } from "@mui/material";
 import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";

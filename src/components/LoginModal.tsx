@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
 import { logIn } from "../Firebase/auth";
-import { loginBoxStyle } from "../dynamicStyles";
+import { loginBoxStyle } from "../utils/dynamicStyles";
 import { ErrorAlert } from "./ErrorAlert";
 
 function LoginModal() {
@@ -49,7 +49,7 @@ function LoginModal() {
 
   return (
     <>
-      <ErrorAlert validAuth={validAuth} type={"login"}/>
+      <ErrorAlert validAuth={validAuth} type={"login"} />
 
       <Modal open={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)}>
         <Box sx={loginBoxStyle}>

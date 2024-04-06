@@ -1,7 +1,7 @@
 import React from "react";
 import logoutIcon from "../images/logout.png";
 import { Link as ScrollLink } from "react-scroll";
-import { linkStyle } from "../dynamicStyles";
+import { linkStyle } from "../utils/dynamicStyles";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";

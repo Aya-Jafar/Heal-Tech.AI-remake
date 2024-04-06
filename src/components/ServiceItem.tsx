@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { linkStyle } from "../dynamicStyles";
-
+import { linkStyle } from "../utils/dynamicStyles";
 
 interface ServiceItemProps {
   color: string;
@@ -11,7 +10,6 @@ interface ServiceItemProps {
 }
 
 export default function ServiceItem(props: ServiceItemProps) {
-
   return (
     <div className="service-item" style={{ backgroundColor: props.color }}>
       <h1>{props.title}</h1>

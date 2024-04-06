@@ -6,7 +6,7 @@ import TextField from "@mui/material/TextField";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
 import { createAccount } from "../Firebase/auth";
-import { signupBoxStyle } from "../dynamicStyles";
+import { signupBoxStyle } from "../utils/dynamicStyles";
 import { ErrorAlert } from "./ErrorAlert";
 
 function SignUpModal() {

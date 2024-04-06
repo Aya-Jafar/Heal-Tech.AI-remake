@@ -95,7 +95,7 @@ export const saveGeneratedText = async (
   }
 };
 
-export const getSavedGeneratedText = async (
+export const getSavedGeneratedTexts = async (
   dataSetter: React.Dispatch<React.SetStateAction<Array<object>>>,
   setLoaded: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
@@ -191,9 +191,9 @@ export const editGeneratedText = async (
     // Update the comment text
     await updateDoc(savedGeneratedRef, { text: newText });
     console.log("Comment edited successfully");
-    return true
+    return true;
   } catch (error) {
     console.error("Error editing comment: ", error);
-    return false
+    return false;
   }
 };

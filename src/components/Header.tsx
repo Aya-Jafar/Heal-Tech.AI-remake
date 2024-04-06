@@ -3,7 +3,7 @@
 import * as React from "react";
 import logo from "../images/healai-icon.png";
 import { Link } from "react-router-dom";
-import { linkStyle } from "../dynamicStyles";
+import { linkStyle } from "../utils/dynamicStyles";
 import { Link as ScrollLink } from "react-scroll";
 import LoginModal from "./LoginModal";
 import { useAuth } from "../store/auth";

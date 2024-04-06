@@ -4,7 +4,7 @@ import { getSavedGeneratedData } from "../Firebase/data";
 import Modal from "@mui/material/Modal";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
-import { confirmDeleteBoxStyle } from "../dynamicStyles";
+import { confirmDeleteBoxStyle } from "../utils/dynamicStyles";
 import { deleteGeneratedText, editGeneratedText } from "../Firebase/data";
 import CustomizedSnackbars from "../components/SnackBar";
 
