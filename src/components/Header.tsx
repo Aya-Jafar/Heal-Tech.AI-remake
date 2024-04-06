@@ -70,7 +70,10 @@ export default function Header() {
         </div>
         {currentUser !== null && currentUser !== undefined ? (
           <div className="logout">
-            <Link to="/profile/1" style={{ ...linkStyle }}>
+            <Link
+              to={`/profile/${(currentUser as any)?.uid}`}
+              style={{ ...linkStyle }}
+            >
               {(currentUser as any).displayName}
             </Link>
             <img
