@@ -771,6 +771,13 @@ input::file-selector-button {
   width: 7vw;
   color: white;
 }
+#cancel-btn-confirm {
+  background: none;
+  width: 7vw;
+  color: white;
+  border: 1.5px white solid;
+}
+
 
 @media only screen and (max-width: 767px) {
   .home-cover {

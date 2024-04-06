@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { getSavedGeneratedData } from "../Firebase/data";
+import Modal from "@mui/material/Modal";
+import { Box } from "@mui/material";
+import { Typography } from "@mui/material";
+import { confirmDeleteBoxStyle } from "../dynamicStyles";
+import { deleteGeneratedText } from "../Firebase/data";
 
 interface SavedGeneratedData {
   title: string;
@@ -12,6 +17,8 @@ function SavedGenerated() {
   const [currentData, setCurrentData] = useState<
     SavedGeneratedData | undefined
   >();
+
+  const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (generatedTextId) {
@@ -33,7 +40,6 @@ function SavedGenerated() {
     }
   }, [generatedTextId]);
 
-
   return (
     <div className="page-wrapper">
       <div className="generated-page-container">
@@ -45,7 +51,11 @@ function SavedGenerated() {
                 <button className="btn" id="edit-btn">
                   Edit
                 </button>
-                <button className="btn" id="del-btn">
+                <button
+                  className="btn"
+                  id="del-btn"
+                  onClick={() => setConfirmOpen(true)}
+                >
                   Delete
                 </button>
               </div>
@@ -53,6 +63,48 @@ function SavedGenerated() {
             <p>{currentData?.text}</p>
           </>
         )}
+        <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)}>
+          <Box
+            sx={confirmDeleteBoxStyle}
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <Typography id="modal-modal-title" variant="h4" component="h2">
+              Confirm Action
+            </Typography>
+            <br />
+            <Typography variant="subtitle1">
+              Are you sure you want to delete this generated text?
+            </Typography>
+            <br />
+            <br />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-end",
+                width: "100%",
+                gap: "10px",
+              }}
+            >
+              <button
+                className="btn"
+                id="del-btn-confirm"
+                onClick={() => {
+                  if (generatedTextId) {
+                    deleteGeneratedText(generatedTextId);
+                  }
+                }}
+              >
+                Delete
+              </button>
+              <button className="btn" id="cancel-btn-confirm">
+                Cancel
+              </button>
+            </div>
+          </Box>
+        </Modal>
       </div>
     </div>
   );

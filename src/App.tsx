@@ -10,8 +10,6 @@ const ChatBot = lazy(() => import("./pages/services/ChatBot"));
 const Profile = lazy(() => import("./pages/Profile"));
 const SavedGenerated = lazy(() => import("./pages/SavedGenerated"));
 
-
-
 const App: FC = () => {
   return (
     <div className="App">
