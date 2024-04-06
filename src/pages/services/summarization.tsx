@@ -2,17 +2,38 @@ import React, { useState, ChangeEvent, useEffect } from "react";
 import summarizeText from "../../huggingFace/textSummary";
 import { countTokens, extractPdfText } from "../../utils/helpers";
 import { SummaryAPIResponse, APIErrorResponse } from "../../schema";
+import saveIcon from "../../images/save-icon.png";
+import Modal from "@mui/material/Modal";
+import { Box } from "@mui/material";
+import { Typography } from "@mui/material";
+import { TextField } from "@mui/material";
+import { useAuth } from "../../store/auth";
+import { AuthSchema } from "../../schema";
+import { saveBoxStyle } from "../../utils/dynamicStyles";
+import { saveSummarizedText } from "../../Firebase/data";
 
 export default function Summarization() {
   const [fileContent, setFileContent] = useState<string | null>(null);
-  const [summaryText, setSummaryText] = useState<SummaryAPIResponse | string>(
-    ""
-  );
+  const { currentUser, setIsLoginModalOpen } = useAuth() as AuthSchema;
+
+
+  // TODO: Change this to empty object
+
+  const [summaryText, setSummaryText] = useState<SummaryAPIResponse | string>({
+    generated_text: "hiii",
+  });
+
+
+  
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [isTitleModalOpen, setIsTitleModalOpen] =
+    React.useState<boolean>(false);
+
+  const [title, setTitle] = React.useState<string>("");
 
   const handleFileChange = async (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
-
 
     if (file) {
       const reader = new FileReader();
@@ -61,6 +82,36 @@ export default function Summarization() {
     }
   };
 
+  const handleSaveClick = async () => {
+    if (currentUser !== undefined && currentUser !== null) {
+      setIsTitleModalOpen(true);
+    } else {
+      setIsLoginModalOpen(true);
+    }
+  };
+
+  const saveToProfile = async () => {
+    if (
+      title.length > 0 &&
+      summaryText &&
+      typeof summaryText === "object" &&
+      summaryText.generated_text !== undefined &&
+      typeof summaryText.generated_text === "string" &&
+      summaryText.generated_text.length > 0
+    ) {
+      if (typeof summaryText === "object") {
+        await saveSummarizedText({
+          title: title,
+          text: summaryText.generated_text,
+        });
+      }
+      setIsTitleModalOpen(false);
+      // setSnackbar(true);
+    } else {
+      // TODO: show snackbar error message
+    }
+  };
+
   return (
     <div className="model-page">
       <div className="model-description">
@@ -92,6 +143,56 @@ export default function Summarization() {
           // Show error message string
           <p>{summaryText}</p>
         )}
+        <center>
+          <button className="save-btn" onClick={handleSaveClick}>
+            <img src={saveIcon} alt="" />
+
+            <p>Save</p>
+          </button>
+        </center>
+
+        <Modal
+          open={isTitleModalOpen}
+          onClose={() => setIsTitleModalOpen(false)}
+        >
+          <Box sx={saveBoxStyle}>
+            <Typography id="modal-modal-title" variant="h4" component="h2">
+              Save to your profile
+            </Typography>
+            <form action="" style={{ marginTop: "60px" }}>
+              <TextField
+                id="outlined-basic"
+                label="Title"
+                variant="outlined"
+                name="title"
+                onChange={(e) => setTitle(e.target.value)}
+                style={{ marginBottom: "20px" }}
+                sx={{
+                  width: "100%",
+                  "& label": {
+                    color: "white", // Label color
+                  },
+                  "& fieldset": {
+                    borderColor: "white !important", // Border color
+                  },
+                }}
+                inputProps={{
+                  style: {
+                    color: "white", // Text color
+                  },
+                }}
+              />
+            </form>
+
+            <br />
+            <br />
+            <center>
+              <button className="btn" onClick={saveToProfile}>
+                <strong>Save</strong>
+              </button>
+            </center>
+          </Box>
+        </Modal>
       </div>
     </div>
   );

@@ -1,7 +1,10 @@
 import React from "react";
 import { linkStyle } from "../utils/dynamicStyles";
 import { Link } from "react-router-dom";
-import { getSavedGeneratedTexts } from "../Firebase/data";
+import {
+  getSavedGeneratedTexts,
+  getSavedSummarizedTexts,
+} from "../Firebase/data";
 
 interface SavedGenerated {
   generatedTextId?: string;
@@ -26,9 +29,8 @@ function GeneratedTextGrid({ currentTab }: GeneratedTextGridProps) {
         getSavedGeneratedTexts(setSavedGenerated, setLoaded);
         break;
       case "Summarized Text":
-        
+        getSavedSummarizedTexts(setSavedGenerated, setLoaded);
         break;
-
       default:
         break;
     }
@@ -36,7 +38,7 @@ function GeneratedTextGrid({ currentTab }: GeneratedTextGridProps) {
 
   React.useEffect(() => {
     getCurrentTabData();
-  }, [savedGenerated, loaded]);
+  }, [currentTab, loaded]);
 
   return (
     <>

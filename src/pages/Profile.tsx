@@ -34,7 +34,7 @@ function Profile() {
       setCurrentTab("Summarized Text");
     }
   };
-
+  
   const generateTabContent = () => (
     <GeneratedTextGrid currentTab={currentTab} />
   );
@@ -50,7 +50,7 @@ function Profile() {
           {userInfo?.specialization ? (
             <p>{userInfo?.specialization}</p>
           ) : (
-            <>None</>
+            <>No specific specialization</>
           )}
         </div>
       </div>
