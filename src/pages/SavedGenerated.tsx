@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import { confirmDeleteBoxStyle } from "../dynamicStyles";
-import { deleteGeneratedText } from "../Firebase/data";
+import { deleteGeneratedText, editGeneratedText } from "../Firebase/data";
 import CustomizedSnackbars from "../components/SnackBar";
 
 interface SavedGeneratedData {
@@ -21,6 +21,12 @@ function SavedGenerated() {
 
   const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
   const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
+
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+
+  const [editBtnText, setEditBtnText] = useState<string>("Edit");
+
+  const [editedText, setEditedText] = useState<string>("");
 
   useEffect(() => {
     if (generatedTextId) {
@@ -42,6 +48,20 @@ function SavedGenerated() {
     }
   }, [generatedTextId]);
 
+  const handleInput = async (e: React.FormEvent<HTMLSpanElement>) => {
+    let newText = (e.target as HTMLSpanElement).innerText;
+    setEditedText(newText);
+  };
+
+  const handleSaveClick = async () => {
+    if (generatedTextId) {
+      const edited = await editGeneratedText(generatedTextId, editedText);
+      if (edited && editBtnText === "Save") {
+        setShowSnackbar(true);
+      }
+    }
+  };
+
   return (
     <div className="page-wrapper">
       <div className="generated-page-container">
@@ -50,8 +70,16 @@ function SavedGenerated() {
             <div className="generated-crud">
               <h1>{currentData?.title}</h1>
               <div className="crud-btns">
-                <button className="btn" id="edit-btn">
-                  Edit
+                <button
+                  className="btn"
+                  id="edit-btn"
+                  onClick={() => {
+                    setIsEditing(true);
+                    setEditBtnText("Save");
+                    handleSaveClick();
+                  }}
+                >
+                  {editBtnText}
                 </button>
                 <button
                   className="btn"
@@ -62,7 +90,13 @@ function SavedGenerated() {
                 </button>
               </div>
             </div>
-            <p>{currentData?.text}</p>
+            <p
+              contentEditable={isEditing}
+              suppressContentEditableWarning={true}
+              onInput={handleInput}
+            >
+              {currentData?.text}
+            </p>
           </>
         )}
         <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)}>
@@ -103,7 +137,7 @@ function SavedGenerated() {
                       setShowSnackbar(true);
                       setConfirmOpen(false);
                     }
-                    // If something went wrong while deleting the generated text
+                    // TODO: If something went wrong while deleting the generated text
                     else {
                     }
                   }
@@ -119,6 +153,12 @@ function SavedGenerated() {
         </Modal>
         <CustomizedSnackbars
           text="Generated text was successfully deleted"
+          openState={showSnackbar}
+          setOpenState={setShowSnackbar}
+        />
+
+        <CustomizedSnackbars
+          text="Generated text was successfully updated"
           openState={showSnackbar}
           setOpenState={setShowSnackbar}
         />

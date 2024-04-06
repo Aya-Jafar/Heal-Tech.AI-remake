@@ -8,6 +8,7 @@ import {
   collection,
   getDocs,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import db from "./config";
 
@@ -177,5 +178,22 @@ export const deleteGeneratedText = async (savedTextId: string) => {
   } catch (error) {
     console.error("Error deleting document: ", error);
     return false;
+  }
+};
+
+export const editGeneratedText = async (
+  savedTextId: string,
+  newText: string
+) => {
+  const savedGeneratedRef = doc(db, "generated-text", savedTextId);
+
+  try {
+    // Update the comment text
+    await updateDoc(savedGeneratedRef, { text: newText });
+    console.log("Comment edited successfully");
+    return true
+  } catch (error) {
+    console.error("Error editing comment: ", error);
+    return false
   }
 };
