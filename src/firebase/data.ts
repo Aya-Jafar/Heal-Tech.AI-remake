@@ -160,20 +160,20 @@ export const getSavedGeneratedData = async (savedTextId: string) => {
   }
 };
 
-
-
-
 export const deleteGeneratedText = async (savedTextId: string) => {
-  const { currentUser } = useAuth.getState() as AuthSchema;
-  const currentUserUid = (currentUser as any)?.uid;
-
-  const savedGeneratedRef = doc(db, "saved-generated", currentUserUid);
-  const docSnapshot = await getDoc(savedGeneratedRef);
-
-  console.log(docSnapshot);
+  const savedGeneratedRef = doc(db, "generated-text", savedTextId);
 
   try {
+    // Check if the document exists before attempting deletion
+    const docSnapshot = await getDoc(savedGeneratedRef);
+    if (docSnapshot.exists()) {
+      await deleteDoc(savedGeneratedRef);
+      console.log("Document successfully deleted");
+    } else {
+      console.log("Document does not exist");
+    }
   } catch (error) {
-    console.error("Error deleting comment: ", error);
+    console.error("Error deleting document: ", error);
+    throw error;
   }
 };

@@ -765,10 +765,12 @@ input::file-selector-button {
   width: 7vw;
 }
 
-
-
-
-
+#del-btn-confirm {
+  background: none;
+  background-color: #d74a53;
+  width: 7vw;
+  color: white;
+}
 
 @media only screen and (max-width: 767px) {
   .home-cover {
