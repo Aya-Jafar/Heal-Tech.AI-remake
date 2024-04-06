@@ -169,11 +169,13 @@ export const deleteGeneratedText = async (savedTextId: string) => {
     if (docSnapshot.exists()) {
       await deleteDoc(savedGeneratedRef);
       console.log("Document successfully deleted");
+      return true;
     } else {
       console.log("Document does not exist");
+      return false;
     }
   } catch (error) {
     console.error("Error deleting document: ", error);
-    throw error;
+    return false;
   }
 };

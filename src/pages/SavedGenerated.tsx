@@ -6,6 +6,7 @@ import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import { confirmDeleteBoxStyle } from "../dynamicStyles";
 import { deleteGeneratedText } from "../Firebase/data";
+import CustomizedSnackbars from "../components/SnackBar";
 
 interface SavedGeneratedData {
   title: string;
@@ -19,6 +20,7 @@ function SavedGenerated() {
   >();
 
   const [confirmOpen, setConfirmOpen] = useState<boolean>(false);
+  const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
 
   useEffect(() => {
     if (generatedTextId) {
@@ -91,9 +93,19 @@ function SavedGenerated() {
               <button
                 className="btn"
                 id="del-btn-confirm"
-                onClick={() => {
+                onClick={async () => {
                   if (generatedTextId) {
-                    deleteGeneratedText(generatedTextId);
+                    // If the delete was successful
+                    const isDeleted = await deleteGeneratedText(
+                      generatedTextId
+                    );
+                    if (isDeleted) {
+                      setShowSnackbar(true);
+                      setConfirmOpen(false);
+                    }
+                    // If something went wrong while deleting the generated text
+                    else {
+                    }
                   }
                 }}
               >
@@ -105,6 +117,11 @@ function SavedGenerated() {
             </div>
           </Box>
         </Modal>
+        <CustomizedSnackbars
+          text="Generated text was successfully deleted"
+          openState={showSnackbar}
+          setOpenState={setShowSnackbar}
+        />
       </div>
     </div>
   );
