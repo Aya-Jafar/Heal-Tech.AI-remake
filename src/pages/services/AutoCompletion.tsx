@@ -10,6 +10,7 @@ import { saveBoxStyle } from "../../dynamicStyles";
 import { TextField } from "@mui/material";
 import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";
+import CustomizedSnackbars from "../../components/SnackBar";
 
 export default function AutoCompletion() {
   const { currentUser, setIsLoginModalOpen } = useAuth() as AuthSchema;
@@ -20,6 +21,7 @@ export default function AutoCompletion() {
     React.useState<boolean>(false);
 
   const [title, setTitle] = React.useState<string>("");
+  const [snackbar, setSnackbar] = React.useState<boolean>(false);
 
   const handleSaveClick = async () => {
     if (currentUser !== undefined && currentUser !== null) {
@@ -35,10 +37,10 @@ export default function AutoCompletion() {
         title: title,
         text: userText,
       });
-      setIsTitleModalOpen(false)
-    }else{
-      // TODO: show snackbar message
-
+      setIsTitleModalOpen(false);
+      setSnackbar(true);
+    } else {
+      // TODO: show snackbar error message
     }
   };
 
@@ -109,6 +111,11 @@ export default function AutoCompletion() {
           </center>
         </Box>
       </Modal>
+      <CustomizedSnackbars
+        text="Generated text was saved in profile successfully"
+        openState={snackbar}
+        setOpenState={setSnackbar}
+      />
     </div>
   );
 }
