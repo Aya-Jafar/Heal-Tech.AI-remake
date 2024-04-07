@@ -232,22 +232,30 @@ export const getSavedSummarizedTexts = async (
   }
 };
 
-export const getSavedGeneratedData = async (savedTextId: string) => {
+export const getSavedGeneratedData = async (
+  savedTextId: string,
+  generatedType: "generated" | "summarized"
+) => {
   try {
+    let savedGeneratedRef;
     // Reference to the document with the specified savedTextId
-    const savedGeneratedRef = doc(db, "generated-text", savedTextId);
-
-    // Get the document snapshot
-    const docSnapshot = await getDoc(savedGeneratedRef);
-
-    // Check if the document exists
-    if (docSnapshot?.exists()) {
-      // Access the data of the document
-      const savedGeneratedData = docSnapshot.data();
-      return savedGeneratedData;
-    } else {
-      console.log("Document does not exist");
-      return;
+    if (generatedType === "generated") {
+      savedGeneratedRef = doc(db, "generated-text", savedTextId);
+    } else if (generatedType === "summarized") {
+      savedGeneratedRef = doc(db, "summarized-text", savedTextId);
+    }
+    if (savedGeneratedRef) {
+      // Get the document snapshot
+      const docSnapshot = await getDoc(savedGeneratedRef);
+      // Check if the document exists
+      if (docSnapshot?.exists()) {
+        // Access the data of the document
+        const savedGeneratedData = docSnapshot.data();
+        return savedGeneratedData;
+      } else {
+        console.log("Document does not exist");
+        return;
+      }
     }
   } catch (error) {
     console.error("Error getting document:", error);
@@ -255,19 +263,29 @@ export const getSavedGeneratedData = async (savedTextId: string) => {
   }
 };
 
-export const deleteGeneratedText = async (savedTextId: string) => {
-  const savedGeneratedRef = doc(db, "generated-text", savedTextId);
+export const deleteGeneratedText = async (
+  savedTextId: string,
+  generatedType: "generated" | "summarized"
+) => {
+  let savedGeneratedRef;
+  if (generatedType === "generated") {
+    savedGeneratedRef = doc(db, "generated-text", savedTextId);
+  } else if (generatedType === "summarized") {
+    savedGeneratedRef = doc(db, "summarized-text", savedTextId);
+  }
 
   try {
-    // Check if the document exists before attempting deletion
-    const docSnapshot = await getDoc(savedGeneratedRef);
-    if (docSnapshot.exists()) {
-      await deleteDoc(savedGeneratedRef);
-      console.log("Document successfully deleted");
-      return true;
-    } else {
-      console.log("Document does not exist");
-      return false;
+    if (savedGeneratedRef) {
+      // Check if the document exists before attempting deletion
+      const docSnapshot = await getDoc(savedGeneratedRef);
+      if (docSnapshot.exists()) {
+        await deleteDoc(savedGeneratedRef);
+        console.log("Document successfully deleted");
+        return true;
+      } else {
+        console.log("Document does not exist");
+        return false;
+      }
     }
   } catch (error) {
     console.error("Error deleting document: ", error);
@@ -277,15 +295,23 @@ export const deleteGeneratedText = async (savedTextId: string) => {
 
 export const editGeneratedText = async (
   savedTextId: string,
-  newText: string
+  newText: string,
+  generatedType: "generated" | "summarized"
 ) => {
-  const savedGeneratedRef = doc(db, "generated-text", savedTextId);
+  let savedGeneratedRef;
+  if (generatedType === "generated") {
+    savedGeneratedRef = doc(db, "generated-text", savedTextId);
+  } else if (generatedType === "summarized") {
+    savedGeneratedRef = doc(db, "summarized-text", savedTextId);
+  }
 
   try {
-    // Update the comment text
-    await updateDoc(savedGeneratedRef, { text: newText });
-    console.log("Comment edited successfully");
-    return true;
+    if (savedGeneratedRef) {
+      // Update the comment text
+      await updateDoc(savedGeneratedRef, { text: newText });
+      console.log("Comment edited successfully");
+      return true;
+    }
   } catch (error) {
     console.error("Error editing comment: ", error);
     return false;

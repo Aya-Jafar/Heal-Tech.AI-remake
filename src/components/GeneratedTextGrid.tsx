@@ -51,7 +51,9 @@ function GeneratedTextGrid({ currentTab }: GeneratedTextGridProps) {
         <div className="saved-grid">
           {savedGenerated?.map((saved: SavedGenerated, index) => (
             <Link
-              to={`/saved-generated/${saved?.generatedTextId}`}
+              to={`/saved-generated/${saved?.generatedTextId}/${
+                currentTab === "Generated Text" ? "generated" : "summarized"
+              }`}
               key={index}
               className="saved-item"
               style={{ ...linkStyle }}

@@ -88,7 +88,7 @@ const App: FC = () => {
         ></Route>
 
         <Route
-          path="/saved-generated/:generatedTextId"
+          path="/saved-generated/:generatedTextId/:type"
           element={
             <Suspense
               fallback={

@@ -14,7 +14,8 @@ interface SavedGeneratedData {
 }
 
 function SavedGenerated() {
-  const { generatedTextId } = useParams();
+  const { generatedTextId, type } = useParams();
+
   const [currentData, setCurrentData] = useState<
     SavedGeneratedData | undefined
   >();
@@ -28,9 +29,13 @@ function SavedGenerated() {
 
   const [editedText, setEditedText] = useState<string>("");
 
-  useEffect(() => {
-    if (generatedTextId) {
-      getSavedGeneratedData(generatedTextId)
+  const fetchDataBasedOnType = (currentType: string) => {
+    if (
+      generatedTextId &&
+      type === currentType &&
+      (currentType === "summarized" || currentType === "generated")
+    ) {
+      getSavedGeneratedData(generatedTextId, currentType)
         .then((result) => {
           if (result) {
             const transformedData: SavedGeneratedData = {
@@ -46,7 +51,13 @@ function SavedGenerated() {
           setCurrentData(undefined);
         });
     }
-  }, [generatedTextId]);
+  };
+
+  useEffect(() => {
+    if (type) {
+      fetchDataBasedOnType(type);
+    }
+  }, [generatedTextId, type]);
 
   const handleInput = async (e: React.FormEvent<HTMLSpanElement>) => {
     let newText = (e.target as HTMLSpanElement).innerText;
@@ -54,8 +65,8 @@ function SavedGenerated() {
   };
 
   const handleSaveClick = async () => {
-    if (generatedTextId) {
-      const edited = await editGeneratedText(generatedTextId, editedText);
+    if (generatedTextId && (type === "summarized" || type === "generated")) {
+      const edited = await editGeneratedText(generatedTextId, editedText, type);
       if (edited && editBtnText === "Save") {
         setShowSnackbar(true);
       }
@@ -130,15 +141,22 @@ function SavedGenerated() {
                 onClick={async () => {
                   if (generatedTextId) {
                     // If the delete was successful
-                    const isDeleted = await deleteGeneratedText(
-                      generatedTextId
-                    );
-                    if (isDeleted) {
-                      setShowSnackbar(true);
-                      setConfirmOpen(false);
-                    }
-                    // TODO: If something went wrong while deleting the generated text
-                    else {
+                    if (
+                      type &&
+                      (type === "summarized" || type === "generated")
+                    ) {
+                      const isDeleted = await deleteGeneratedText(
+                        generatedTextId,
+                        type
+                      );
+
+                      if (isDeleted) {
+                        setShowSnackbar(true);
+                        setConfirmOpen(false);
+                      }
+                      // TODO: If something went wrong while deleting the generated text
+                      else {
+                      }
                     }
                   }
                 }}
