@@ -17,14 +17,8 @@ export default function Summarization() {
   const { currentUser, setIsLoginModalOpen } = useAuth() as AuthSchema;
 
 
-  // TODO: Change this to empty object
+  const [summaryText, setSummaryText] = useState<SummaryAPIResponse | string>();
 
-  const [summaryText, setSummaryText] = useState<SummaryAPIResponse | string>({
-    generated_text: "hiii",
-  });
-
-
-  
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const [isTitleModalOpen, setIsTitleModalOpen] =

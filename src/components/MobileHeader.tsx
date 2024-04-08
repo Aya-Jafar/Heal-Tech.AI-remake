@@ -7,10 +7,8 @@ import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
 import { app } from "../Firebase/config";
 import { signOutUser } from "../Firebase/auth";
+import { MobileHeaderProps } from "../schema";
 
-interface MobileHeaderProps {
-  menuActive: boolean;
-}
 
 function MobileNav({ menuActive }: MobileHeaderProps) {
   const auth = getAuth(app);

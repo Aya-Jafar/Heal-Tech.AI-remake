@@ -1,5 +1,5 @@
 import { useAuth } from "../store/auth";
-import { AuthSchema } from "../schema";
+import { AuthSchema, SaveGeneratedTextInput } from "../schema";
 import {
   addDoc,
   doc,
@@ -11,18 +11,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import db from "./config";
-
-// Input object schema to save in Firestore
-interface SaveGeneratedTextInput {
-  title: string;
-  text: string;
-}
-
-//
-interface GetGeneratedTextInput {
-  dataSetter: React.Dispatch<React.SetStateAction<Array<object>>>;
-  setLoaded: React.Dispatch<React.SetStateAction<boolean>>;
-}
 
 export const getUserInfo = async () => {
   try {

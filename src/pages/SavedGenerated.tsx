@@ -7,11 +7,8 @@ import { Typography } from "@mui/material";
 import { confirmDeleteBoxStyle } from "../utils/dynamicStyles";
 import { deleteGeneratedText, editGeneratedText } from "../Firebase/data";
 import CustomizedSnackbars from "../components/SnackBar";
+import { SavedGeneratedData } from "../schema";
 
-interface SavedGeneratedData {
-  title: string;
-  text: string;
-}
 
 function SavedGenerated() {
   const { generatedTextId, type } = useParams();

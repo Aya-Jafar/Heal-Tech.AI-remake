@@ -3,12 +3,7 @@ import { Link } from "react-router-dom";
 import { linkStyle } from "../utils/dynamicStyles";
 import { motion } from "framer-motion";
 import { fadeIn } from "../utils/animation";
-interface ServiceItemProps {
-  color: string;
-  title: string;
-  description: string;
-  path: string;
-}
+import { ServiceItemProps } from "../schema";
 
 export default function ServiceItem(props: ServiceItemProps) {
   return (

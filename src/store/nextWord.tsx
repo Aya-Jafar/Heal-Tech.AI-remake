@@ -1,12 +1,5 @@
 import { create } from "zustand";
-
-interface NextWordState {
-  userText: string;
-}
-
-interface NextWordActions {
-  setUserText: (update: string | ((prevUserText: string) => string)) => void;
-}
+import { NextWordState, NextWordActions } from "../schema";
 
 export const useNextWord = create<NextWordState & NextWordActions>((set) => ({
   userText: "",

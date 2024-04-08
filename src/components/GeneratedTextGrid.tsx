@@ -5,16 +5,7 @@ import {
   getSavedGeneratedTexts,
   getSavedSummarizedTexts,
 } from "../Firebase/data";
-
-interface SavedGenerated {
-  generatedTextId?: string;
-  title?: string;
-  text?: string;
-}
-
-interface GeneratedTextGridProps {
-  currentTab: string;
-}
+import { GeneratedTextGridProps, SavedGenerated } from "../schema";
 
 function GeneratedTextGrid({ currentTab }: GeneratedTextGridProps) {
   const [loaded, setLoaded] = React.useState<boolean>(false);

@@ -2,12 +2,7 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-
-interface CustomizedSnackbarsProps {
-  text: string;
-  openState: boolean;
-  setOpenState: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { CustomizedSnackbarsProps } from "../schema";
 
 export default function CustomizedSnackbars({
   openState,

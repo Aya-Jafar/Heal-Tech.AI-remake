@@ -33,3 +33,58 @@ export type ChatBotStateAction =
   | { type: "SET_ANSWER"; payload: string }
   | { type: "RESET_CLICK" }
   | { type: "SET_ERROR"; payload: string };
+
+
+
+export interface SavedGenerated {
+  generatedTextId?: string;
+  title?: string;
+  text?: string;
+}
+
+export interface GeneratedTextGridProps {
+  currentTab: string;
+}
+
+export interface ErrorAlertProps {
+  validAuth: boolean;
+  type?: string;
+}
+
+export interface MobileHeaderProps {
+  menuActive: boolean;
+}
+
+export interface ServiceItemProps {
+  color: string;
+  title: string;
+  description: string;
+  path: string;
+}
+
+
+export interface CustomizedSnackbarsProps {
+  text: string;
+  openState: boolean;
+  setOpenState: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+
+// Input object schema to save in Firestore
+export interface SaveGeneratedTextInput {
+  title: string;
+  text: string;
+}
+
+export interface SavedGeneratedData {
+  title: string;
+  text: string;
+}
+
+export interface NextWordState {
+  userText: string;
+}
+
+export interface NextWordActions {
+  setUserText: (update: string | ((prevUserText: string) => string)) => void;
+}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
-import { getSavedGeneratedTexts } from "../Firebase/data";
 import { Avatar } from "@mui/material";
 import { cyan } from "@mui/material/colors";
 import { getUserInfo } from "../Firebase/data";
