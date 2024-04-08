@@ -1,28 +1,42 @@
 import * as React from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { stagger, fadeIn, slideAnimation } from "../utils/animation";
 
 export default function ProblemStatement() {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.02,
+  });
+
   return (
-    <div className="problems">
+    <motion.div
+      className="problems"
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"} // Animate when in view
+      variants={stagger}
+    >
       <center>
-        <h1>Problems Doctor face</h1>
+        <motion.h1 variants={fadeIn}>Problems Doctor face</motion.h1>
       </center>
-      <div className="grid">
-        <div className="problem">
+      <motion.div className="grid" variants={fadeIn}>
+        <motion.div className="problem">
           <p>Long time reading patient records and data</p>
-        </div>
-        <div className="problem">
+        </motion.div>
+        <motion.div className="problem">
           <p>
             Finding it difficult to enter data, especially for those who do not
             like computers
           </p>
-        </div>
-        <div className="problem">
+        </motion.div>
+        <motion.div className="problem">
           <p>There is no source to quickly verify questionable information</p>
-        </div>
-        <div className="problem">
+        </motion.div>
+        <motion.div className="problem">
           <p>CRUDS operations are inaccurate</p>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </motion.div>
+    </motion.div>
   );
 }

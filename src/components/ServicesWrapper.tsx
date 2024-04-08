@@ -1,15 +1,28 @@
 import * as React from "react";
 import ServiceItem from "./ServiceItem";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { stagger, fadeIn, slideAnimation } from "../utils/animation";
 
-interface ServicesWrapperProps {}
+export function ServicesWrapper() {
+  const [ref, inView] = useInView({
+    triggerOnce: true,
+    threshold: 0.02,
+  });
 
-export function ServicesWrapper(props: ServicesWrapperProps) {
   return (
-    <div className="services" id="services">
+    <motion.div
+      className="services"
+      id="services"
+      ref={ref}
+      initial="hidden"
+      animate={inView ? "visible" : "hidden"}
+      variants={stagger}
+    >
       <center>
-        <h1 style={{fontSize:"40px"}}>Our Services</h1>
+        <motion.h1 style={{ fontSize: "40px" }}>Our Services</motion.h1>
       </center>
-      <div className="services-wrapper">
+      <motion.div className="services-wrapper" variants={fadeIn}>
         <ServiceItem
           title="Medical Auto Completion"
           description="Saves time by quickly providing accurate medical text predictions"
@@ -28,7 +41,7 @@ export function ServicesWrapper(props: ServicesWrapperProps) {
           path="/services/chat-bot"
           color="#0283CB"
         />
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

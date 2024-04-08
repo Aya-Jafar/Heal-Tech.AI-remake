@@ -149,16 +149,16 @@ hr {
   border: 1px #006cea solid;
   border-radius: 30px;
   background-color: #040a21;
-  padding: 5%;
+  padding: 4%;
 }
 .about-us-container h1 {
-  font-size: 55px;
+  font-size: 50px;
 }
 
 .about-us-container p {
   font-size: 35px;
   font-style: normal;
-  font-weight: 200;
+  font-weight: 100;
   line-height: 55px;
 }
 .services {

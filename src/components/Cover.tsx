@@ -2,13 +2,23 @@ import * as React from "react";
 import pic from "../images/heal-tech.AI-cover.png";
 import { handleMouseMove, handleMouseLeave } from "../utils/animation";
 import { Link as ScrollLink } from "react-scroll";
+import { motion } from "framer-motion";
+import { fadeIn, slideAnimation } from "../utils/animation";
 
-interface ICoverProps {}
-
-export default function Cover(props: ICoverProps) {
+export default function Cover() {
   return (
-    <div className="home-cover">
-      <div className="cover-text">
+    <motion.div
+      className="home-cover"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        variants={fadeIn}
+        {...slideAnimation("left")}
+        className="cover-text"
+      >
         <h1>Empowering Healthcare with Precision.</h1>
         <p>
           Elevate Your Practice with Seamless Auto-Completion, Dynamic
@@ -18,8 +28,10 @@ export default function Cover(props: ICoverProps) {
         <ScrollLink to="services" spy={true} smooth={true} duration={500}>
           <button id="explore-btn">Start Exploring</button>
         </ScrollLink>
-      </div>
-      <div
+      </motion.div>
+      <motion.div
+        variants={fadeIn}
+        {...slideAnimation("right")}
         className="cover-pic"
         id="cover"
         onMouseMove={(e) => {
@@ -30,7 +42,7 @@ export default function Cover(props: ICoverProps) {
         }}
       >
         <img src={pic} alt="" />
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

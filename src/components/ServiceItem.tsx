@@ -1,7 +1,8 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
 import { linkStyle } from "../utils/dynamicStyles";
-
+import { motion } from "framer-motion";
+import { fadeIn } from "../utils/animation";
 interface ServiceItemProps {
   color: string;
   title: string;
@@ -11,14 +12,21 @@ interface ServiceItemProps {
 
 export default function ServiceItem(props: ServiceItemProps) {
   return (
-    <div className="service-item" style={{ backgroundColor: props.color }}>
-      <h1>{props.title}</h1>
-      <p>{props.description}</p>
+    <motion.div
+      className="service-item"
+      style={{ backgroundColor: props.color }}
+    >
+      <motion.h1 variants={fadeIn}>{props.title}</motion.h1>
+      <motion.p variants={fadeIn}>{props.description}</motion.p>
       <Link to={props.path} style={{ ...linkStyle, marginTop: "auto" }}>
-        <button className="try-btn" style={{ backgroundColor: props.color }}>
+        <motion.button
+          className="try-btn"
+          style={{ backgroundColor: props.color }}
+          variants={fadeIn}
+        >
           <h3>Try Now</h3>
-        </button>
+        </motion.button>
       </Link>
-    </div>
+    </motion.div>
   );
 }
