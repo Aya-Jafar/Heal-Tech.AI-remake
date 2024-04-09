@@ -1,10 +1,9 @@
-import * as React from "react";
-import Cover from "../components/Cover";
-import AboutUs from "../components/AboutUs";
-import { ServicesWrapper } from "../components/ServicesWrapper";
-import Contact from "../components/Contact";
-import { Footer } from "../components/Footer";
-import ProblemStatement from "../components/ProblemStatement";
+import Cover from "../components/home/Cover";
+import AboutUs from "../components/home/AboutUs";
+import { ServicesWrapper } from "../components/home/services/ServicesWrapper";
+import Contact from "../components/home/Contact";
+import { Footer } from "../components/home/Footer";
+import ProblemStatement from "../components/home/ProblemStatement";
 
 export default function Home() {
   return (

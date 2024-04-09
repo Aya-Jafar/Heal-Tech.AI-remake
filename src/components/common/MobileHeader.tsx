@@ -1,14 +1,13 @@
 import React from "react";
 import logoutIcon from "../images/logout.png";
 import { Link as ScrollLink } from "react-scroll";
-import { linkStyle } from "../utils/dynamicStyles";
+import { linkStyle } from "../../utils/dynamicStyles";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { useAuth } from "../store/auth";
-import { AuthSchema } from "../schema";
-import { app } from "../Firebase/config";
-import { signOutUser } from "../Firebase/auth";
-import { MobileHeaderProps } from "../schema";
-
+import { useAuth } from "../../store/auth";
+import { AuthSchema } from "../../schema";
+import { app } from "../../Firebase/config";
+import { signOutUser } from "../../Firebase/auth";
+import { MobileHeaderProps } from "../../schema";
 
 function MobileNav({ menuActive }: MobileHeaderProps) {
   const auth = getAuth(app);

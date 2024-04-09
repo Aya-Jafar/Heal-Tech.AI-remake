@@ -3,10 +3,10 @@ import { Box, Button } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
-import { useAuth } from "../store/auth";
-import { AuthSchema } from "../schema";
-import { createAccount } from "../Firebase/auth";
-import { signupBoxStyle } from "../utils/dynamicStyles";
+import { useAuth } from "../../store/auth";
+import { AuthSchema } from "../../schema";
+import { createAccount } from "../../Firebase/auth";
+import { signupBoxStyle } from "../../utils/dynamicStyles";
 import { ErrorAlert } from "./ErrorAlert";
 
 function SignUpModal() {

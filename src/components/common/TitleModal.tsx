@@ -7,7 +7,7 @@ import {
   inputTextStyles,
   labelStyles,
   saveBoxStyle,
-} from "../utils/dynamicStyles";
+} from "../../utils/dynamicStyles";
 
 interface TitleFormProps {
   isTitleModalOpen: boolean;

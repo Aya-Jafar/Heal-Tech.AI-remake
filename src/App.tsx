@@ -1,7 +1,7 @@
 import React, { FC, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
-import Header from "./components/Header";
+import Header from "./components/common/Header";
 
 const Home = lazy(() => import("./pages/Home"));
 const AutoCompletion = lazy(() => import("./pages/services/AutoCompletion"));

@@ -1,7 +1,7 @@
 import * as React from "react";
 import Alert from "@mui/material/Alert";
 import Stack from "@mui/material/Stack";
-import { ErrorAlertProps } from "../schema";
+import { ErrorAlertProps } from "../../schema";
 
 export function ErrorAlert({ validAuth, type }: ErrorAlertProps) {
   return (

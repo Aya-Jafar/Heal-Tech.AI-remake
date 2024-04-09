@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
-import { linkStyle } from "../utils/dynamicStyles";
+import { linkStyle } from "../../../utils/dynamicStyles";
 import { motion } from "framer-motion";
-import { fadeIn } from "../utils/animation";
-import { ServiceItemProps } from "../schema";
+import { fadeIn } from "../../../utils/animation";
+import { ServiceItemProps } from "../../../schema";
 
 export default function ServiceItem(props: ServiceItemProps) {
   return (

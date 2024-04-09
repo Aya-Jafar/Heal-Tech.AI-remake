@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
-import fetchSuggestions from "../huggingFace/nextWord";
-import { useNextWord } from "../store/nextWord";
+import fetchSuggestions from "../../../huggingFace/nextWord";
+import { useNextWord } from "../../../store/nextWord";
 
 const PredictiveText: React.FC = () => {
   const { userText, setUserText } = useNextWord();
@@ -72,8 +72,7 @@ const PredictiveText: React.FC = () => {
   const acceptSuggestion = () => {
     const contentEditableElement = contentEditableRef.current;
     if (aiText) {
-      
-      setUserText((prevUserText : string) => prevUserText + aiText);
+      setUserText((prevUserText: string) => prevUserText + aiText);
 
       contentEditableElement!.innerText = userText + aiText;
       setAIText("");
@@ -115,8 +114,6 @@ const PredictiveText: React.FC = () => {
       }, 0); // SetTimeout with delay of 0 to allow the stack to clear and the <br> to be inserted
     }
   };
-
-
 
   return (
     <div className="model">

@@ -2,7 +2,7 @@ import * as React from "react";
 import ServiceItem from "./ServiceItem";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { stagger, fadeIn, slideAnimation } from "../utils/animation";
+import { stagger, fadeIn, slideAnimation } from "../../../utils/animation";
 
 export function ServicesWrapper() {
   const [ref, inView] = useInView({

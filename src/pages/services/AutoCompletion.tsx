@@ -1,17 +1,12 @@
 import React from "react";
-import PredictiveText from "../../components/PredictiveText";
+import PredictiveText from "../../components/home/services/PredictiveText";
 import saveIcon from "../../images/save-icon.png";
 import { saveGeneratedText } from "../../Firebase/data";
 import { useNextWord } from "../../store/nextWord";
-import Modal from "@mui/material/Modal";
-import { Box } from "@mui/material";
-import { Typography } from "@mui/material";
-import { saveBoxStyle } from "../../utils/dynamicStyles";
-import { TextField } from "@mui/material";
 import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";
-import CustomizedSnackbars from "../../components/SnackBar";
-import TitleModal from "../../components/TitleModal";
+import CustomizedSnackbars from "../../components/common/SnackBar";
+import TitleModal from "../../components/common/TitleModal";
 
 export default function AutoCompletion() {
   const { currentUser, setIsLoginModalOpen } = useAuth() as AuthSchema;

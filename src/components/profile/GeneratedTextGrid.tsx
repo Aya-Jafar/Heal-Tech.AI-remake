@@ -1,11 +1,11 @@
 import React from "react";
-import { linkStyle } from "../utils/dynamicStyles";
+import { linkStyle } from "../../utils/dynamicStyles";
 import { Link } from "react-router-dom";
 import {
   getSavedGeneratedTexts,
   getSavedSummarizedTexts,
-} from "../Firebase/data";
-import { GeneratedTextGridProps, SavedGenerated } from "../schema";
+} from "../../Firebase/data";
+import { GeneratedTextGridProps, SavedGenerated } from "../../schema";
 import { Grid } from "@mui/material";
 
 function GeneratedTextGrid({ currentTab }: GeneratedTextGridProps) {

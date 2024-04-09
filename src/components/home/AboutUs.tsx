@@ -1,7 +1,7 @@
 import * as React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { stagger, fadeIn, slideAnimation } from "../utils/animation";
+import { stagger, fadeIn, slideAnimation } from "../../utils/animation";
 
 export default function AboutUs() {
   const [ref, inView] = useInView({
