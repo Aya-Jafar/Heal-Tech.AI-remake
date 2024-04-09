@@ -7,6 +7,7 @@ import {
 } from "../../Firebase/data";
 import { GeneratedTextGridProps, SavedGenerated } from "../../schema";
 import { Grid } from "@mui/material";
+import Loader from "../common/Loader";
 
 function GeneratedTextGrid({ currentTab }: GeneratedTextGridProps) {
   const [loaded, setLoaded] = React.useState<boolean>(false);
@@ -36,9 +37,7 @@ function GeneratedTextGrid({ currentTab }: GeneratedTextGridProps) {
   return (
     <>
       {!loaded && (
-        <div className="loader-container">
-          <span className="loader"></span>
-        </div>
+        <Loader />
       )}
       {loaded && savedGenerated?.length > 0 ? (
         <Grid container spacing={{ xs: 2, md: 3 }} className="saved-grid">

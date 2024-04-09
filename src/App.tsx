@@ -2,6 +2,7 @@ import React, { FC, lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./components/common/Header";
+import Loader from "./components/common/Loader";
 
 const Home = lazy(() => import("./pages/Home"));
 const AutoCompletion = lazy(() => import("./pages/services/AutoCompletion"));
@@ -18,13 +19,7 @@ const App: FC = () => {
         <Route
           path="/"
           element={
-            <Suspense
-              fallback={
-                <div className="loader-container">
-                  <span className="loader"></span>
-                </div>
-              }
-            >
+            <Suspense fallback={<Loader />}>
               <Home />
             </Suspense>
           }
@@ -32,13 +27,7 @@ const App: FC = () => {
         <Route
           path="/services/auto-completion"
           element={
-            <Suspense
-              fallback={
-                <div className="loader-container">
-                  <span className="loader"></span>
-                </div>
-              }
-            >
+            <Suspense fallback={<Loader />}>
               <AutoCompletion />
             </Suspense>
           }
@@ -46,13 +35,7 @@ const App: FC = () => {
         <Route
           path="/services/summarization"
           element={
-            <Suspense
-              fallback={
-                <div className="loader-container">
-                  <span className="loader"></span>
-                </div>
-              }
-            >
+            <Suspense fallback={<Loader />}>
               <Summarization />
             </Suspense>
           }
@@ -60,13 +43,7 @@ const App: FC = () => {
         <Route
           path="/services/chat-bot"
           element={
-            <Suspense
-              fallback={
-                <div className="loader-container">
-                  <span className="loader"></span>
-                </div>
-              }
-            >
+            <Suspense fallback={<Loader />}>
               <ChatBot />
             </Suspense>
           }
@@ -75,13 +52,7 @@ const App: FC = () => {
         <Route
           path="/profile/:uid"
           element={
-            <Suspense
-              fallback={
-                <div className="loader-container">
-                  <span className="loader"></span>
-                </div>
-              }
-            >
+            <Suspense fallback={<Loader />}>
               <Profile />
             </Suspense>
           }
@@ -90,13 +61,7 @@ const App: FC = () => {
         <Route
           path="/saved-generated/:generatedTextId/:type"
           element={
-            <Suspense
-              fallback={
-                <div className="loader-container">
-                  <span className="loader"></span>
-                </div>
-              }
-            >
+            <Suspense fallback={<Loader />}>
               <SavedGenerated />
             </Suspense>
           }
