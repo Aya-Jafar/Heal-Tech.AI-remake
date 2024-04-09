@@ -29,8 +29,9 @@ function GeneratedTextGrid({ currentTab }: GeneratedTextGridProps) {
   };
 
   React.useEffect(() => {
+    setLoaded(false);
     getCurrentTabData();
-  }, [currentTab, loaded]);
+  }, [currentTab]);
 
   return (
     <>
