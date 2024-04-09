@@ -88,3 +88,11 @@ export interface NextWordState {
 export interface NextWordActions {
   setUserText: (update: string | ((prevUserText: string) => string)) => void;
 }
+
+
+export interface TitleFormProps {
+  isTitleModalOpen: boolean;
+  setIsTitleModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
+  saveToProfile: React.MouseEventHandler<HTMLButtonElement>;
+}

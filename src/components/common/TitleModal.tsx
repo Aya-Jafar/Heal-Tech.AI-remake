@@ -8,13 +8,8 @@ import {
   labelStyles,
   saveBoxStyle,
 } from "../../utils/dynamicStyles";
+import { TitleFormProps } from "../../schema";
 
-interface TitleFormProps {
-  isTitleModalOpen: boolean;
-  setIsTitleModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
-  saveToProfile: React.MouseEventHandler<HTMLButtonElement>;
-}
 
 function TitleModal({
   isTitleModalOpen,
