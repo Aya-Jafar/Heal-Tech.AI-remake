@@ -11,15 +11,18 @@ import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";
 import { saveBoxStyle } from "../../utils/dynamicStyles";
 import { saveSummarizedText } from "../../Firebase/data";
+import CustomizedSnackbars from "../../components/SnackBar";
 
 export default function Summarization() {
   const [fileContent, setFileContent] = useState<string | null>(null);
   const { currentUser, setIsLoginModalOpen } = useAuth() as AuthSchema;
 
+  const [summaryText, setSummaryText] = useState<SummaryAPIResponse>();
 
-  const [summaryText, setSummaryText] = useState<SummaryAPIResponse | string>();
-
+  const [errorMsg, setErrorMsg] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [snackbar, setSnackbar] = React.useState<boolean>(false);
 
   const [isTitleModalOpen, setIsTitleModalOpen] =
     React.useState<boolean>(false);
@@ -46,13 +49,15 @@ export default function Summarization() {
     }
   };
 
-  useEffect(() => {}, [summaryText, isLoading]);
+  useEffect(() => {
+    console.log(summaryText?.generated_text);
+  }, [summaryText, isLoading]);
 
   const summarizeClickHandler = async () => {
     if (fileContent) {
       // Check input size before sending request
       if (countTokens(fileContent) > 512) {
-        setSummaryText("File size is too large");
+        setErrorMsg("File size is too large");
         setIsLoading(false);
         setFileContent(null);
         return;
@@ -62,11 +67,14 @@ export default function Summarization() {
         setIsLoading(true);
         const response = await summarizeText({ inputs: fileContent });
         if (Array.isArray(response) && response[0]?.generated_text) {
-          setSummaryText(response[0].generated_text);
+          console.log(response[0].generated_text);
+
+          setSummaryText(response[0]?.generated_text);
+
           setIsLoading(false);
           setFileContent(null);
         } else {
-          setSummaryText("Something went wrong, Please try again");
+          setErrorMsg("Something went wrong, Please try again");
           setIsLoading(false);
           setFileContent(null);
         }
@@ -87,24 +95,22 @@ export default function Summarization() {
   const saveToProfile = async () => {
     if (
       title.length > 0 &&
-      summaryText &&
-      typeof summaryText === "object" &&
-      summaryText.generated_text !== undefined &&
-      typeof summaryText.generated_text === "string" &&
-      summaryText.generated_text.length > 0
+      summaryText !== undefined &&
+      typeof summaryText === "string" &&
+      errorMsg.length === 0
     ) {
-      if (typeof summaryText === "object") {
-        await saveSummarizedText({
-          title: title,
-          text: summaryText.generated_text,
-        });
-      }
+      await saveSummarizedText({
+        title: title,
+        text: summaryText,
+      });
       setIsTitleModalOpen(false);
-      // setSnackbar(true);
+      setSnackbar(true);
     } else {
       // TODO: show snackbar error message
     }
   };
+
+  console.log(summaryText);
 
   return (
     <div className="model-page">
@@ -129,21 +135,24 @@ export default function Summarization() {
           {isLoading ? <strong>Loading...</strong> : <strong>Summarize</strong>}
         </button>
 
-        {summaryText !== null &&
-        summaryText !== undefined &&
-        typeof summaryText !== "string" ? (
-          <p>{summaryText.generated_text}</p>
-        ) : (
-          // Show error message string
-          <p>{summaryText}</p>
+        {summaryText !== undefined &&
+          typeof summaryText === "string" &&
+          errorMsg.length === 0 && (
+            <>
+              <p>{summaryText}</p>
+              <center>
+                <button className="save-btn" onClick={handleSaveClick}>
+                  <img src={saveIcon} alt="" />
+                  <p>Save</p>
+                </button>
+              </center>
+            </>
+          )}
+        {errorMsg.length > 0 && (
+          <>
+            <p>{errorMsg}</p>
+          </>
         )}
-        <center>
-          <button className="save-btn" onClick={handleSaveClick}>
-            <img src={saveIcon} alt="" />
-
-            <p>Save</p>
-          </button>
-        </center>
 
         <Modal
           open={isTitleModalOpen}
@@ -187,6 +196,11 @@ export default function Summarization() {
             </center>
           </Box>
         </Modal>
+        <CustomizedSnackbars
+          text="Summarized text was saved in profile successfully"
+          openState={snackbar}
+          setOpenState={setSnackbar}
+        />
       </div>
     </div>
   );
