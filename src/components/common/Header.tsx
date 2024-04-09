@@ -1,7 +1,7 @@
 // TODO: Convert this to lazy loading imports
 
 import * as React from "react";
-import logo from "../images/healai-icon.png";
+import logo from "../../images/healai-icon.png";
 import { Link } from "react-router-dom";
 import { linkStyle } from "../../utils/dynamicStyles";
 import { Link as ScrollLink } from "react-scroll";
@@ -11,7 +11,7 @@ import { AuthSchema } from "../../schema";
 import SignUpModal from "./SignUpModal";
 import { app } from "../../Firebase/config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-import logoutIcon from "../images/logout.png";
+import logoutIcon from "../../images/logout.png";
 import { signOutUser } from "../../Firebase/auth";
 import MobileNav from "./MobileHeader";
 import { FaBars } from "react-icons/fa";

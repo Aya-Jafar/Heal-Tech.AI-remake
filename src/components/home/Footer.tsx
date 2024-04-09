@@ -1,5 +1,5 @@
 import * as React from "react";
-import logo from "../images/healai-icon.png";
+import logo from "../../images/healai-icon.png";
 
 export function Footer() {
   return (

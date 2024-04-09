@@ -1,5 +1,5 @@
 import * as React from "react";
-import pic from "../images/heal-tech.AI-cover.png";
+import pic from "../../images/heal-tech.AI-cover.png";
 import { handleMouseMove, handleMouseLeave } from "../../utils/animation";
 import { Link as ScrollLink } from "react-scroll";
 import { motion } from "framer-motion";

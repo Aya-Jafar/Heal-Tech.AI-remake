@@ -1,5 +1,5 @@
 import React from "react";
-import logoutIcon from "../images/logout.png";
+import logoutIcon from "../../images/logout.png";
 import { Link as ScrollLink } from "react-scroll";
 import { linkStyle } from "../../utils/dynamicStyles";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
