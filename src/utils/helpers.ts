@@ -65,3 +65,6 @@ export const countTokens = (text: string) => {
 
   return totalCount;
 };
+
+export const isValidEmail = (email: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

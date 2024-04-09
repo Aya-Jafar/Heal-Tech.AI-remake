@@ -1,20 +1,24 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button } from "@mui/material";
+import React, { useState } from "react";
+import { Box } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";
 import { logIn } from "../../Firebase/auth";
-import { loginBoxStyle } from "../../utils/dynamicStyles";
-import { ErrorAlert } from "./ErrorAlert";
+import CustomizedSnackbar from "./SnackBar";
+import {
+  fieldsetStyles,
+  inputTextStyles,
+  labelStyles,
+  loginBoxStyle,
+} from "../../utils/dynamicStyles";
+import { isValidEmail } from "../../utils/helpers";
 
-function LoginModal() {
+export default function LoginModal() {
   const {
     isLoginModalOpen,
     setIsLoginModalOpen,
-    setCurrentUser,
-    currentUser,
     setIsSignUpModalOpen,
   } = useAuth() as AuthSchema;
 
@@ -22,35 +26,34 @@ function LoginModal() {
     email: "",
     password: "",
   });
-  const [validAuth, setValidAuth] = useState<boolean>(true);
+  const [validEmail, setValidEmail] = useState<boolean>(true);
+  const [validPassword, setValidPassword] = useState<boolean>(true);
+  const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    if (name === "email") {
+      setFormData((prevData) => ({ ...prevData, email: value }));
+      setValidEmail(isValidEmail(value));
+    } else if (name === "password") {
+      setFormData((prevData) => ({ ...prevData, password: value }));
+      setValidPassword(value.length >= 8);
+    }
   };
 
   const handleSubmit = async () => {
-    await logIn(formData.email, formData.password);
-
-    if (localStorage.getItem("token")) {
-      setIsLoginModalOpen(false);
-      setValidAuth(true);
-    } else {
-      setValidAuth(false);
+    const { email, password } = formData;
+    if (validEmail && validPassword) {
+      await logIn(email, password);
+      if (localStorage.getItem("token")) {
+        setIsLoginModalOpen(false);
+        setShowSnackbar(true);
+      }
     }
-
-    setTimeout(() => {
-      setValidAuth(true);
-    }, 3000);
   };
 
   return (
     <>
-      <ErrorAlert validAuth={validAuth} type={"login"} />
-
       <Modal open={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)}>
         <Box sx={loginBoxStyle}>
           <Typography id="modal-modal-title" variant="h4" component="h2">
@@ -72,19 +75,15 @@ function LoginModal() {
               name="email"
               onChange={handleInputChange}
               style={{ marginBottom: "20px" }}
+              error={!validEmail}
+              helperText={!validEmail && "Invalid email"}
               sx={{
                 width: "100%",
-                "& label": {
-                  color: "white", // Label color
-                },
-                "& fieldset": {
-                  borderColor: "white !important", // Border color
-                },
+                ...(validEmail ? { "& label": labelStyles } : { "& label": { color: "#d74a53 !important" } }),
+                ...(validEmail ? { "& fieldset": fieldsetStyles } : { "& fieldset": { borderColor: "#d74a53 !important", border: "2px solid #d74a53" } }),
               }}
               inputProps={{
-                style: {
-                  color: "white", // Text color
-                },
+                style: inputTextStyles,
               }}
             />
 
@@ -96,19 +95,15 @@ function LoginModal() {
               name="password"
               onChange={handleInputChange}
               style={{ marginBottom: "20px" }}
+              error={!validPassword}
+              helperText={!validPassword && "Password is too short"}
               sx={{
                 width: "100%",
-                "& label": {
-                  color: "white", // Label color
-                },
-                "& fieldset": {
-                  borderColor: "white !important", // Border color
-                },
+                ...(validPassword ? { "& label": labelStyles } : { "& label": { color: "#d74a53 !important" } }),
+                ...(validPassword ? { "& fieldset": fieldsetStyles } : { "& fieldset": { borderColor: "#d74a53 !important", border: "2px solid #d74a53" } }),
               }}
               inputProps={{
-                style: {
-                  color: "white", // Text color
-                },
+                style: inputTextStyles,
               }}
             />
             <center>
@@ -143,8 +138,11 @@ function LoginModal() {
           </form>
         </Box>
       </Modal>
+      <CustomizedSnackbar
+        text="User logged in successfully"
+        openState={showSnackbar}
+        setOpenState={setShowSnackbar}
+      />
     </>
   );
 }
-
-export default LoginModal;
