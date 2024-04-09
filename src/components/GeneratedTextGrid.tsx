@@ -6,6 +6,7 @@ import {
   getSavedSummarizedTexts,
 } from "../Firebase/data";
 import { GeneratedTextGridProps, SavedGenerated } from "../schema";
+import { Grid } from "@mui/material";
 
 function GeneratedTextGrid({ currentTab }: GeneratedTextGridProps) {
   const [loaded, setLoaded] = React.useState<boolean>(false);
@@ -39,23 +40,23 @@ function GeneratedTextGrid({ currentTab }: GeneratedTextGridProps) {
         </div>
       )}
       {loaded && savedGenerated?.length > 0 ? (
-        <div className="saved-grid">
+        <Grid container spacing={{ xs: 2, md: 3 }} className="saved-grid">
           {savedGenerated?.map((saved: SavedGenerated, index) => (
-            <Link
-              to={`/saved-generated/${saved?.generatedTextId}/${
-                currentTab === "Generated Text" ? "generated" : "summarized"
-              }`}
-              key={index}
-              className="saved-item"
-              style={{ ...linkStyle }}
-            >
-              <>
-                <h1>{saved?.title}</h1>
-                <p>{saved?.text}</p>
-              </>
-            </Link>
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Link
+                to={`/saved-generated/${saved?.generatedTextId}/${
+                  currentTab === "Generated Text" ? "generated" : "summarized"
+                }`}
+                style={{ ...linkStyle }}
+              >
+                <div className="saved-item">
+                  <h1>{saved?.title}</h1>
+                  <p>{saved?.text}</p>
+                </div>
+              </Link>
+            </Grid>
           ))}
-        </div>
+        </Grid>
       ) : (
         <center>
           <p>No Saved texts yet...</p>

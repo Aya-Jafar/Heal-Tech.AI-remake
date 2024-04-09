@@ -33,7 +33,7 @@ function Profile() {
       setCurrentTab("Summarized Text");
     }
   };
-  
+
   const generateTabContent = () => (
     <GeneratedTextGrid currentTab={currentTab} />
   );
@@ -56,7 +56,7 @@ function Profile() {
       <br />
       <br />
 
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "100%", marginBottom: "3vh" }}>
         <Tabs value={value} onChange={handleChange} centered>
           <Tab
             label="Generated Text"

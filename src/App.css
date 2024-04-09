@@ -632,21 +632,24 @@ input::file-selector-button {
 }
 
 .saved-grid {
-  display: flex;
-  /* grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); */
-
-  align-items: center;
-  justify-content: start;
-  /* flex-wrap: wrap; */
-  gap: 2.5%;
   margin: 0 auto;
   margin-bottom: 1%;
+  margin-top: 10vh;
+}
+
+.saved-item {
   margin-top: 3%;
-  width: 100%;
 
-  overflow: hidden;
+  height: 280px;
+  color: white;
+  border-radius: 10px;
 
-  /* padding: 1% 100px; */
+  border: 1px rgba(255, 255, 255, 0.622) solid;
+
+  padding-left: 15px;
+
+  padding-right: 15px;
+  cursor: pointer;
 }
 
 .loader-container {
@@ -682,23 +685,6 @@ input::file-selector-button {
   100% {
     box-shadow: 14px 0 0 -2px, 38px 0 0 2px, -14px 0 0 -2px, -38px 0 0 -2px;
   }
-}
-.saved-item {
-  position: relative;
-  margin-top: 3%;
-
-  width: 30%;
-  /* background-color: #006cea; */
-  height: 300px;
-  color: white;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1px rgba(255, 255, 255, 0.622) solid;
-
-  padding-left: 15px;
-
-  padding-right: 15px;
-  cursor: pointer;
 }
 
 .saved-item:hover {

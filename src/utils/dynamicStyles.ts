@@ -54,3 +54,16 @@ export const confirmDeleteBoxStyle = {
   borderRadius: 3,
   p: 4,
 };
+
+
+export const labelStyles = {
+  color: "white", // Label color
+};
+
+export const fieldsetStyles = {
+  borderColor: "white !important", // Border color
+};
+
+export const inputTextStyles = {
+  color: "white", // Text color
+};
