@@ -3,15 +3,13 @@ import summarizeText from "../../huggingFace/textSummary";
 import { countTokens, extractPdfText } from "../../utils/helpers";
 import { SummaryAPIResponse, APIErrorResponse } from "../../schema";
 import saveIcon from "../../images/save-icon.png";
-import Modal from "@mui/material/Modal";
-import { Box } from "@mui/material";
-import { Typography } from "@mui/material";
-import { TextField } from "@mui/material";
 import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";
-import { saveBoxStyle } from "../../utils/dynamicStyles";
+import { motion } from "framer-motion";
 import { saveSummarizedText } from "../../Firebase/data";
 import CustomizedSnackbars from "../../components/SnackBar";
+import { fadeIn, slideAnimation } from "../../utils/animation";
+import TitleModal from "../../components/TitleModal";
 
 export default function Summarization() {
   const [fileContent, setFileContent] = useState<string | null>(null);
@@ -50,7 +48,6 @@ export default function Summarization() {
   };
 
   useEffect(() => {
-    console.log(summaryText?.generated_text);
   }, [summaryText, isLoading]);
 
   const summarizeClickHandler = async () => {
@@ -110,11 +107,13 @@ export default function Summarization() {
     }
   };
 
-  console.log(summaryText);
-
   return (
     <div className="model-page">
-      <div className="model-description">
+      <motion.div
+        className="model-description"
+        variants={fadeIn}
+        {...slideAnimation("left")}
+      >
         <h1>Text summarization</h1>
         <p>
           where you can upload paitients documents and data to get a summary of
@@ -125,8 +124,12 @@ export default function Summarization() {
         </p>
         <br />
         <p>Upload patient document (as a PDF) and then click summarize</p>
-      </div>
-      <div className="model summary">
+      </motion.div>
+      <motion.div
+        className="model summary"
+        variants={fadeIn}
+        {...slideAnimation("right")}
+      >
         <div className="file-upload-container">
           <input type="file" id="inp" onChange={handleFileChange} />
         </div>
@@ -154,54 +157,18 @@ export default function Summarization() {
           </>
         )}
 
-        <Modal
-          open={isTitleModalOpen}
-          onClose={() => setIsTitleModalOpen(false)}
-        >
-          <Box sx={saveBoxStyle}>
-            <Typography id="modal-modal-title" variant="h4" component="h2">
-              Save to your profile
-            </Typography>
-            <form action="" style={{ marginTop: "60px" }}>
-              <TextField
-                id="outlined-basic"
-                label="Title"
-                variant="outlined"
-                name="title"
-                onChange={(e) => setTitle(e.target.value)}
-                style={{ marginBottom: "20px" }}
-                sx={{
-                  width: "100%",
-                  "& label": {
-                    color: "white", // Label color
-                  },
-                  "& fieldset": {
-                    borderColor: "white !important", // Border color
-                  },
-                }}
-                inputProps={{
-                  style: {
-                    color: "white", // Text color
-                  },
-                }}
-              />
-            </form>
-
-            <br />
-            <br />
-            <center>
-              <button className="btn" onClick={saveToProfile}>
-                <strong>Save</strong>
-              </button>
-            </center>
-          </Box>
-        </Modal>
+        <TitleModal
+          isTitleModalOpen={isTitleModalOpen}
+          setIsTitleModalOpen={setIsTitleModalOpen}
+          setTitle={setTitle}
+          saveToProfile={saveToProfile}
+        />
         <CustomizedSnackbars
           text="Summarized text was saved in profile successfully"
           openState={snackbar}
           setOpenState={setSnackbar}
         />
-      </div>
+      </motion.div>
     </div>
   );
 }

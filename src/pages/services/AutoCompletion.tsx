@@ -11,6 +11,7 @@ import { TextField } from "@mui/material";
 import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";
 import CustomizedSnackbars from "../../components/SnackBar";
+import TitleModal from "../../components/TitleModal";
 
 export default function AutoCompletion() {
   const { currentUser, setIsLoginModalOpen } = useAuth() as AuthSchema;
@@ -72,45 +73,13 @@ export default function AutoCompletion() {
         <PredictiveText />
       </div>
 
-      <Modal open={isTitleModalOpen} onClose={() => setIsTitleModalOpen(false)}>
-        <Box sx={saveBoxStyle}>
-          <Typography id="modal-modal-title" variant="h4" component="h2">
-            Save to your profile
-          </Typography>
-          <form action="" style={{ marginTop: "60px" }}>
-            <TextField
-              id="outlined-basic"
-              label="Title"
-              variant="outlined"
-              name="title"
-              onChange={(e) => setTitle(e.target.value)}
-              style={{ marginBottom: "20px" }}
-              sx={{
-                width: "100%",
-                "& label": {
-                  color: "white", // Label color
-                },
-                "& fieldset": {
-                  borderColor: "white !important", // Border color
-                },
-              }}
-              inputProps={{
-                style: {
-                  color: "white", // Text color
-                },
-              }}
-            />
-          </form>
+      <TitleModal
+        isTitleModalOpen={isTitleModalOpen}
+        setIsTitleModalOpen={setIsTitleModalOpen}
+        setTitle={setTitle}
+        saveToProfile={saveToProfile}
+      />
 
-          <br />
-          <br />
-          <center>
-            <button className="btn" onClick={saveToProfile}>
-              <strong>Save</strong>
-            </button>
-          </center>
-        </Box>
-      </Modal>
       <CustomizedSnackbars
         text="Generated text was saved in profile successfully"
         openState={snackbar}
