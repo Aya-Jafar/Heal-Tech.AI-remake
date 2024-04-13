@@ -107,13 +107,7 @@ function SavedGenerated() {
           </>
         )}
         <Modal open={confirmOpen} onClose={() => setConfirmOpen(false)}>
-          <Box
-            sx={confirmDeleteBoxStyle}
-            style={{
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
+          <Box sx={confirmDeleteBoxStyle}>
             <Typography id="modal-modal-title" variant="h4" component="h2">
               Confirm Action
             </Typography>
@@ -123,14 +117,7 @@ function SavedGenerated() {
             </Typography>
             <br />
             <br />
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-end",
-                width: "100%",
-                gap: "10px",
-              }}
-            >
+            <div className="crud-btns-container">
               <button
                 className="btn"
                 id="del-btn-confirm"
@@ -150,16 +137,17 @@ function SavedGenerated() {
                         setShowSnackbar(true);
                         setConfirmOpen(false);
                       }
-                      // TODO: If something went wrong while deleting the generated text
-                      else {
-                      }
                     }
                   }
                 }}
               >
                 Delete
               </button>
-              <button className="btn" id="cancel-btn-confirm">
+              <button
+                className="btn"
+                id="cancel-btn-confirm"
+                onClick={() => setConfirmOpen(false)}
+              >
                 Cancel
               </button>
             </div>
