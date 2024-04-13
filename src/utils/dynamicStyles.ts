@@ -53,6 +53,8 @@ export const confirmDeleteBoxStyle = {
   boxShadow: 24,
   borderRadius: 3,
   p: 4,
+  display: "flex",
+  flexDirection: "column",
 };
 
 

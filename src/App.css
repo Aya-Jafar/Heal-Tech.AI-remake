@@ -459,14 +459,15 @@ input::file-selector-button {
   border: 1px #006cea solid;
   display: flex;
   align-items: center;
-  padding: 0 5%;
+  padding: 3% 5%;
   width: 60vw;
   border-radius: 14px;
   outline: none;
   font-size: 20px;
   color: white;
-  height: 8vh;
+  /* height: 8vh; */
   position: relative;
+
 }
 
 .comment-icon {
