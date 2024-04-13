@@ -1,20 +1,19 @@
-// TODO: Convert this to lazy loading imports
-
-import * as React from "react";
+import React, { Suspense, startTransition } from "react";
 import logo from "../../images/healai-icon.png";
 import { Link } from "react-router-dom";
 import { linkStyle } from "../../utils/dynamicStyles";
 import { Link as ScrollLink } from "react-scroll";
-import LoginModal from "./LoginModal";
 import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";
-import SignUpModal from "./SignUpModal";
 import { app } from "../../Firebase/config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import logoutIcon from "../../images/logout.png";
 import { signOutUser } from "../../Firebase/auth";
-import MobileNav from "./MobileHeader";
 import { FaBars } from "react-icons/fa";
+import Loader from "./Loader";
+import LoginModal from "./LoginModal";
+import SignUpModal from "./SignUpModal";
+import MobileNav from "./MobileHeader";
 
 export default function Header() {
   const {
@@ -44,6 +43,7 @@ export default function Header() {
     <>
       <LoginModal />
       <SignUpModal />
+      <MobileNav menuActive={menuActive} />
 
       <div className="header">
         <Link to="/" style={{ ...linkStyle }}>
