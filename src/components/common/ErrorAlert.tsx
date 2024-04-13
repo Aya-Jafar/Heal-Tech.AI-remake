@@ -1,29 +1,43 @@
 import * as React from "react";
+import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import Stack from "@mui/material/Stack";
 import { ErrorAlertProps } from "../../schema";
 
-export function ErrorAlert({ validAuth, type }: ErrorAlertProps) {
+export default function ErrorAlert({ validAuth, type }: ErrorAlertProps) {
+  const [open, setOpen] = React.useState(!validAuth); // Set open state based on validAuth prop
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (
+    event?: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  React.useEffect(() => {
+    // Update the open state when validAuth changes
+    setOpen(!validAuth);
+  }, [validAuth]);
+
   return (
-    <>
-      {!validAuth && (
-        <center>
-          <Stack
-            sx={{
-              width: "50%",
-              position: "relative",
-              zIndex: (theme) => theme.zIndex.modal + 1,
-            }}
-            spacing={10}
-          >
-            <Alert variant="filled" severity="error" className="error-alert">
-              {type === "login"
-                ? `Invalid email or password`
-                : `Invalid user data`}
-            </Alert>
-          </Stack>
-        </center>
-      )}
-    </>
+    <div>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+        <Alert
+          onClose={handleClose}
+          severity="error"
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {type === "login" ? `Invalid email or password` : `Invalid user data`}
+        </Alert>
+      </Snackbar>
+    </div>
   );
 }
