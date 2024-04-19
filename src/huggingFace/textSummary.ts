@@ -1,9 +1,9 @@
 async function summarizeText(text: object) {
 	
   const response = await fetch(`${process.env.REACT_APP_SUMMARY_URL}`, {
-    headers: { Authorization: `Bearer ${process.env.REACT_APP_HF_TOKEN}` },
+    headers: { "Content-Type": "application/json" },
     method: "POST",
-    body: JSON.stringify(text),
+    body: JSON.stringify({ long_text: text }),
   });
   const result = await response.json();
   return result;

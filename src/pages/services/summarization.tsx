@@ -62,11 +62,8 @@ export default function Summarization() {
       const makeRequest = async () => {
         setIsLoading(true);
         const response = await summarizeText({ inputs: fileContent });
-        if (Array.isArray(response) && response[0]?.generated_text) {
-          console.log(response[0].generated_text);
-
-          setSummaryText(response[0]?.generated_text);
-
+        if (response &&  response?.summarized_text) {
+          setSummaryText(response?.summarized_text);
           setIsLoading(false);
           setFileContent(null);
         } else {
