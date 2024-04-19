@@ -55,11 +55,13 @@ export default function ChatBot() {
     if (state.currentQuestion.trim().length > 0) {
       try {
         const response = await sendQuestion(state.currentQuestion);
-        
+
+        console.log(response);
+
         if (response) {
           dispatch({
             type: "SET_ANSWER",
-            payload: JSON.stringify(response),
+            payload: response,
           });
         } else {
           dispatch({
