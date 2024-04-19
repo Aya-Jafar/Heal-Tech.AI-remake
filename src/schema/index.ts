@@ -96,3 +96,14 @@ export interface TitleFormProps {
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   saveToProfile: React.MouseEventHandler<HTMLButtonElement>;
 }
+
+
+export interface ValidAuth {
+  email: boolean;
+  password1: boolean;
+  password2: boolean;
+  name: boolean;
+  specialization: boolean;
+  phoneNumber: boolean;
+  password1ErrorMessage: string;
+}
