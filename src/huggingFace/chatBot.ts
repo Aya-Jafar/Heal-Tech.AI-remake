@@ -7,16 +7,9 @@ async function sendQuestion(data: string) {
   const result = await response.json();
 
   if (result && result.generated_text) {
-    const generatedTextWords = result?.generated_text;
-
-    if (generatedTextWords.includes(data)) {
-      // Remove duplicated input from the response
-      
-      const endIndex = generatedTextWords.indexOf(data) + data.length;
-      var remainingText = generatedTextWords.slice(endIndex).trim();
-      remainingText = remainingText.split('"').join("");
-      return remainingText.replace("?", "");
-    }
+    let generatedTextWords = result?.generated_text;
+    generatedTextWords = generatedTextWords.replace(/"/g, "");
+    return generatedTextWords.replace("?", "");
   }
 }
 
