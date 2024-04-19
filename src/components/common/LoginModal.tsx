@@ -16,11 +16,8 @@ import {
 import { isValidEmail } from "../../utils/helpers";
 
 export default function LoginModal() {
-  const {
-    isLoginModalOpen,
-    setIsLoginModalOpen,
-    setIsSignUpModalOpen,
-  } = useAuth() as AuthSchema;
+  const { isLoginModalOpen, setIsLoginModalOpen, setIsSignUpModalOpen } =
+    useAuth() as AuthSchema;
 
   const [formData, setFormData] = useState({
     email: "",
@@ -79,8 +76,17 @@ export default function LoginModal() {
               helperText={!validEmail && "Invalid email"}
               sx={{
                 width: "100%",
-                ...(validEmail ? { "& label": labelStyles } : { "& label": { color: "#d74a53 !important" } }),
-                ...(validEmail ? { "& fieldset": fieldsetStyles } : { "& fieldset": { borderColor: "#d74a53 !important", border: "2px solid #d74a53" } }),
+                ...(validEmail
+                  ? { "& label": labelStyles }
+                  : { "& label": { color: "#d74a53 !important" } }),
+                ...(validEmail
+                  ? { "& fieldset": fieldsetStyles }
+                  : {
+                      "& fieldset": {
+                        borderColor: "#d74a53 !important",
+                        border: "2px solid #d74a53",
+                      },
+                    }),
               }}
               inputProps={{
                 style: inputTextStyles,
@@ -99,8 +105,17 @@ export default function LoginModal() {
               helperText={!validPassword && "Password is too short"}
               sx={{
                 width: "100%",
-                ...(validPassword ? { "& label": labelStyles } : { "& label": { color: "#d74a53 !important" } }),
-                ...(validPassword ? { "& fieldset": fieldsetStyles } : { "& fieldset": { borderColor: "#d74a53 !important", border: "2px solid #d74a53" } }),
+                ...(validPassword
+                  ? { "& label": labelStyles }
+                  : { "& label": { color: "#d74a53 !important" } }),
+                ...(validPassword
+                  ? { "& fieldset": fieldsetStyles }
+                  : {
+                      "& fieldset": {
+                        borderColor: "#d74a53 !important",
+                        border: "2px solid #d74a53",
+                      },
+                    }),
               }}
               inputProps={{
                 style: inputTextStyles,

@@ -4,10 +4,15 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { useAuth } from "../../store/auth";
-import { AuthSchema } from "../../schema";
+import { AuthSchema, ValidAuth } from "../../schema";
 import { createAccount } from "../../Firebase/auth";
-import { signupBoxStyle } from "../../utils/dynamicStyles";
-import { ErrorAlert } from "./ErrorAlert";
+import {
+  signupBoxStyle,
+  labelStyles,
+  fieldsetStyles,
+  inputTextStyles,
+} from "../../utils/dynamicStyles";
+import { isValidEmail, isValidIraqiPhoneNumber } from "../../utils/helpers";
 
 function SignUpModal() {
   const {
@@ -18,8 +23,16 @@ function SignUpModal() {
     setIsLoginModalOpen,
   } = useAuth() as AuthSchema;
 
-  const [emailError, setEmailError] = useState("");
-  const [validAuth, setValidAuth] = useState<boolean>(true);
+  // const [emailError, setEmailError] = useState("");
+  const [validAuth, setValidAuth] = useState<ValidAuth>({
+    email: true,
+    password1: true,
+    password2: true,
+    name: true,
+    specialization: true,
+    phoneNumber: true,
+    password1ErrorMessage: "",
+  });
 
   const [formData, setFormData] = useState({
     email: "",
@@ -34,10 +47,50 @@ function SignUpModal() {
     const { name, value } = e.target;
 
     if (name === "email") {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      const isValidEmail = emailRegex.test(value);
+      setValidAuth((prevState) => ({
+        ...prevState,
+        email: isValidEmail(value),
+      }));
+    } else if (name === "password1") {
+      const isShortPassword = value.length < 8;
+      const doesNotMatchConfirmPassword = value !== formData.password2;
 
-      setEmailError(isValidEmail ? "" : "Invalid email address");
+      setValidAuth((prevState) => ({
+        ...prevState,
+        password1: !isShortPassword,
+        password2: !doesNotMatchConfirmPassword,
+      }));
+
+      // Set different error messages based on conditions
+      if (isShortPassword) {
+        setValidAuth((prevState) => ({
+          ...prevState,
+          password1: false,
+          password1ErrorMessage: "Password should be at least 8 characters",
+        }));
+      } else if (doesNotMatchConfirmPassword) {
+        setValidAuth((prevState) => ({
+          ...prevState,
+          password1: false,
+          password1ErrorMessage: "Passwords do not match",
+        }));
+      } else {
+        // Clear the error message if no error
+        setValidAuth((prevState) => ({
+          ...prevState,
+          password1ErrorMessage: "",
+        }));
+      }
+    } else if (name === "password2") {
+      setValidAuth((prevState) => ({
+        ...prevState,
+        password2: formData.password1 === value,
+      }));
+    } else if (name === "Phone number") {
+      setValidAuth((prevState) => ({
+        ...prevState,
+        phoneNumber: isValidIraqiPhoneNumber(value),
+      }));
     }
 
     setFormData({
@@ -56,19 +109,19 @@ function SignUpModal() {
     );
     if (localStorage.getItem("token")) {
       setIsSignUpModalOpen(false);
-      setValidAuth(true);
+      // setValidAuth(true);
     } else {
-      setValidAuth(false);
+      // setValidAuth(false);
     }
 
     setTimeout(() => {
-      setValidAuth(true);
+      // setValidAuth(true);
     }, 3000);
   };
 
   return (
     <>
-      <ErrorAlert validAuth={validAuth} />
+      {/* <ErrorAlert validAuth={validAuth} /> */}
 
       <Modal
         open={isSignUpModalOpen}
@@ -92,23 +145,25 @@ function SignUpModal() {
               label="Email"
               variant="outlined"
               name="email"
-              error={!!emailError}
-              helperText={emailError}
               onChange={handleInputChange}
               style={{ marginBottom: "20px" }}
+              helperText={!validAuth.email && "Invalid email"}
               sx={{
                 width: "100%",
-                "& label": {
-                  color: "white", // Label color
-                },
-                "& fieldset": {
-                  borderColor: "white !important", // Border color
-                },
+                ...(validAuth.email
+                  ? { "& label": labelStyles }
+                  : { "& label": { color: "#d74a53 !important" } }),
+                ...(validAuth.email
+                  ? { "& fieldset": fieldsetStyles }
+                  : {
+                      "& fieldset": {
+                        borderColor: "#d74a53 !important",
+                        border: "2px solid #d74a53",
+                      },
+                    }),
               }}
               inputProps={{
-                style: {
-                  color: "white", // Text color
-                },
+                style: inputTextStyles,
               }}
             />
             <br />
@@ -121,17 +176,8 @@ function SignUpModal() {
               name="name"
               sx={{
                 width: "100%",
-                "& label": {
-                  color: "white", // Label color
-                },
-                "& fieldset": {
-                  borderColor: "white !important", // Border color
-                },
-              }}
-              inputProps={{
-                style: {
-                  color: "white", // Text color
-                },
+                "& label": labelStyles,
+                "& fieldset": fieldsetStyles,
               }}
             />
             <br />
@@ -139,22 +185,13 @@ function SignUpModal() {
               id="outlined-basic"
               label="Specialization"
               variant="outlined"
+              name="specialization"
               onChange={handleInputChange}
               style={{ marginBottom: "20px" }}
-              name="specialization"
               sx={{
                 width: "100%",
-                "& label": {
-                  color: "white", // Label color
-                },
-                "& fieldset": {
-                  borderColor: "white !important", // Border color
-                },
-              }}
-              inputProps={{
-                style: {
-                  color: "white", // Text color
-                },
+                "& label": labelStyles,
+                "& fieldset": fieldsetStyles,
               }}
             />
             <br />
@@ -163,22 +200,26 @@ function SignUpModal() {
               id="outlined-basic"
               label="Phone number"
               variant="outlined"
+              name="Phone number"
               onChange={handleInputChange}
               style={{ marginBottom: "20px" }}
-              name="phoneNumber"
+              helperText={!validAuth.phoneNumber && "Invalid phone number"}
               sx={{
                 width: "100%",
-                "& label": {
-                  color: "white", // Label color
-                },
-                "& fieldset": {
-                  borderColor: "white !important", // Border color
-                },
+                ...(validAuth.phoneNumber
+                  ? { "& label": labelStyles }
+                  : { "& label": { color: "#d74a53 !important" } }),
+                ...(validAuth.phoneNumber
+                  ? { "& fieldset": fieldsetStyles }
+                  : {
+                      "& fieldset": {
+                        borderColor: "#d74a53 !important",
+                        border: "2px solid #d74a53",
+                      },
+                    }),
               }}
               inputProps={{
-                style: {
-                  color: "white", // Text color
-                },
+                style: inputTextStyles,
               }}
             />
             <br />
@@ -191,19 +232,23 @@ function SignUpModal() {
               name="password1"
               onChange={handleInputChange}
               style={{ marginBottom: "20px" }}
+              helperText={!validAuth.password1 && validAuth.password1ErrorMessage}
               sx={{
                 width: "100%",
-                "& label": {
-                  color: "white", // Label color
-                },
-                "& fieldset": {
-                  borderColor: "white !important", // Border color
-                },
+                ...(validAuth.password1
+                  ? { "& label": labelStyles }
+                  : { "& label": { color: "#d74a53 !important" } }),
+                ...(validAuth.password1
+                  ? { "& fieldset": fieldsetStyles }
+                  : {
+                      "& fieldset": {
+                        borderColor: "#d74a53 !important",
+                        border: "2px solid #d74a53",
+                      },
+                    }),
               }}
               inputProps={{
-                style: {
-                  color: "white", // Text color
-                },
+                style: inputTextStyles,
               }}
             />
             <br />
@@ -214,20 +259,24 @@ function SignUpModal() {
               name="password2"
               type="password"
               onChange={handleInputChange}
-              style={{ marginBottom: "50px" }}
+              style={{ marginBottom: "20px" }}
+              helperText={!validAuth.password2 && validAuth.password1ErrorMessage}
               sx={{
                 width: "100%",
-                "& label": {
-                  color: "white", // Label color
-                },
-                "& fieldset": {
-                  borderColor: "white !important", // Border color
-                },
+                ...(validAuth.password2
+                  ? { "& label": labelStyles }
+                  : { "& label": { color: "#d74a53 !important" } }),
+                ...(validAuth.password2
+                  ? { "& fieldset": fieldsetStyles }
+                  : {
+                      "& fieldset": {
+                        borderColor: "#d74a53 !important",
+                        border: "2px solid #d74a53",
+                      },
+                    }),
               }}
               inputProps={{
-                style: {
-                  color: "white", // Text color
-                },
+                style: inputTextStyles,
               }}
             />
             <center>
