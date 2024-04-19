@@ -68,3 +68,10 @@ export const countTokens = (text: string) => {
 
 export const isValidEmail = (email: string) =>
   /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+
+export const isValidIraqiPhoneNumber = (phoneNumber: string): boolean => {
+  // Iraqi phone numbers usually start with '07' followed by 8 digits
+  const phoneRegex = /^(07)\d{8}$/;
+  return phoneRegex.test(phoneNumber);
+};
