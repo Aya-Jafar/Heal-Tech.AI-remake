@@ -726,6 +726,10 @@ input::file-selector-button {
   padding-right: 3%;
   padding-top: 1%;
 }
+.generated-page-container p {
+  font-size: 25px;
+  font-weight: 300;
+}
 
 .generated-crud {
   display: flex;
