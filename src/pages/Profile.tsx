@@ -27,11 +27,16 @@ function Profile() {
   // Handle current tab change
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-    if (newValue === 0) {
-      setCurrentTab("Generated Text");
-    } else if (newValue === 1) {
-      setCurrentTab("Summarized Text");
-    }
+    switch (newValue) {
+      case 0:
+        setCurrentTab("Generated Text");
+        break;
+      case 1:
+        setCurrentTab("Summarized Text");
+        break;
+      default:
+        break;
+    } 
   };
 
   const generateTabContent = () => (
