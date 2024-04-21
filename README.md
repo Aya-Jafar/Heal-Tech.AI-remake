@@ -8,6 +8,8 @@
 
 > Heal Tech.AI is a React web application designed to provide AI-powered medical services. It leverages a Django API backend and integrates with Firebase for seamless data management and authentication.
 
+![Heal Tech.AI](https://github.com/Aya-Jafar/Heal-Tech.AI-remake/blob/main/result.png)
+
 ## Key Features
 
 - **AI Medical Services**: Utilizes advanced machine learning algorithms to offer medical assistance and support.
