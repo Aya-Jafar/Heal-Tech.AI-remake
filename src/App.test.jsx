@@ -26,6 +26,101 @@ jest.mock("firebase/auth", () => ({
   updateProfile: jest.fn(),
 }));
 
+describe("Sign up function", () => {
+  beforeEach(() => {
+    jest.clearAllMocks(); // Clear mock function calls before each test
+  });
+
+  it("should create a new user account and save user data to Firestore", async () => {
+    const email = "test@example.com";
+    const userName = "Test User";
+    const password = "testPassword";
+    const specialization = "Test specialization";
+    const phoneNumber = "123456789";
+
+    // Mock successful createUserWithEmailAndPassword
+    createUserWithEmailAndPassword.mockResolvedValueOnce();
+
+    await createAccount(email, userName, password, specialization, phoneNumber);
+    expect(createAccount).toHaveBeenCalledWith(
+      email,
+      userName,
+      password,
+      specialization,
+      phoneNumber
+    );
+    expect(createAccount).toBeTruthy();
+  });
+
+  it("should handle sign up failure", async () => {
+    const email = "invalidemail"; // Invalid email
+    const userName = "Test User";
+    const password = "testPassword";
+    const specialization = "Test specialization";
+    const phoneNumber = "123456789";
+
+    // Mock failed createUserWithEmailAndPassword
+    const error = new Error("Invalid email address");
+    // createUserWithEmailAndPassword.mockRejectedValueOnce(error);
+
+    await createAccount(email, userName, password, specialization, phoneNumber);
+
+    // expect(error.message).toBe("Invalid email address");
+    createAccount.mockRejectedValueOnce(error);
+    expect(createAccount).toBeCalledWith(
+      email,
+      userName,
+      password,
+      specialization,
+      phoneNumber
+    );
+    expect(createAccount).rejects.toThrow(error.message);
+  });
+});
+
+describe("Log in function", () => {
+  beforeEach(() => {
+    jest.clearAllMocks(); // Clear mock function calls before each test
+  });
+
+  it("should log in the user and set the current user if sign-in is successful", async () => {
+    // Mock successful sign-in
+    signInWithEmailAndPassword.mockResolvedValueOnce();
+
+    const email = "test@example.com";
+    const password = "password";
+
+    await logIn(email, password);
+
+    // Expect signInWithEmailAndPassword to have been called with the provided email and password
+    expect(signInWithEmailAndPassword).toHaveBeenCalledWith(
+      expect.anything(),
+      email,
+      password
+    );
+
+    // Add your assertions for other expected behavior, such as setting current user and localStorage
+  });
+
+  it("should set current user to null if sign-in fails", async () => {
+    // Mock failed sign-in
+    const error = new Error("Authentication failed");
+    signInWithEmailAndPassword.mockRejectedValueOnce(error);
+
+    const email = "test@example.com";
+    const password = "password";
+
+    await logIn(email, password);
+
+    // Expect signInWithEmailAndPassword to have been called with the provided email and password
+    expect(signInWithEmailAndPassword).toHaveBeenCalledWith(
+      expect.anything(),
+      email,
+      password
+    );
+  });
+});
+
 describe("Next word model tests", () => {
   let setAITextMock;
   let setLoadingMock;
@@ -178,97 +273,4 @@ describe("Send Question model tests", () => {
   });
 });
 
-describe("Sign up function", () => {
-  beforeEach(() => {
-    jest.clearAllMocks(); // Clear mock function calls before each test
-  });
 
-  it("should create a new user account and save user data to Firestore", async () => {
-    const email = "test@example.com";
-    const userName = "Test User";
-    const password = "testPassword";
-    const specialization = "Test specialization";
-    const phoneNumber = "123456789";
-
-    // Mock successful createUserWithEmailAndPassword
-    createUserWithEmailAndPassword.mockResolvedValueOnce();
-
-    await createAccount(email, userName, password, specialization, phoneNumber);
-    expect(createAccount).toHaveBeenCalledWith(
-      email,
-      userName,
-      password,
-      specialization,
-      phoneNumber
-    );
-    expect(createAccount).toBeTruthy();
-  });
-
-  it("should handle sign up failure", async () => {
-    const email = "invalidemail"; // Invalid email
-    const userName = "Test User";
-    const password = "testPassword";
-    const specialization = "Test specialization";
-    const phoneNumber = "123456789";
-
-    // Mock failed createUserWithEmailAndPassword
-    const error = new Error("Invalid email address");
-    // createUserWithEmailAndPassword.mockRejectedValueOnce(error);
-
-    await createAccount(email, userName, password, specialization, phoneNumber);
-
-    // expect(error.message).toBe("Invalid email address");
-    createAccount.mockRejectedValueOnce(error);
-    expect(createAccount).toBeCalledWith(
-      email,
-      userName,
-      password,
-      specialization,
-      phoneNumber
-    );
-    expect(createAccount).rejects.toThrow(error.message);
-  });
-});
-
-describe("Log in function", () => {
-  beforeEach(() => {
-    jest.clearAllMocks(); // Clear mock function calls before each test
-  });
-
-  it("should log in the user and set the current user if sign-in is successful", async () => {
-    // Mock successful sign-in
-    signInWithEmailAndPassword.mockResolvedValueOnce();
-
-    const email = "test@example.com";
-    const password = "password";
-
-    await logIn(email, password);
-
-    // Expect signInWithEmailAndPassword to have been called with the provided email and password
-    expect(signInWithEmailAndPassword).toHaveBeenCalledWith(
-      expect.anything(),
-      email,
-      password
-    );
-
-    // Add your assertions for other expected behavior, such as setting current user and localStorage
-  });
-
-  it("should set current user to null if sign-in fails", async () => {
-    // Mock failed sign-in
-    const error = new Error("Authentication failed");
-    signInWithEmailAndPassword.mockRejectedValueOnce(error);
-
-    const email = "test@example.com";
-    const password = "password";
-
-    await logIn(email, password);
-
-    // Expect signInWithEmailAndPassword to have been called with the provided email and password
-    expect(signInWithEmailAndPassword).toHaveBeenCalledWith(
-      expect.anything(),
-      email,
-      password
-    );
-  });
-});
