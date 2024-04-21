@@ -6,7 +6,7 @@ async function sendQuestion(data: string) {
   });
   const result = await response.json();
 
-  if (result && result.generated_text) {
+  if (result && result.generated_text && result.generated_text.length > 0) {
     let generatedTextWords = result?.generated_text;
     generatedTextWords = generatedTextWords.replace(/"/g, "");
     return generatedTextWords.replace("?", "");
