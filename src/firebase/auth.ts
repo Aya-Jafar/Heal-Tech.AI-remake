@@ -47,10 +47,11 @@ export async function createAccount(
     }
   } catch (error) {
     console.error("Email sign-up error:", error);
+    throw error
   }
 }
 
-async function saveUserDataToFirestore(uid: string, userData: any) {
+export async function saveUserDataToFirestore(uid: string, userData: any) {
   try {
     // Create a reference to the "users" collection and the document with the user's UID
     const userDocRef = doc(db, "users", uid);

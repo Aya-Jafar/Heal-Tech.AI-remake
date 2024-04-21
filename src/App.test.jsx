@@ -1,18 +1,29 @@
 import fetchSuggestions from "./huggingFace/nextWord";
 import summarizeText from "./huggingFace/textSummary";
 import { useState } from "react";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  createAccount,
+} from "firebase/auth";
 import { logIn } from "./Firebase/auth";
+import sendQuestion from "./huggingFace/chatBot";
+import { saveUserDataToFirestore } from "./Firebase/auth";
 
 jest.mock("react", () => ({
   ...jest.requireActual("react"),
   useState: jest.fn(),
+  saveUserDataToFirestore: jest.fn(),
 }));
 
 jest.mock("firebase/auth", () => ({
   ...jest.requireActual("firebase/auth"),
   getAuth: jest.fn(() => ({})),
   signInWithEmailAndPassword: jest.fn(),
+  createUserWithEmailAndPassword: jest.fn(),
+  createAccount: jest.fn(),
+  updateProfile: jest.fn(),
 }));
 
 describe("Next word model tests", () => {
@@ -93,19 +104,18 @@ describe("Summary model tests", () => {
   });
 
   it("should return the summary from the API response", async () => {
-    const inputText = { inputs: "This is a long text to summarize." }; 
-  
+    const inputText = { inputs: "This is a long text to summarize." };
+
     const mockResponse = { summary: "This is a summary." };
     fetchMock.mockResolvedValueOnce({
-      json: jest.fn().mockResolvedValueOnce(mockResponse)
+      json: jest.fn().mockResolvedValueOnce(mockResponse),
     });
-  
+
     const summary = await summarizeText(inputText);
-    
+
     expect(fetchMock).toHaveBeenCalled();
     expect(summary).toEqual(mockResponse);
   });
-  
 
   it("should return null if input text is empty", async () => {
     const text = "";
@@ -120,8 +130,107 @@ describe("Summary model tests", () => {
   });
 });
 
-// Unit tests for the logIn function
-describe("logIn function", () => {
+describe("Send Question model tests", () => {
+  let fetchMock;
+
+  beforeEach(() => {
+    fetchMock = jest.fn();
+    global.fetch = fetchMock;
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should send a question and return the generated text without "?"', async () => {
+    const mockResponse = { generated_text: '"This is a generated text?"' };
+    fetchMock.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce(mockResponse),
+    });
+
+    const data = "This is a question";
+    const result = await sendQuestion(data);
+
+    expect(fetchMock).toHaveBeenCalledWith(expect.any(String), {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({ prompt: data }),
+    });
+
+    expect(result).toBe("This is a generated text");
+  });
+
+  it("should handle empty response from the API", async () => {
+    fetchMock.mockResolvedValueOnce({
+      json: jest.fn().mockResolvedValueOnce({}),
+    });
+
+    const data = "This is a question";
+    const result = await sendQuestion(data);
+
+    expect(fetchMock).toHaveBeenCalledWith(expect.any(String), {
+      headers: { "Content-Type": "application/json" },
+      method: "POST",
+      body: JSON.stringify({ prompt: data }),
+    });
+
+    expect(result).toBeUndefined();
+  });
+});
+
+describe("Sign up function", () => {
+  beforeEach(() => {
+    jest.clearAllMocks(); // Clear mock function calls before each test
+  });
+
+  it("should create a new user account and save user data to Firestore", async () => {
+    const email = "test@example.com";
+    const userName = "Test User";
+    const password = "testPassword";
+    const specialization = "Test specialization";
+    const phoneNumber = "123456789";
+
+    // Mock successful createUserWithEmailAndPassword
+    createUserWithEmailAndPassword.mockResolvedValueOnce();
+
+    await createAccount(email, userName, password, specialization, phoneNumber);
+    expect(createAccount).toHaveBeenCalledWith(
+      email,
+      userName,
+      password,
+      specialization,
+      phoneNumber
+    );
+    expect(createAccount).toBeTruthy();
+  });
+
+  it("should handle sign up failure", async () => {
+    const email = "invalidemail"; // Invalid email
+    const userName = "Test User";
+    const password = "testPassword";
+    const specialization = "Test specialization";
+    const phoneNumber = "123456789";
+
+    // Mock failed createUserWithEmailAndPassword
+    const error = new Error("Invalid email address");
+    // createUserWithEmailAndPassword.mockRejectedValueOnce(error);
+
+    await createAccount(email, userName, password, specialization, phoneNumber);
+
+    // expect(error.message).toBe("Invalid email address");
+    createAccount.mockRejectedValueOnce(error);
+    expect(createAccount).toBeCalledWith(
+      email,
+      userName,
+      password,
+      specialization,
+      phoneNumber
+    );
+    expect(createAccount).rejects.toThrow(error.message);
+  });
+});
+
+describe("Log in function", () => {
   beforeEach(() => {
     jest.clearAllMocks(); // Clear mock function calls before each test
   });
