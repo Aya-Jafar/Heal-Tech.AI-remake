@@ -37,9 +37,15 @@ Comprehensive testing ensures the reliability of Heal Tech.AI. Run tests using:
 npx jest
 ```
 
-## Contributors
+## 👤 Contributors
 
-👤 **Aya Jafar, Mohammed Riad, Mostafa Mohammed**
+### Web development:
+- **Aya Jafar
+
+### AI Services development:
+- Mohammed Riad
+- Mostafa Mohammed
+
 
 ## Show your support
 
