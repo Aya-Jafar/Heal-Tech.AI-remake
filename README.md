@@ -40,7 +40,7 @@ npx jest
 ## 👤 Contributors
 
 ### Web development:
-- **Aya Jafar
+- Aya Jafar
 
 ### AI Services development:
 - Mohammed Riad
