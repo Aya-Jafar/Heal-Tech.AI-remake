@@ -156,12 +156,14 @@ function SavedGenerated() {
         <CustomizedSnackbars
           text="Generated text was successfully deleted"
           openState={showSnackbar}
+          type="success"
           setOpenState={setShowSnackbar}
         />
 
         <CustomizedSnackbars
           text="Generated text was successfully updated"
           openState={showSnackbar}
+          type="success"
           setOpenState={setShowSnackbar}
         />
       </div>

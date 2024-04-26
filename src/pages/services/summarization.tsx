@@ -163,6 +163,7 @@ export default function Summarization() {
           text="Summarized text was saved in profile successfully"
           openState={snackbar}
           setOpenState={setSnackbar}
+          type="success"
         />
       </motion.div>
     </div>

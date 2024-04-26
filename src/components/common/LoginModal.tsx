@@ -40,12 +40,22 @@ export default function LoginModal() {
 
   const handleSubmit = async () => {
     const { email, password } = formData;
-    if (validEmail && validPassword) {
-      await logIn(email, password);
-      if (localStorage.getItem("token")) {
-        setIsLoginModalOpen(false);
+    const isValidCredentials = validEmail && validPassword;
+
+    if (isValidCredentials) {
+      try {
+        await logIn(email, password);
+        if (localStorage.getItem("token")) {
+          setIsLoginModalOpen(false);
+          setShowSnackbar(true);
+        }
+      } catch (error) {
+        // Handle login failure (e.g., show error message)
         setShowSnackbar(true);
       }
+    } else {
+      // Display snackbar for validation errors
+      setShowSnackbar(true);
     }
   };
 
@@ -102,7 +112,7 @@ export default function LoginModal() {
               onChange={handleInputChange}
               style={{ marginBottom: "20px" }}
               error={!validPassword}
-              helperText={!validPassword && "Password is too short"}
+              helperText={!validPassword && "Invalid Password"}
               sx={{
                 width: "100%",
                 ...(validPassword
@@ -154,7 +164,12 @@ export default function LoginModal() {
         </Box>
       </Modal>
       <CustomizedSnackbar
-        text="User logged in successfully"
+        text={
+          validEmail && validPassword 
+            ? "User logged in successfully"
+            : "Please enter the right credentials"
+        }
+        type={validEmail && validPassword ? "success" : "error"}
         openState={showSnackbar}
         setOpenState={setShowSnackbar}
       />

@@ -8,6 +8,7 @@ export default function CustomizedSnackbars({
   openState,
   setOpenState,
   text,
+  type="success",
 }: CustomizedSnackbarsProps) {
   const handleClose = (
     event?: React.SyntheticEvent | Event,
@@ -24,7 +25,7 @@ export default function CustomizedSnackbars({
       <Snackbar open={openState} autoHideDuration={6000} onClose={handleClose}>
         <Alert
           onClose={handleClose}
-          severity="success"
+          severity={type}
           variant="filled"
           sx={{ width: "100%" }}
         >

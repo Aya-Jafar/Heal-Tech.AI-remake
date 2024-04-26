@@ -79,6 +79,7 @@ export default function AutoCompletion() {
         text="Generated text was saved in profile successfully"
         openState={snackbar}
         setOpenState={setSnackbar}
+        type="success"
       />
     </div>
   );

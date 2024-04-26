@@ -333,6 +333,7 @@ function SignUpModal() {
 
       <CustomizedSnackbar
         text="User signed up successfully"
+        type="success"
         openState={showSnackbar}
         setOpenState={setShowSnackbar}
       />

@@ -10,7 +10,7 @@ export interface AuthSchema {
 
   setCurrentUser: React.Dispatch<React.SetStateAction<any>>;
 
-  currentUser: object
+  currentUser: object;
 }
 
 export interface SummaryAPIResponse {
@@ -33,8 +33,6 @@ export type ChatBotStateAction =
   | { type: "SET_ANSWER"; payload: string }
   | { type: "RESET_CLICK" }
   | { type: "SET_ERROR"; payload: string };
-
-
 
 export interface SavedGenerated {
   generatedTextId?: string;
@@ -62,13 +60,12 @@ export interface ServiceItemProps {
   path: string;
 }
 
-
 export interface CustomizedSnackbarsProps {
   text: string;
   openState: boolean;
   setOpenState: React.Dispatch<React.SetStateAction<boolean>>;
+  type: "success" | "error";
 }
-
 
 // Input object schema to save in Firestore
 export interface SaveGeneratedTextInput {
@@ -89,14 +86,12 @@ export interface NextWordActions {
   setUserText: (update: string | ((prevUserText: string) => string)) => void;
 }
 
-
 export interface TitleFormProps {
   isTitleModalOpen: boolean;
   setIsTitleModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setTitle: React.Dispatch<React.SetStateAction<string>>;
   saveToProfile: React.MouseEventHandler<HTMLButtonElement>;
 }
-
 
 export interface ValidAuth {
   email: boolean;
