@@ -78,6 +78,11 @@ function SignUpModal() {
         ...prevState,
         password2: !doesNotMatchPassword,
       }));
+    } else if (name === "Phone number") {
+      setValidAuth((prevState) => ({
+        ...prevState,
+        phoneNumber: isValidIraqiPhoneNumber(value),
+      }));
     } else if (
       name === "name" ||
       name === "specialization" ||
