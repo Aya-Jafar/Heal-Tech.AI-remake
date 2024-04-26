@@ -43,7 +43,7 @@ function SignUpModal() {
     phoneNumber: "",
   });
 
-  const handleInputChange = (e: any) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
 
     if (name === "email") {
@@ -58,38 +58,40 @@ function SignUpModal() {
       setValidAuth((prevState) => ({
         ...prevState,
         password1: !isShortPassword,
-        password2: !doesNotMatchConfirmPassword,
+        password1ErrorMessage: isShortPassword
+          ? "Password should be at least 8 characters"
+          : doesNotMatchConfirmPassword
+          ? "Passwords do not match"
+          : "",
       }));
 
-      // Set different error messages based on conditions
-      if (isShortPassword) {
+      // Clear the error message for password2 if it was previously shown
+      if (!doesNotMatchConfirmPassword) {
         setValidAuth((prevState) => ({
           ...prevState,
-          password1: false,
-          password1ErrorMessage: "Password should be at least 8 characters",
-        }));
-      } else if (doesNotMatchConfirmPassword) {
-        setValidAuth((prevState) => ({
-          ...prevState,
-          password1: false,
-          password1ErrorMessage: "Passwords do not match",
-        }));
-      } else {
-        // Clear the error message if no error
-        setValidAuth((prevState) => ({
-          ...prevState,
-          password1ErrorMessage: "",
+          password2: true,
         }));
       }
     } else if (name === "password2") {
+      const doesNotMatchPassword = value !== formData.password1;
       setValidAuth((prevState) => ({
         ...prevState,
-        password2: formData.password1 === value,
+        password2: !doesNotMatchPassword,
       }));
-    } else if (name === "Phone number") {
+    } else if (
+      name === "name" ||
+      name === "specialization" ||
+      name === "Phone number"
+    ) {
+      // Validate other fields based on specific criteria
+      const isValid =
+        (name === "name" && value.trim() !== "") ||
+        (name === "specialization" && value.trim() !== "") ||
+        (name === "Phone number" && isValidIraqiPhoneNumber(value));
+
       setValidAuth((prevState) => ({
         ...prevState,
-        phoneNumber: isValidIraqiPhoneNumber(value),
+        [name]: isValid,
       }));
     }
 
@@ -232,7 +234,9 @@ function SignUpModal() {
               name="password1"
               onChange={handleInputChange}
               style={{ marginBottom: "20px" }}
-              helperText={!validAuth.password1 && validAuth.password1ErrorMessage}
+              helperText={
+                !validAuth.password1 && validAuth.password1ErrorMessage
+              }
               sx={{
                 width: "100%",
                 ...(validAuth.password1
@@ -260,7 +264,9 @@ function SignUpModal() {
               type="password"
               onChange={handleInputChange}
               style={{ marginBottom: "20px" }}
-              helperText={!validAuth.password2 && validAuth.password1ErrorMessage}
+              helperText={
+                !validAuth.password2 && validAuth.password1ErrorMessage
+              }
               sx={{
                 width: "100%",
                 ...(validAuth.password2
