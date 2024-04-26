@@ -181,6 +181,9 @@ function SignUpModal() {
                 "& label": labelStyles,
                 "& fieldset": fieldsetStyles,
               }}
+              inputProps={{
+                style: inputTextStyles,
+              }}
             />
             <br />
             <TextField
@@ -194,6 +197,9 @@ function SignUpModal() {
                 width: "100%",
                 "& label": labelStyles,
                 "& fieldset": fieldsetStyles,
+              }}
+              inputProps={{
+                style: inputTextStyles,
               }}
             />
             <br />
