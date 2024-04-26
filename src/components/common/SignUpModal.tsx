@@ -13,6 +13,7 @@ import {
   inputTextStyles,
 } from "../../utils/dynamicStyles";
 import { isValidEmail, isValidIraqiPhoneNumber } from "../../utils/helpers";
+import CustomizedSnackbar from "./SnackBar";
 
 function SignUpModal() {
   const {
@@ -33,6 +34,7 @@ function SignUpModal() {
     phoneNumber: true,
     password1ErrorMessage: "",
   });
+  const [showSnackbar, setShowSnackbar] = useState<boolean>(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -117,6 +119,7 @@ function SignUpModal() {
     if (localStorage.getItem("token")) {
       setIsSignUpModalOpen(false);
       // setValidAuth(true);
+      setShowSnackbar(true);
     } else {
       // setValidAuth(false);
     }
@@ -327,6 +330,12 @@ function SignUpModal() {
           </form>
         </Box>
       </Modal>
+
+      <CustomizedSnackbar
+        text="User signed up successfully"
+        openState={showSnackbar}
+        setOpenState={setShowSnackbar}
+      />
     </>
   );
 }
