@@ -117,7 +117,7 @@ function SavedGenerated() {
             </Typography>
             <br />
             <br />
-            <div className="crud-btns-container">
+            <div className="crud-btns">
               <button
                 className="btn"
                 id="del-btn-confirm"
