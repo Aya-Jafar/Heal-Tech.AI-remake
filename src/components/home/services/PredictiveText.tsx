@@ -151,7 +151,7 @@ const PredictiveText: React.FC = () => {
         </span>
       </div>
       <div className="text-xs h-10 text-gray-700 italic">
-        {aiText.length > 0 || (loading && <div>loading ai suggestions...</div>)}
+        {aiText?.length > 0 || (loading && <div>loading ai suggestions...</div>)}
       </div>
     </div>
   );

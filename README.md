@@ -38,9 +38,6 @@ npx jest
 ```
 
 
-![Unit tests](https://github.com/Aya-Jafar/Heal-Tech.AI-remake/blob/main/result.png)
-
-
 ## 👤 Contributors
 
 ### Web development:
