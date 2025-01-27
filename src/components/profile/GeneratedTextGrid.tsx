@@ -36,9 +36,9 @@ function GeneratedTextGrid({ currentTab }: GeneratedTextGridProps) {
 
   return (
     <>
-      {!loaded && (
-        <Loader />
-      )}
+      {!loaded &&  <Loader />}
+
+
       {loaded && savedGenerated?.length > 0 ? (
         <Grid container spacing={{ xs: 2, md: 3 }} className="saved-grid">
           {savedGenerated?.map((saved: SavedGenerated, index) => (

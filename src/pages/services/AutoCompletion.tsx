@@ -1,7 +1,7 @@
+import { saveGeneratedText } from './../../Firebase/data';
 import React from "react";
 import PredictiveText from "../../components/home/services/PredictiveText";
 import saveIcon from "../../images/save-icon.png";
-import { saveGeneratedText } from "../../Firebase/data";
 import { useNextWord } from "../../store/nextWord";
 import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";
