@@ -1,4 +1,4 @@
-import { saveGeneratedText } from './../../Firebase/data';
+import { saveGeneratedText } from '../../backend/data';
 import React from "react";
 import PredictiveText from "../../components/home/services/PredictiveText";
 import saveIcon from "../../images/save-icon.png";

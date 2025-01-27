@@ -5,8 +5,8 @@ import { linkStyle } from "../../utils/dynamicStyles";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";
-import { app } from "../../Firebase/config";
-import { signOutUser } from "../../Firebase/auth";
+import { app } from "../../backend/config";
+import { signOutUser } from "../../backend/auth";
 import { MobileHeaderProps } from "../../schema";
 
 function MobileNav({ menuActive }: MobileHeaderProps) {

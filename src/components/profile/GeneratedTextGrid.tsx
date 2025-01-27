@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import {
   getSavedGeneratedTexts,
   getSavedSummarizedTexts,
-} from "../../Firebase/data";
+} from "../../backend/data";
 import { GeneratedTextGridProps, SavedGenerated } from "../../schema";
 import { Grid } from "@mui/material";
 import Loader from "../common/Loader";

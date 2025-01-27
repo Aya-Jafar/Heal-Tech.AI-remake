@@ -3,7 +3,7 @@ import { useAuth } from "../store/auth";
 import { AuthSchema } from "../schema";
 import { Avatar } from "@mui/material";
 import { cyan } from "@mui/material/colors";
-import { getUserInfo } from "../Firebase/data";
+import { getUserInfo } from "../backend/data";
 import { get1st2Letters } from "../utils/helpers";
 import GeneratedTextGrid from "../components/profile/GeneratedTextGrid";
 import Tabs from "@mui/material/Tabs";

@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { useAuth } from "../../store/auth";
 import { AuthSchema, ValidAuth } from "../../schema";
-import { createAccount } from "../../Firebase/auth";
+import { createAccount } from "../../backend/auth";
 import {
   signupBoxStyle,
   labelStyles,

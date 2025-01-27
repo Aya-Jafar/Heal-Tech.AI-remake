@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getSavedGeneratedData } from "../Firebase/data";
+import { getSavedGeneratedData } from "../backend/data";
 import Modal from "@mui/material/Modal";
 import { Box } from "@mui/material";
 import { Typography } from "@mui/material";
 import { confirmDeleteBoxStyle } from "../utils/dynamicStyles";
-import { deleteGeneratedText, editGeneratedText } from "../Firebase/data";
+import { deleteGeneratedText, editGeneratedText } from "../backend/data";
 import CustomizedSnackbars from "../components/common/SnackBar";
 import { SavedGeneratedData } from "../schema";
 

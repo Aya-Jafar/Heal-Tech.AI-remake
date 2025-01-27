@@ -7,9 +7,9 @@ import {
   updateProfile,
   createAccount,
 } from "firebase/auth";
-import { logIn } from "./Firebase/auth";
+import { logIn } from "./backend/auth";
 import sendQuestion from "./huggingFace/chatBot";
-import { saveUserDataToFirestore } from "./Firebase/auth";
+import { saveUserDataToFirestore } from "./backend/auth";
 
 jest.mock("react", () => ({
   ...jest.requireActual("react"),

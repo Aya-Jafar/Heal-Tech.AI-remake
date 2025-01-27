@@ -6,7 +6,7 @@ import saveIcon from "../../images/save-icon.png";
 import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";
 import { motion } from "framer-motion";
-import { saveSummarizedText } from "../../Firebase/data";
+import { saveSummarizedText } from "../../backend/data";
 import CustomizedSnackbars from "../../components/common/SnackBar";
 import { fadeIn, slideAnimation } from "../../utils/animation";
 import TitleModal from "../../components/common/TitleModal";

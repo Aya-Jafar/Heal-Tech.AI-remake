@@ -5,7 +5,7 @@ import Modal from "@mui/material/Modal";
 import TextField from "@mui/material/TextField";
 import { useAuth } from "../../store/auth";
 import { AuthSchema } from "../../schema";
-import { logIn } from "../../Firebase/auth";
+import { logIn } from "../../backend/auth";
 import CustomizedSnackbar from "./SnackBar";
 import {
   fieldsetStyles,
